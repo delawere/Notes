@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import fire from '../config/Fire';
 import Item from './Item';
-import GetUsers from './GetUsers'
+import GetUsers from './GetUsers';
 
 const period = {
   to: '',

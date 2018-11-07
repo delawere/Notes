@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import fire from '../config/Fire';
 
 import Input from './Input';
-import PasswordInfo from './PasswordInfo';
 
 const containerStyle = { 
   'width': '60%',
@@ -104,8 +103,6 @@ class Signup extends Component {
             className="form-control"
             placeholder="Пароль"
         />
-
-        <PasswordInfo valid = {this.state.passwordValid}/>
 
         <div className="form-group row">
           <button onClick={this.signup} className="btn btn-success center-block col-6">Регистрация</button>

@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import fire from '../config/Fire';
 
 import UsersItem from './UsersItem';
-import Wrapper from './styledComponents/Wrapper';
 
 class GetUsers extends PureComponent {
   constructor(props) {
@@ -18,10 +17,7 @@ class GetUsers extends PureComponent {
   
   async componentDidMount() {
     const users = await this.fetchAccounts();
-    this.setState({ 'usersData': users }, () => console.log(this.state));
-  }
-
-  componentDidUpdate() {
+    this.setState({ 'usersData': users });
   }
 
   async fetchAccounts () {
@@ -39,12 +35,10 @@ class GetUsers extends PureComponent {
     return(
       <div>
         {this.state.usersData.map(currentUser => (
-          <Wrapper>
             <UsersItem 
               key = {currentUser.name}
               name = {currentUser.name}
             />
-          </Wrapper>
        ))}
       </div>
     )
