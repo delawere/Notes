@@ -26,7 +26,9 @@ class GetUsers extends PureComponent {
     const res = await tasks;
 
     res.forEach(snapshot => {
-      data.push(snapshot.val() || {});
+      let currentValue = snapshot.val() || {};
+      currentValue.key = snapshot.key;
+      data.push(currentValue);
     });
     return data;
   }
@@ -34,10 +36,12 @@ class GetUsers extends PureComponent {
   render() {
     return(
       <div>
-        {this.state.usersData.map(currentUser => (
+        {this.state.usersData.map(user => (
             <UsersItem 
-              key = {currentUser.name}
-              name = {currentUser.name}
+              id = {user.key}
+              key = {user.key}
+              name = {`${user.name} ${user.surname}`} 
+              time = {user.time}
             />
        ))}
       </div>

@@ -20,6 +20,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "d3": "^5.7.0",
     "svg-inline-loader": "^0.8.0"
   }
 }

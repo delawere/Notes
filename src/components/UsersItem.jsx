@@ -1,8 +1,9 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
 import person from '../person.svg';
+
+import UserSchedule from './UserSchedule';
 
 const Wrapper = styled.div `
   width: 225px;
@@ -36,17 +37,51 @@ const Image = styled.img `
   border-radius: 3px; 
 `
 
-export default function UsersItem({ name }) {
-  return(
-    <Wrapper>
-      <ImageContainer>
-        <Image src={person} alt=""/>
-      </ImageContainer>
-      <TitleContainer>
-        <span>
-          {name}
-        </span>
-      </TitleContainer>
-    </Wrapper>
-  );
-} 
+class UsersItem extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      id: '',
+      visible: false
+    }
+  };
+
+  componentDidMount() {
+    debugger;
+    const { id, name, time } = this.props;
+    this.setState({
+      name: name,
+      id: id,
+    });
+  }
+
+  handleClick = () => {
+    this.setState({
+      visible: !this.state.visible
+    })
+  }
+
+  render () {
+    return(
+      <div> 
+        <Wrapper onClick={this.handleClick}>
+          <ImageContainer>
+            <Image src={person} alt="" />
+          </ImageContainer>
+          <TitleContainer>
+            <span>
+              {this.state.name} 
+            </span>
+          </TitleContainer>
+        </Wrapper>
+        <UserSchedule time = {this.props.time}
+                      visible = {this.state.visible}
+        />
+      </div>
+    );
+  }
+}
+
+export default UsersItem;
