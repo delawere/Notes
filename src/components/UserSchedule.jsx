@@ -49,6 +49,37 @@ const SVG = styled.svg `
   }
 `
 
+const Title = styled.h2 `
+  position: absolute;
+  top: 15px;
+`
+
+const LeftArrow = styled.div `
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  top: 50%;
+  margin-top: -7.5px;
+  cursor: pointer;
+  border-width: 7.5px 10px 7.5px 0;
+  border-color: transparent rgba(160, 159, 160, 1) transparent transparent;
+  left: 20px;
+`
+
+const RightArrow = styled.div `
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  top: 50%;
+  margin-top: -7.5px;
+  cursor: pointer;
+  border-width: 7.5px 0 7.5px 10px;
+  border-color: transparent transparent transparent rgba(160, 159, 160, 1);
+  right: 20px;
+`
+
 const day = {
   to: '',
   from: '',
@@ -78,7 +109,8 @@ class UserSchedule extends PureComponent {
       Thursday: day,
       Friday: day,
       Saturday: day,
-      Sunday: day
+      Sunday: day,
+      days: []
     };
   }
 
@@ -93,10 +125,9 @@ class UserSchedule extends PureComponent {
   }
 
   componentDidMount () {
-    const dates = this.getDates();
-    this.setState(
-      dates
-    , () => console.log(this.state));
+    this.setState({
+      days: this.getDates()
+    }, () => console.log(this.state.days));
   }
 
   closeWindow = () => {
@@ -106,29 +137,34 @@ class UserSchedule extends PureComponent {
   }
 
   getDates = () => {
-    const dates = {};
-    const currentDayinWeek = Moment().weekday() - 1;
-    const beginWeekDay = Moment().subtract(currentDayinWeek, 'day').format('DD MMMM YYYY');
-    UserSchedule.days.forEach((it, i) => {
-      dates[it] = {
-        to: '',
-        from: '',
-        date: ''
-      };
-      dates[it].date = Moment(beginWeekDay).add(i, 'day').format('DD MMMM YYYY')
-    });
-
-    return dates;
+    const daysInMonth = Moment().endOf('month').format('DD');
+    const month = Moment().format('MM');
+    const year = Moment().format('YYYY')
+    const startMonthWeekDay = Moment().startOf('month').format('ddd');
+    const days = [];
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(
+        {
+          'dayInMonth': i,
+          'dayInWeek': Moment(`${month}.${i}.${year}`).format('ddd')
+        }
+      )
+    }
+    return days;
   }
 
   render() {
+    console.log(this.state.days);
     return(
       <Wrapper style={{'opacity': this.state.visible ? '1' : '0'}}>
-        {UserSchedule.days.map(day => (
-          <ScheduleColumn day={day}
-                          date={this.state.Monday.date}
-          />
-        ))}
+        <LeftArrow></LeftArrow>
+        <Title>{Moment().format('MMMM YYYY')}</Title>
+        {this.state.days.map(day => {
+          return (<ScheduleColumn dayInMonth = {day.dayInMonth}
+                                  dayInWeek  = {day.dayInWeek}>
+                </ScheduleColumn>)
+        })}
+        <RightArrow></RightArrow>
         <ImageContainer onClick={this.closeWindow}>
           <SVG version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
             <title>Close</title>

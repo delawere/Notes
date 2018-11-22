@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import * as Moment from 'moment';
 
 const Table = styled.fieldset `
   display: inline-block;
@@ -16,13 +17,17 @@ const Title = styled.span `
   font-size: 18px;
 `
 
-const TimeButton = styled.button `
-  border: 1px solid rgba(207, 207, 207, 0.79);
-  background-color: #fff;
-  display: block;
+const Container = styled.div `
   width: 100%;
-  border-radius: 3px;
-  margin-bottom: 7px;
+  display: flex;
+  justify-content: space-betweenl
+
+`
+
+const Cell = styled.div `
+  width: 25px;
+  height: 25px;
+  display: inline-block;
 `
 
 class ScheduleColumn extends PureComponent {
@@ -30,29 +35,11 @@ class ScheduleColumn extends PureComponent {
     super(props);
   }
   render() {
-    console.log(this.props);
     return (
-      <Table>
-        <TitleCont>
-          <Title>{this.props.day}</Title> 
-          <Title>{this.props.date}</Title> 
-        </TitleCont>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-        <TimeButton>00:00</TimeButton>
-      </Table>
+      <Container>
+        <Cell>{this.props.dayInWeek}</Cell>
+      </Container>
+     
     )
   }
 };
