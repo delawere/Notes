@@ -2,18 +2,16 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import * as Moment from 'moment';
 
-import ScheduleColumn from './ScheduleColumn';
+import CalendarContainer from './CalendarContainer';
 
 const Wrapper = styled.div `
   z-index: 200;
   position: fixed;
-  display: flex;
   margin: auto;
-  width: 50vw;
+  width: 35vw;
   height: 650px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
   border-radius: 3px;
-  background-color: #fff;
   top: 0;
   left: 0;
   right: 0;
@@ -21,10 +19,11 @@ const Wrapper = styled.div `
   justify-content: space-around;
   border: 1px solid #000;
   padding: 20px;
-  padding-top: 50px;
+  padding-top: 75px;
   transition-property: opacity;
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
+  background: #4A4A4A;
 `
 
 const ImageContainer = styled.div `
@@ -39,10 +38,11 @@ const SVG = styled.svg `
   width: 20px;
   heigth: 20px;
   border-radius: 3px; 
-  background-color: #fff;
+  background-color: inherit;
   transition-property: fill;
   transition-duration: 0.15s;
   transition-timing-function: ease-out;
+  fill: #dbdbdb;
 
   &:hover {
     fill: #d91c1c;
@@ -52,6 +52,7 @@ const SVG = styled.svg `
 const Title = styled.h2 `
   position: absolute;
   top: 15px;
+  color: #f0f0f0;
 `
 
 const LeftArrow = styled.div `
@@ -78,6 +79,13 @@ const RightArrow = styled.div `
   border-width: 7.5px 0 7.5px 10px;
   border-color: transparent transparent transparent rgba(160, 159, 160, 1);
   right: 20px;
+`
+
+const WeekDayContainer = styled.div `
+  width: 600px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap;
 `
 
 const day = {
@@ -127,7 +135,7 @@ class UserSchedule extends PureComponent {
   componentDidMount () {
     this.setState({
       days: this.getDates()
-    }, () => console.log(this.state.days));
+    });
   }
 
   closeWindow = () => {
@@ -154,16 +162,17 @@ class UserSchedule extends PureComponent {
   }
 
   render() {
-    console.log(this.state.days);
     return(
       <Wrapper style={{'opacity': this.state.visible ? '1' : '0'}}>
+
         <LeftArrow></LeftArrow>
         <Title>{Moment().format('MMMM YYYY')}</Title>
-        {this.state.days.map(day => {
-          return (<ScheduleColumn dayInMonth = {day.dayInMonth}
-                                  dayInWeek  = {day.dayInWeek}>
-                </ScheduleColumn>)
-        })}
+        <WeekDayContainer>
+          {UserSchedule.days.map(weekday => {
+            return <div>{weekday}</div>
+          })}
+        </WeekDayContainer>
+        <CalendarContainer days = {this.state.days} />
         <RightArrow></RightArrow>
         <ImageContainer onClick={this.closeWindow}>
           <SVG version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
