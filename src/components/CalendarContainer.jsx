@@ -69,13 +69,14 @@ class CalendarContainer extends PureComponent {
   }
 
   render() {
+    console.log(this.state.days)
     return (
       <Container>
        {this.state.days.map(day => {
           return <ScheduleCell value = {day.label}
                                className = {{
                                  'prev': day.prev,
-                                 'next': day.prev,
+                                 'next': day.next,
                                  'curr': day.curr,
                                  'today': day.today
                                }}

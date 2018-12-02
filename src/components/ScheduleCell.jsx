@@ -18,6 +18,15 @@ const Cell = styled.div `
   color: #f0f0f0;
 `
 
-const ScheduleCell = ({ value, className }) => <Cell className = {`${className} cell`}>{value}</Cell>
+const otherDayStyle = {
+  'color': '#9e9e9e'
+};
+
+const ScheduleCell = ({ value, className }) => {
+  const { next, prev } = className;
+  return (
+    <Cell style = {next || prev ? otherDayStyle  : {}}>{value}</Cell>
+  )
+};
 
 export default ScheduleCell;
