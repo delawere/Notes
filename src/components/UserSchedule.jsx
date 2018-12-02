@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import * as Moment from 'moment';
+import * as moment from 'moment';
 
 import CalendarContainer from './CalendarContainer';
 
@@ -49,36 +49,41 @@ const SVG = styled.svg `
   }
 `
 
+const ContainerLeftArrow = styled.div `
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  cursor: pointer;
+`
+
+const SVG_Arrows = styled.svg `
+  width: 20px;
+  heigth: 20px;
+  border-radius: 3px; 
+  background-color: inherit;
+  transition-property: fill;
+  transition-duration: 0.15s;
+  transition-timing-function: ease-out;
+  fill: #dbdbdb;
+
+  &:hover {
+    fill: #fff;
+  }
+`
+
+const ContainerRightArrow = styled.div `
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  cursor: pointer;
+`
+
 const Title = styled.h2 `
   position: absolute;
   top: 15px;
   color: #f0f0f0;
-`
-
-const LeftArrow = styled.div `
-  position: absolute;
-  width: 0px;
-  height: 0px;
-  border-style: solid;
-  top: 50%;
-  margin-top: -7.5px;
-  cursor: pointer;
-  border-width: 7.5px 10px 7.5px 0;
-  border-color: transparent rgba(160, 159, 160, 1) transparent transparent;
-  left: 20px;
-`
-
-const RightArrow = styled.div `
-  position: absolute;
-  width: 0px;
-  height: 0px;
-  border-style: solid;
-  top: 50%;
-  margin-top: -7.5px;
-  cursor: pointer;
-  border-width: 7.5px 0 7.5px 10px;
-  border-color: transparent transparent transparent rgba(160, 159, 160, 1);
-  right: 20px;
 `
 
 const WeekDayContainer = styled.div `
@@ -86,13 +91,9 @@ const WeekDayContainer = styled.div `
   display: flex;
   justify-content: space-around;
   flex-wrap: nowrap;
+  color: #f0f0f0;
+  font-weight: 400;
 `
-
-const day = {
-  to: '',
-  from: '',
-  date: ''
-}
 
 class UserSchedule extends PureComponent {
 
@@ -111,14 +112,7 @@ class UserSchedule extends PureComponent {
 
     this.state = {
       visible: false,
-      Monday: day,
-      Tuesday: day,
-      Wednesday: day,
-      Thursday: day,
-      Friday: day,
-      Saturday: day,
-      Sunday: day,
-      days: []
+      month: moment().format('MM-DD-YYYY')
     };
   }
 
@@ -132,48 +126,50 @@ class UserSchedule extends PureComponent {
     });
   }
 
-  componentDidMount () {
-    this.setState({
-      days: this.getDates()
-    });
-  }
-
   closeWindow = () => {
     this.setState({
       visible: !this.state.visible
     });
   }
 
-  getDates = () => {
-    const daysInMonth = Moment().endOf('month').format('DD');
-    const month = Moment().format('MM');
-    const year = Moment().format('YYYY')
-    const startMonthWeekDay = Moment().startOf('month').format('ddd');
-    const days = [];
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push(
-        {
-          'dayInMonth': i,
-          'dayInWeek': Moment(`${month}.${i}.${year}`).format('ddd')
-        }
-      )
-    }
-    return days;
+  prevMonth = () => {
+    const currentMonth = this.state.month;
+    this.setState({
+      month: moment(currentMonth).subtract(1, 'month').format('MM-DD-YYYY')
+    }) 
   }
+
+  nextMonth = () => {
+    const currentMonth = this.state.month;
+    this.setState({
+      month: moment(currentMonth).add(1, 'month').format('MM-DD-YYYY')
+    }); 
+  }
+
 
   render() {
     return(
-      <Wrapper style={{'opacity': this.state.visible ? '1' : '0'}}>
+      <Wrapper style={{'opacity': this.state.visible ? '0.98' : '0'}}>
 
-        <LeftArrow></LeftArrow>
-        <Title>{Moment().format('MMMM YYYY')}</Title>
+        <ContainerLeftArrow onClick={this.prevMonth}>
+          <SVG_Arrows version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+            <title>left-open</title>
+            <path d="M20.928 5.376l-9.504 9.472 9.504 9.504q0.32 0.32 0.32 0.8t-0.32 0.8l-2.976 2.976q-0.352 0.32-0.8 0.32t-0.8-0.32l-13.248-13.28q-0.352-0.32-0.352-0.8t0.352-0.8l13.248-13.248q0.32-0.352 0.8-0.352t0.8 0.352l2.976 2.976q0.32 0.32 0.32 0.8t-0.32 0.8z"></path>
+          </SVG_Arrows>
+        </ContainerLeftArrow>
+        <Title>{moment(this.state.month).format('MMMM YYYY')}</Title>
         <WeekDayContainer>
           {UserSchedule.days.map(weekday => {
             return <div>{weekday}</div>
           })}
         </WeekDayContainer>
-        <CalendarContainer days = {this.state.days} />
-        <RightArrow></RightArrow>
+        <CalendarContainer date = {moment(this.state.month)} />
+        <ContainerRightArrow onClick={this.nextMonth}>
+          <SVG_Arrows version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+            <title>right-open</title>
+            <path d="M19.776 15.648l-13.248 13.28q-0.352 0.32-0.8 0.32t-0.8-0.32l-2.976-2.976q-0.352-0.352-0.352-0.8t0.352-0.8l9.472-9.504-9.472-9.472q-0.352-0.352-0.352-0.8t0.352-0.8l2.976-2.976q0.32-0.352 0.8-0.352t0.8 0.352l13.248 13.248q0.32 0.352 0.32 0.8t-0.32 0.8z"></path>
+          </SVG_Arrows>
+        </ContainerRightArrow>
         <ImageContainer onClick={this.closeWindow}>
           <SVG version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
             <title>Close</title>

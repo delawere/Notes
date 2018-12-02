@@ -18,10 +18,6 @@ const Cell = styled.div `
   color: #f0f0f0;
 `
 
-const ScheduleCell = ({ day }) => {
-  return (
-    <Cell>{day}</Cell>
-  )
-}
+const ScheduleCell = ({ value, className }) => <Cell className = {`${className} cell`}>{value}</Cell>
 
 export default ScheduleCell;
