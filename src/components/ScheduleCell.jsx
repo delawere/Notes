@@ -22,11 +22,12 @@ const otherDayStyle = {
   'color': '#9e9e9e'
 };
 
-const ScheduleCell = ({ value, className }) => {
+const ScheduleCell = ({ value, className, fullDate, eventClickDay }) => {
   const { next, prev } = className;
   return (
-    <Cell style = {next || prev ? otherDayStyle  : {}}>{value}</Cell>
+    <Cell style = {next || prev ? otherDayStyle  : {}} onClick = {() => eventClickDay(fullDate)} >{value}</Cell>
   )
 };
+
 
 export default ScheduleCell;

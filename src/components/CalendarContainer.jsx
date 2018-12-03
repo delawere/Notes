@@ -17,12 +17,12 @@ class CalendarContainer extends PureComponent {
     super(props);
 
     this.state = {
-      days: []
+      days: this.getDays()
     }
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.date === prevProps.date) {
+    if (prevProps.date === this.props.date) {
       return;
     };
     this.setState({
@@ -32,7 +32,6 @@ class CalendarContainer extends PureComponent {
 
   getDays() {
     const { date } = this.props;
-    
     const now = date ? date : moment();
     var start = now
       .clone()
@@ -43,13 +42,13 @@ class CalendarContainer extends PureComponent {
       .endOf('month')
       .weekday(7);
     const month = now.month();
-    const today = moment();
     const currDay = now.date();
     const year = now.year();
     let days = [];
 
     for (; start < end; start.add('day', 1).clone()) {
       days.push({
+        fullDate: start.format('MM.DD.YYYY'),
         label: start.format('D'),
         prev: (start.month() < month && !(start.year() > year)) || start.year() < year,
         next: start.month() > month || start.year() > year,
@@ -64,12 +63,7 @@ class CalendarContainer extends PureComponent {
     return days 
   }
 
-  shouldComponentUpdate() {
-    return true;
-  }
-
   render() {
-    console.log(this.state.days)
     return (
       <Container>
        {this.state.days.map(day => {
@@ -80,6 +74,8 @@ class CalendarContainer extends PureComponent {
                                  'curr': day.curr,
                                  'today': day.today
                                }}
+                               fullDate = {day.fullDate}
+                               eventClickDay = {this.props.eventClickDay}
                 
                 />
         })}

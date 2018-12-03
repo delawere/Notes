@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fire from '../config/Fire';
-import InputGroup from './InputGroup';
+import UserSchedule from './UserSchedule';
+import AsideMenu from './AsideMenu';
 
 class Home extends Component {
   constructor(props) {
@@ -12,15 +13,11 @@ class Home extends Component {
     }
   }
 
-  logout = () => {
-    fire.auth().signOut(); 
-  }
-
   render() {
     return (
       <div className="container">
-        <button onClick={this.logout} className="btn btn-secondary">Выйти</button>
-        <InputGroup updateData = {this.updateData} />
+        <UserSchedule />
+        <AsideMenu />
       </div> 
     );
   }

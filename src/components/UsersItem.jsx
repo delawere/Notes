@@ -49,8 +49,7 @@ class UsersItem extends PureComponent {
   };
 
   componentDidMount() {
-    debugger;
-    const { id, name, time } = this.props;
+    const { id, name } = this.props;
     this.setState({
       name: name,
       id: id,

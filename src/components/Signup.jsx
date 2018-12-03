@@ -9,12 +9,6 @@ const containerStyle = {
   'padding': '30px'
 }
 
-const regexp = {
-  email:    /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/,
-  name:     /^[a-z0-9_-]{3,16}$/,
-  password: /^[a-z0-9_-]{6,18}$/
-};
-
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -53,7 +47,6 @@ class Signup extends Component {
     if(name === 'password') {
       this.setState({
         passwordValid: {
-          safetyCheck: regexp.password.test(value),
           lengthCheck: value.length >= 8
         }
       });
