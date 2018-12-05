@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'moment-range';
 
 import ScheduleCell from './ScheduleCell';
+import fire from '../config/Fire';
 
 const Container = styled.div `
   width: 600px;
@@ -12,12 +13,17 @@ const Container = styled.div `
   flex-wrap: wrap;
 `
 
+const database = fire.database();
+
+const userId = localStorage.getItem('user');
+
 class CalendarContainer extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      days: this.getDays()
+      days: [],
+      tasks: []
     }
   }
 
@@ -29,6 +35,36 @@ class CalendarContainer extends PureComponent {
       days: this.getDays()
     })
   }
+
+  async componentDidMount () {
+    const tasks = await this.getTasks();
+    const days = this.getDays();
+    const data = [];
+
+    for (let key in tasks) {
+      data.push({
+        date: moment(key).format('MM.DD.YYYY'),
+        task: tasks[key]
+      });
+    };
+
+    this.setState({
+      days: days,
+      tasks: data
+    });
+
+  }
+
+  async getTasks() {
+    let result = {};
+    const tasks = database.ref(`users/${userId}/tasks`).once('value', snap => {
+      result = snap.val() || {};
+    });
+    await tasks;
+
+    return result
+  }
+
 
   getDays() {
     const { date } = this.props;
