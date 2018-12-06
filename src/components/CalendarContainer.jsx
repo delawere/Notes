@@ -22,37 +22,28 @@ class CalendarContainer extends PureComponent {
     super(props);
 
     this.state = {
-      days: [],
-      tasks: []
+      days: []
     }
   }
 
-  componentDidUpdate (prevProps) {
+  async componentDidUpdate (prevProps) {
     if (prevProps.date === this.props.date) {
       return;
     };
+
+    const days = await this.getDays();
+
     this.setState({
-      days: this.getDays()
+      days: days
     })
   }
 
   async componentDidMount () {
-    const tasks = await this.getTasks();
-    const days = this.getDays();
-    const data = [];
-
-    for (let key in tasks) {
-      data.push({
-        date: moment(key).format('MM.DD.YYYY'),
-        task: tasks[key]
-      });
-    };
+    const days = await this.getDays();
 
     this.setState({
-      days: days,
-      tasks: data
+      days: days
     });
-
   }
 
   async getTasks() {
@@ -66,7 +57,7 @@ class CalendarContainer extends PureComponent {
   }
 
 
-  getDays() {
+  async getDays() {
     const { date } = this.props;
     const now = date ? date : moment();
     var start = now
@@ -82,20 +73,38 @@ class CalendarContainer extends PureComponent {
     const year = now.year();
     let days = [];
 
-    for (; start < end; start.add('day', 1).clone()) {
-      days.push({
-        fullDate: start.format('MM.DD.YYYY'),
-        label: start.format('D'),
-        prev: (start.month() < month && !(start.year() > year)) || start.year() < year,
-        next: start.month() > month || start.year() > year,
-        curr: start.date() === currDay && start.month() === month,
-        today:
-        start.date() === start.date() &&
-        start.month() === start.month() &&
-        start.year() === start.year()
-      });
-    }
+    let data = [];
 
+    const tasks = await this.getTasks();
+    for (let key in tasks) {
+      data.push({
+        date: moment(key).format('MM.DD.YYYY'),
+        desc: tasks[key]
+      });
+    };
+
+    for (; start < end; start.add('day', 1).clone()) {
+      const currentDay = {};
+
+      data.forEach(task => {
+        if (start.format('MM.DD.YYYY') === task.date) {
+          currentDay.task = task.desc;
+        } 
+      }); 
+
+      currentDay.fullDate = start.format('MM.DD.YYYY'),
+      currentDay.label = start.format('D'),
+      currentDay.prev = (start.month() < month && !(start.year() > year)) || start.year() < year,
+      currentDay.next = start.month() > month || start.year() > year,
+      currentDay.curr = start.date() === currDay && start.month() === month,
+      currentDay.today = 
+            start.date() === start.date() &&
+            start.month() === start.month() &&
+            start.year() === start.year()
+
+      days.push(currentDay);
+    };
+    console.log(days);
     return days 
   }
 
