@@ -104,7 +104,6 @@ class CalendarContainer extends PureComponent {
 
       days.push(currentDay);
     };
-    console.log(days);
     return days 
   }
 
@@ -121,6 +120,7 @@ class CalendarContainer extends PureComponent {
                                }}
                                fullDate = {day.fullDate}
                                eventClickDay = {this.props.eventClickDay}
+                               task = {day.task}
                 
                 />
         })}

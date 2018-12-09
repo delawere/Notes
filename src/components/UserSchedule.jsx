@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import * as moment from 'moment';
 
 import CalendarContainer from './CalendarContainer';
+import Popup from './Popup';
 
 const Wrapper = styled.div `
   z-index: 200;
@@ -150,7 +151,7 @@ class UserSchedule extends PureComponent {
   render() {
     return(
       <Wrapper>
-
+        
         <ContainerLeftArrow onClick={this.prevMonth}>
           <SvgArrows version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
             <title>left-open</title>
