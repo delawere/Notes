@@ -118,6 +118,7 @@ class UserSchedule extends PureComponent {
   }
 
   componentDidUpdate (prevProps) {
+    console.log(this.props);
     this.setState({
       visible: true
     });
@@ -143,10 +144,9 @@ class UserSchedule extends PureComponent {
     }); 
   }
 
-  clickDay = (text) => {
-    console.log(text);
+  componentDidMount () {
+    console.log(this.props);
   }
-
 
   render() {
     return(
@@ -164,7 +164,7 @@ class UserSchedule extends PureComponent {
             return <div>{weekday}</div>
           })}
         </WeekDayContainer>
-        <CalendarContainer date = {moment(this.state.month)}  eventClickDay = {this.clickDay}/>
+        <CalendarContainer date = {moment(this.state.month)}  onClickDay = {this.props.onClickDay}/>
         <ContainerRightArrow onClick={this.nextMonth}>
           <SvgArrows version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
             <title>right-open</title>

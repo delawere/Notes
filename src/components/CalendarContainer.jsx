@@ -119,7 +119,7 @@ class CalendarContainer extends PureComponent {
                                  'today': day.today
                                }}
                                fullDate = {day.fullDate}
-                               eventClickDay = {this.props.eventClickDay}
+                               onClickDay = {this.props.onClickDay}
                                task = {day.task}
                 
                 />

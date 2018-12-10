@@ -30,11 +30,11 @@ const otherDayStyle = {
   'color': '#9e9e9e'
 };
 
-const ScheduleCell = ({ value, className, fullDate, eventClickDay, task }) => {
+const ScheduleCell = ({ value, className, fullDate, onClickDay, task }) => {
   const { next, prev } = className;
   return (
     <Cell style = { next || prev ? otherDayStyle  : {} } 
-          onClick = {() => eventClickDay({ fullData: task })}>
+          onClick = {() => onClickDay({ date: fullDate, task: task ? task : '' })}>
       <Flag style = { task ? {} : {'visibility':'hidden'}}></Flag>
       {value}
     </Cell>
