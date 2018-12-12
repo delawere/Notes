@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as moment from 'moment';
 
 import PopupListItem from './PopupListItem';
-import AddButton from './AddButton';
+import AddForm from './AddForm';
 
 const Wrapper = styled.div `
   position: fixed;
@@ -53,7 +53,7 @@ class Popup extends Component {
             {moment(this.props.tasks.date).format('D MMMM')}
           </PopupHeader>
           <PopupListItem text = {this.props.tasks.task} />
-          <AddButton />
+          <AddForm />
         </PopupContainer>
       </Wrapper>
     )

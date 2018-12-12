@@ -12,20 +12,23 @@ const Button = styled.button `
   font-size: 12px;
   text-transform: uppercase;
   -webkit-text-decoration: none;
+  -webkit-text-decoration: none;
   text-decoration: none;
-  padding: 15px 40px;
-  border-radius: 20px;
+  margin-bottom: 15px;
+  margin-right: 15px;
+  margin-left: 15px;
+  padding: 10px 40px;
+  border-radius: 5px;
   outline: 0!important;
   border: 0;
-  -webkit-transition: all 1.5s ease-in-out;
-  transition: all 2s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
 
+  &:focus,
   &:hover {
-    margin-left: 80%;
-    border-radius: 50%;
-    padding: 15px;
-  }
+    background-color: #18ad90;
 `
 
 function AddButton() {
