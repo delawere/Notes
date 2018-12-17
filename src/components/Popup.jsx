@@ -45,6 +45,19 @@ class Popup extends Component {
     }
   }
 
+  componentDidMount() {
+    let taskArray = [];
+    if (typeof this.props.tasks.task === 'object') {
+      taskArray = Object.values(this.props.tasks.task);
+    } else {
+      taskArray.push(this.props.tasks.task);
+    };
+    this.setState({
+      date: moment(this.props.tasks.date).format('D MMMM'),
+      tasks: taskArray
+    });
+  }
+
   render() {
     return (
       <Wrapper>
@@ -52,8 +65,10 @@ class Popup extends Component {
           <PopupHeader>
             {moment(this.props.tasks.date).format('D MMMM')}
           </PopupHeader>
-          <PopupListItem text = {this.props.tasks.task} />
-          <AddForm />
+          {this.state.tasks.map(task => (
+            <PopupListItem text = {task} />
+          ))}
+          <AddForm date = {moment(this.props.tasks.date).format('MM-DD-YYYY')} />
         </PopupContainer>
       </Wrapper>
     )

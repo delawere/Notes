@@ -11,7 +11,9 @@ class Home extends Component {
 
     this.state = {
       popupVisible: false,
-      popupTasks: {}
+      popupTasks: {},
+      //переписать
+      testTask: {}
     }
   }
 
@@ -20,12 +22,26 @@ class Home extends Component {
       popupVisible: true,
       popupTasks: text
     });
+  };
+
+  componentDidMount () {
+    this.getUsersData();
   }
+
+  getUsersData = async () => {
+    const usersData = await FirebaseRequest.getData();
+    //переписать
+    this.setState({
+      testTask: usersData
+    }, () => console.log(this.state))
+  };
 
   render() {
     return (
       <div className="container">
-        <UserSchedule onClickDay = {this.onClickDay}/>
+        <UserSchedule onClickDay = {this.onClickDay} 
+                      //переписать
+                      usersData = {this.state.testTask}/>
         <AsideMenu />
         { this.state.popupVisible 
           ? <Popup tasks = { this.state.popupTasks }/> 

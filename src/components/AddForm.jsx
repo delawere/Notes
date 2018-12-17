@@ -3,6 +3,13 @@ import styled from 'styled-components';
 
 import PopupListItem from './PopupListItem';
 import AddButton from './AddButton';
+import fire from '../config/Fire'
+import FirebaseRequest from './FirebaseRequest';
+
+const database = fire.database();
+
+const db = fire.database();
+const userId = localStorage.getItem('user');
 
 const AddFormContainer = styled.div `
   width: 60%;
@@ -11,17 +18,18 @@ const AddFormContainer = styled.div `
 `
 
 const Input = styled.input `
+    -webkit-flex: 1;
+    -ms-flex: 1;
     flex: 1;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 24px;
     margin-bottom: 15px;
-    margin-right: 20px;
     color: #898989;
     border-radius: 5px;
     border: 1px solid #ccc;
     cursor: text;
-    font-family: 'pt_sansregular', sans-serif;
+    font-family: 'pt_sansregular',sans-serif;
     font-size: 18px;
 
     &:focus,
@@ -36,16 +44,32 @@ class AddForm extends Component {
     super(props);
 
     this.state = {
-      date: '',
-      tasks: []
+      task: ''
     }
   }
 
+  onChangeInput = (e) => {
+    this.setState({ [e.target.name]: e.target.value  });
+  };
+
+  
+
+  onFetchData = () => {
+    const dayRef = db.ref(`users/${userId}/tasks/`).child(this.props.date);
+    var newPostKey = dayRef.push().key;
+    var update = {};
+    update[newPostKey] = this.state.task;
+    dayRef.update(update);
+    this.props.refreshData();
+  };
+  
   render() {
     return (
      <AddFormContainer>
-       <Input></Input>
-       <AddButton></AddButton>
+       <Input name = "task" 
+              onChange = {this.onChangeInput} >
+       </Input>
+       <AddButton onFetchData = {this.onFetchData}  />
      </AddFormContainer>
     )
   }

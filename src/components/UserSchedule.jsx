@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as moment from 'moment';
 
 import CalendarContainer from './CalendarContainer';
-import Popup from './Popup';
+
 
 const Wrapper = styled.div `
   z-index: 200;
@@ -118,7 +118,6 @@ class UserSchedule extends PureComponent {
   }
 
   componentDidUpdate (prevProps) {
-    console.log(this.props);
     this.setState({
       visible: true
     });
@@ -144,16 +143,16 @@ class UserSchedule extends PureComponent {
     }); 
   }
 
-  componentDidMount () {
-    console.log(this.props);
-  }
-
   render() {
     return(
       <Wrapper>
         
         <ContainerLeftArrow onClick={this.prevMonth}>
-          <SvgArrows version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+          <SvgArrows version="1.1" 
+                     xmlns="http://www.w3.org/2000/svg"   
+                     width="32" 
+                     height="32" 
+                     viewBox="0 0 32 32">
             <title>left-open</title>
             <path d="M20.928 5.376l-9.504 9.472 9.504 9.504q0.32 0.32 0.32 0.8t-0.32 0.8l-2.976 2.976q-0.352 0.32-0.8 0.32t-0.8-0.32l-13.248-13.28q-0.352-0.32-0.352-0.8t0.352-0.8l13.248-13.248q0.32-0.352 0.8-0.352t0.8 0.352l2.976 2.976q0.32 0.32 0.32 0.8t-0.32 0.8z"></path>
           </SvgArrows>
@@ -164,9 +163,15 @@ class UserSchedule extends PureComponent {
             return <div>{weekday}</div>
           })}
         </WeekDayContainer>
-        <CalendarContainer date = {moment(this.state.month)}  onClickDay = {this.props.onClickDay}/>
+        <CalendarContainer date = {moment(this.state.month)}  
+                           onClickDay = {this.props.onClickDay} 
+                           usersData = {this.props.usersData} />
         <ContainerRightArrow onClick={this.nextMonth}>
-          <SvgArrows version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+          <SvgArrows version="1.1" 
+                     xmlns="http://www.w3.org/2000/svg" 
+                     width="32" 
+                     height="32" 
+                     viewBox="0 0 32 32">
             <title>right-open</title>
             <path d="M19.776 15.648l-13.248 13.28q-0.352 0.32-0.8 0.32t-0.8-0.32l-2.976-2.976q-0.352-0.352-0.352-0.8t0.352-0.8l9.472-9.504-9.472-9.472q-0.352-0.352-0.352-0.8t0.352-0.8l2.976-2.976q0.32-0.352 0.8-0.352t0.8 0.352l13.248 13.248q0.32 0.352 0.32 0.8t-0.32 0.8z"></path>
           </SvgArrows>

@@ -10,7 +10,7 @@ const FirebaseRequest = {
   fetchData: ''
 }
 
-FirebaseRequest.getTasks = async () => {
+/* FirebaseRequest.getTasks = async () => {
   const data = {};
 
   const taskRef = `users/${userId}/tasks`;
@@ -21,10 +21,10 @@ FirebaseRequest.getTasks = async () => {
   const res = await Promise.all(tasks);
 
   console.log(res);
-};
+}; */
 
 
-FirebaseRequest.fetchData = async (days, userId) => {
+/* FirebaseRequest.fetchData = async (days, userId) => {
   try {
     const data = {};
     days.forEach(async (day) => {
@@ -37,15 +37,26 @@ FirebaseRequest.fetchData = async (days, userId) => {
     return data;
   } catch(error) {
   } 
-};
+}; */
 
-FirebaseRequest.updateData = async (day, data, userId) => {
+/* FirebaseRequest.updateData = async (day, data, userId) => {
   try {
     const dayRef = `users/${userId}/time/${day}`;
     db.ref(dayRef).update(data);
   } catch(error) {
   }
   
+}; */
+
+FirebaseRequest.getData = async () => {
+  let result = {};
+  const tasks = database.ref(`users/${userId}/tasks`).once('value', snap => {
+    result = snap.val() || {};
+  });
+  await tasks;
+
+  return result
 };
+
 
 export default FirebaseRequest;

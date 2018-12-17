@@ -75,14 +75,17 @@ class CalendarContainer extends PureComponent {
 
     let data = [];
 
-    const tasks = await this.getTasks();
-    for (let key in tasks) {
-      data.push({
-        date: moment(key).format('MM.DD.YYYY'),
-        desc: tasks[key]
-      });
-    };
+    let tasks = this.props.usersData;
 
+    if (tasks) {
+      for (let key in tasks) {
+        data.push({
+          date: moment(key).format('MM.DD.YYYY'),
+          desc: tasks[key]
+        });
+      };
+    };
+    
     for (; start < end; start.add('day', 1).clone()) {
       const currentDay = {};
 
