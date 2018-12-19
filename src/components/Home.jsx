@@ -5,6 +5,10 @@ import AsideMenu from './AsideMenu';
 import FirebaseRequest from './FirebaseRequest';
 import Popup from './Popup';
 
+
+const database = fire.database();
+const userId = localStorage.getItem('user');
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -12,20 +16,29 @@ class Home extends Component {
     this.state = {
       popupVisible: false,
       popupTasks: {},
+      date: '',
       //переписать
       testTask: {}
     }
   }
 
-  onClickDay = (text) => {
+  onClickDay = (data) => {
+    const {date, task} = data;
     this.setState({
       popupVisible: true,
-      popupTasks: text
+      popupTasks: data,
+      date: date
     });
   };
 
   componentDidMount () {
     this.getUsersData();
+    database.ref(`users/${userId}/tasks/${this.state.date}`).on('child_added', snap => {
+      const { key } = snap;
+      this.setState({
+        popupTasks: snap.val()
+      })
+    });
   }
 
   getUsersData = async () => {
@@ -33,7 +46,7 @@ class Home extends Component {
     //переписать
     this.setState({
       testTask: usersData
-    }, () => console.log(this.state))
+    });
   };
 
   render() {

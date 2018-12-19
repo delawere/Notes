@@ -58,9 +58,20 @@ class Popup extends Component {
     });
   }
 
+  testFunction = () => {
+    const newArr = this.state.tasks;
+    // тут захардкожен текст таска, заменить его на данные с инпута
+    newArr.push('dddd');
+    debugger;
+    this.setState({
+      tasks: newArr
+    })
+  };
+
   render() {
     return (
       <Wrapper>
+        <span>{typeof this.props.tasks === 'String' ? this.props.tasks : null}</span>
         <PopupContainer>
           <PopupHeader>
             {moment(this.props.tasks.date).format('D MMMM')}
@@ -68,7 +79,7 @@ class Popup extends Component {
           {this.state.tasks.map(task => (
             <PopupListItem text = {task} />
           ))}
-          <AddForm date = {moment(this.props.tasks.date).format('MM-DD-YYYY')} />
+          <AddForm date = {moment(this.props.tasks.date).format('MM-DD-YYYY')} testFunction = {this.testFunction} />
         </PopupContainer>
       </Wrapper>
     )

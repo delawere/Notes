@@ -55,12 +55,16 @@ class AddForm extends Component {
   
 
   onFetchData = () => {
+    //захардкодил кучу говна для удаления, нужно все это переписать
     const dayRef = db.ref(`users/${userId}/tasks/`).child(this.props.date);
+    const dayRefDel = db.ref(`users/${userId}/tasks/`).child(this.props.date).child('LU71YZbwMHwkvC4KmQm');
+    db.ref(`users/${userId}/tasks/01-01-2019/-LU75Eva5ThzRyO2Mdga`).remove();
     var newPostKey = dayRef.push().key;
+    console.log(newPostKey);
     var update = {};
     update[newPostKey] = this.state.task;
     dayRef.update(update);
-    this.props.refreshData();
+    this.props.testFunction();
   };
   
   render() {
