@@ -36,10 +36,7 @@ const AddButton = styled.button `
 
 
 class AsideMenu extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+  
   logout = () => {
     fire.auth().signOut(); 
   }

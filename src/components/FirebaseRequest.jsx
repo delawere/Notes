@@ -20,7 +20,6 @@ const FirebaseRequest = {
 
   const res = await Promise.all(tasks);
 
-  console.log(res);
 }; */
 
 
@@ -58,5 +57,15 @@ FirebaseRequest.getData = async () => {
   return result
 };
 
+FirebaseRequest.addNewTask = async (date, task) => {
+  const dayRef = db.ref(`users/${userId}/tasks/`).child(date);
+  const newTaskKey = dayRef.push().key;
+  const update = {};
+  update[newTaskKey] = task;
+  await dayRef.update(update);
+  this.setState({
+    key: newTaskKey
+  });
+};
 
 export default FirebaseRequest;

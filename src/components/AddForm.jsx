@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import PopupListItem from './PopupListItem';
 import AddButton from './AddButton';
 import fire from '../config/Fire'
-import FirebaseRequest from './FirebaseRequest';
-
-const database = fire.database();
 
 const db = fire.database();
 const userId = localStorage.getItem('user');
@@ -44,7 +40,8 @@ class AddForm extends Component {
     super(props);
 
     this.state = {
-      task: ''
+      task: '',
+      key: ''
     }
   }
 
@@ -52,28 +49,30 @@ class AddForm extends Component {
     this.setState({ [e.target.name]: e.target.value  });
   };
 
-  
-
-  onFetchData = () => {
-    //захардкодил кучу говна для удаления, нужно все это переписать
-    const dayRef = db.ref(`users/${userId}/tasks/`).child(this.props.date);
-    const dayRefDel = db.ref(`users/${userId}/tasks/`).child(this.props.date).child('LU71YZbwMHwkvC4KmQm');
-    db.ref(`users/${userId}/tasks/01-01-2019/-LU75Eva5ThzRyO2Mdga`).remove();
-    var newPostKey = dayRef.push().key;
-    console.log(newPostKey);
-    var update = {};
-    update[newPostKey] = this.state.task;
-    dayRef.update(update);
-    this.props.testFunction();
+  addNewTask = async () => {
+    try {
+      const dayRef = db.ref(`users/${userId}/tasks/`).child(this.props.date);
+      const newTaskKey = dayRef.push().key;
+      const update = {};
+      update[newTaskKey] = this.state.task;
+      await dayRef.update(update);
+      this.setState({
+        key: newTaskKey
+      }, () => {
+        this.props.refreshDataSet(this.state);
+      });
+    } catch(error) {
+      console.error(`Add failed. Error: ${error}`)
+    };
   };
-  
+
   render() {
     return (
      <AddFormContainer>
        <Input name = "task" 
               onChange = {this.onChangeInput} >
        </Input>
-       <AddButton onFetchData = {this.onFetchData}  />
+       <AddButton addNewTask = {this.addNewTask} />
      </AddFormContainer>
     )
   }

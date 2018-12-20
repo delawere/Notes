@@ -26,29 +26,6 @@ const Wrapper = styled.div `
   background: #4A4A4A;
 `
 
-const ImageContainer = styled.div `
-  display: inline-block;
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  cursor: pointer;
-`
-
-const SVG = styled.svg `
-  width: 20px;
-  heigth: 20px;
-  border-radius: 3px; 
-  background-color: inherit;
-  transition-property: fill;
-  transition-duration: 0.15s;
-  transition-timing-function: ease-out;
-  fill: #dbdbdb;
-
-  &:hover {
-    fill: #d91c1c;
-  }
-`
-
 const ContainerLeftArrow = styled.div `
   display: inline-block;
   position: absolute;

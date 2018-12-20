@@ -4,6 +4,7 @@ import * as moment from 'moment';
 
 import PopupListItem from './PopupListItem';
 import AddForm from './AddForm';
+import ClosePopupButton from './ClosePopupButton';
 
 const Wrapper = styled.div `
   position: fixed;
@@ -58,20 +59,20 @@ class Popup extends Component {
     });
   }
 
-  testFunction = () => {
-    const newArr = this.state.tasks;
-    // тут захардкожен текст таска, заменить его на данные с инпута
-    newArr.push('dddd');
-    debugger;
+  refreshDataSet = (newTask) => {
+    const { key, task } = newTask;
+    const currentTasks = this.state.tasks;
+    currentTasks.push(task);
     this.setState({
-      tasks: newArr
-    })
+      tasks: currentTasks
+    });
   };
 
   render() {
     return (
-      <Wrapper>
-        <span>{typeof this.props.tasks === 'String' ? this.props.tasks : null}</span>
+      <Wrapper action = {this.props.closePopup}>
+        <ClosePopupButton action = {this.props.closePopup}/>
+        <span>{this.props.tasks === 'String' ? this.props.tasks : null}</span>
         <PopupContainer>
           <PopupHeader>
             {moment(this.props.tasks.date).format('D MMMM')}
@@ -79,7 +80,8 @@ class Popup extends Component {
           {this.state.tasks.map(task => (
             <PopupListItem text = {task} />
           ))}
-          <AddForm date = {moment(this.props.tasks.date).format('MM-DD-YYYY')} testFunction = {this.testFunction} />
+          <AddForm date = {moment(this.props.tasks.date).format('MM-DD-YYYY')} 
+                   refreshDataSet = {this.refreshDataSet} />
         </PopupContainer>
       </Wrapper>
     )

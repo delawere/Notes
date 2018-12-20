@@ -67,7 +67,8 @@ class UsersItem extends PureComponent {
       <div> 
         <Wrapper onClick={this.handleClick}>
           <ImageContainer>
-            <Image src={person} alt="" />
+            <Image src={person} 
+                   alt="" />
           </ImageContainer>
           <TitleContainer>
             <span>

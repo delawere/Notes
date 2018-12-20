@@ -15,37 +15,50 @@ class Home extends Component {
 
     this.state = {
       popupVisible: false,
-      popupTasks: {},
-      date: '',
-      //переписать
-      testTask: {}
+      currentDayTasks: {},
+      currentDayDate: '',
+      tasks: {}
     }
   }
 
   onClickDay = (data) => {
-    const {date, task} = data;
+    const { date } = data;
     this.setState({
       popupVisible: true,
-      popupTasks: data,
-      date: date
+      currentDayTasks: data,
+      currentDayDate: date
     });
   };
 
   componentDidMount () {
     this.getUsersData();
-    database.ref(`users/${userId}/tasks/${this.state.date}`).on('child_added', snap => {
-      const { key } = snap;
-      this.setState({
-        popupTasks: snap.val()
-      })
+
+    this.setState({
+      currentDayTasks: this.state.tasks[this.state.currentDayDate]
     });
+  }
+
+  async getTasks() {
+    let result = {};
+    const tasks = database.ref(`users/${userId}/tasks`).once('value', snap => {
+      result = snap.val() || {};
+    });
+    await tasks;
+
+    return result
   }
 
   getUsersData = async () => {
     const usersData = await FirebaseRequest.getData();
-    //переписать
     this.setState({
-      testTask: usersData
+      tasks: usersData
+    });
+  };
+
+  closePopup = async () => {
+    await this.getUsersData();
+    this.setState({
+      popupVisible: false
     });
   };
 
@@ -53,11 +66,11 @@ class Home extends Component {
     return (
       <div className="container">
         <UserSchedule onClickDay = {this.onClickDay} 
-                      //переписать
-                      usersData = {this.state.testTask}/>
+                      usersData = {this.state.tasks}/>
         <AsideMenu />
         { this.state.popupVisible 
-          ? <Popup tasks = { this.state.popupTasks }/> 
+          ? <Popup tasks = { this.state.currentDayTasks } 
+              closePopup = {this.closePopup} /> 
           : null }
       </div> 
     );

@@ -31,9 +31,9 @@ const Button = styled.button `
     background-color: #18ad90;
 `
 
-function AddButton({ onFetchData }) {
+function AddButton({ addNewTask }) {
   return (
-      <Button onClick = {onFetchData}>
+      <Button onClick = {addNewTask}>
         Add
       </Button>
   );

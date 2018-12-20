@@ -4,7 +4,6 @@ import moment from 'moment';
 import 'moment-range';
 
 import ScheduleCell from './ScheduleCell';
-import fire from '../config/Fire';
 
 const Container = styled.div `
   width: 600px;
@@ -12,10 +11,6 @@ const Container = styled.div `
   justify-content: space-around;
   flex-wrap: wrap;
 `
-
-const database = fire.database();
-
-const userId = localStorage.getItem('user');
 
 class CalendarContainer extends PureComponent {
   constructor(props) {
@@ -45,17 +40,6 @@ class CalendarContainer extends PureComponent {
       days: days
     });
   }
-
-  async getTasks() {
-    let result = {};
-    const tasks = database.ref(`users/${userId}/tasks`).once('value', snap => {
-      result = snap.val() || {};
-    });
-    await tasks;
-
-    return result
-  }
-
 
   async getDays() {
     const { date } = this.props;
@@ -99,11 +83,10 @@ class CalendarContainer extends PureComponent {
       currentDay.label = start.format('D'),
       currentDay.prev = (start.month() < month && !(start.year() > year)) || start.year() < year,
       currentDay.next = start.month() > month || start.year() > year,
-      currentDay.curr = start.date() === currDay && start.month() === month,
-      currentDay.today = 
-            start.date() === start.date() &&
-            start.month() === start.month() &&
-            start.year() === start.year()
+      currentDay.curr = (start.date() === currDay && start.month() === month),
+      currentDay.today = !isNaN(start.date()) &&
+                         !isNaN(start.month())  &&
+                         !isNaN(start.year()) 
 
       days.push(currentDay);
     };
@@ -115,6 +98,7 @@ class CalendarContainer extends PureComponent {
       <Container>
        {this.state.days.map(day => {
           return <ScheduleCell value = {day.label}
+                               key = {day.fullDate}
                                className = {{
                                  'prev': day.prev,
                                  'next': day.next,
