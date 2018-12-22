@@ -3,16 +3,16 @@ import styled from 'styled-components';
 
 const Cell = styled.div `
   display: inline-block;
-  width: 60px;
-  height: 60px;
-  padding: 35px;
-  margin: 5px;
+  width: 8px;
+  height: 8px;
+  padding: 13px;
+  margin: 0px;
   text-align: center;
   vertical-align: top;
   cursor: pointer;
   background: #4A4A4A;
   position: relative;
-  font-size: 26px;
+  font-size: 10px;
   font-weigth: 400;
   color: #f0f0f0;
 `

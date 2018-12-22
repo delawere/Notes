@@ -26,7 +26,7 @@ const SvgDeleteCircle = styled.svg `
 
 
 
-function PopupListItem({ text }) {
+function PopupListItem({ text, key }) {
   return (
       <Container>
         <span>{text}</span>

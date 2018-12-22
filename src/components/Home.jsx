@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import fire from '../config/Fire';
-import UserSchedule from './UserSchedule';
 import AsideMenu from './AsideMenu';
 import FirebaseRequest from './FirebaseRequest';
 import Popup from './Popup';
@@ -65,12 +64,12 @@ class Home extends Component {
   render() {
     return (
       <div className="container">
-        <UserSchedule onClickDay = {this.onClickDay} 
-                      usersData = {this.state.tasks}/>
-        <AsideMenu />
+      { }
+        <AsideMenu onClickDay = {this.onClickDay} 
+                   usersData = {this.state.tasks}/> 
         { this.state.popupVisible 
           ? <Popup tasks = { this.state.currentDayTasks } 
-              closePopup = {this.closePopup} /> 
+                   closePopup = {this.closePopup} /> 
           : null }
       </div> 
     );

@@ -7,16 +7,12 @@ import CalendarContainer from './CalendarContainer';
 
 const Wrapper = styled.div `
   z-index: 200;
-  position: fixed;
   margin: auto;
-  width: 35vw;
-  height: 650px;
+  position: relative;
+  width: 80%;
+  height: 250px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
   border-radius: 3px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   justify-content: space-around;
   padding: 20px;
   padding-top: 75px;
@@ -30,13 +26,13 @@ const ContainerLeftArrow = styled.div `
   display: inline-block;
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: 5px;
   cursor: pointer;
 `
 
 const SvgArrows = styled.svg `
-  width: 20px;
-  heigth: 20px;
+  width: 10px;
+  heigth: 10px;
   border-radius: 3px; 
   background-color: inherit;
   transition-property: fill;
@@ -53,7 +49,7 @@ const ContainerRightArrow = styled.div `
   display: inline-block;
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: 5px;
   cursor: pointer;
 `
 
@@ -61,14 +57,16 @@ const Title = styled.h2 `
   position: absolute;
   top: 15px;
   color: #f0f0f0;
+  font-size: 15px;
 `
 
 const WeekDayContainer = styled.div `
-  width: 600px;
+  width: 200px;
   display: flex;
   justify-content: space-around;
   flex-wrap: nowrap;
   color: #f0f0f0;
+  font-size: 12px;
   font-weight: 400;
 `
 
@@ -76,7 +74,7 @@ class UserSchedule extends PureComponent {
 
   static days = [
     'Monday',
-    'Tuesday',
+    'Thuesday',
     'Wednesday',
     'Thursday',
     'Friday',
@@ -137,7 +135,7 @@ class UserSchedule extends PureComponent {
         <Title>{moment(this.state.month).format('MMMM YYYY')}</Title>
         <WeekDayContainer>
           {UserSchedule.days.map(weekday => {
-            return <div>{weekday}</div>
+            return <div key={weekday}>{weekday[0]}</div>
           })}
         </WeekDayContainer>
         <CalendarContainer date = {moment(this.state.month)}  

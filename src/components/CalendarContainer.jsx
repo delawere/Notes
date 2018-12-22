@@ -6,7 +6,7 @@ import 'moment-range';
 import ScheduleCell from './ScheduleCell';
 
 const Container = styled.div `
-  width: 600px;
+  width: 200px;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -70,7 +70,7 @@ class CalendarContainer extends PureComponent {
       };
     };
     
-    for (; start < end; start.add('day', 1).clone()) {
+    for (; start < end; start.add(1, 'day').clone()) {
       const currentDay = {};
 
       data.forEach(task => {
@@ -79,14 +79,14 @@ class CalendarContainer extends PureComponent {
         } 
       }); 
 
-      currentDay.fullDate = start.format('MM.DD.YYYY'),
-      currentDay.label = start.format('D'),
-      currentDay.prev = (start.month() < month && !(start.year() > year)) || start.year() < year,
-      currentDay.next = start.month() > month || start.year() > year,
-      currentDay.curr = (start.date() === currDay && start.month() === month),
+      currentDay.fullDate = start.format('MM.DD.YYYY');
+      currentDay.label = start.format('D');
+      currentDay.prev = (start.month() < month && !(start.year() > year)) || start.year() < year;
+      currentDay.next = start.month() > month || start.year() > year;
+      currentDay.curr = (start.date() === currDay && start.month() === month);
       currentDay.today = !isNaN(start.date()) &&
                          !isNaN(start.month())  &&
-                         !isNaN(start.year()) 
+                         !isNaN(start.year());
 
       days.push(currentDay);
     };

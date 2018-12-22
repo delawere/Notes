@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import fire from '../config/Fire';
 import styled from 'styled-components';
-
-import UsersItem from './UsersItem';
+import UserSchedule from './UserSchedule';
 
 const AsideContainer = styled.aside `
   height: 100%;
@@ -26,32 +25,35 @@ const SearchInput = styled.input `
   border-style: none;
 `
 
-const AsideList = styled.ul `
-
-`
-
-const AddButton = styled.button `
-
-`
-
-
 class AsideMenu extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tasks: {}
+    }
+  } 
   
   logout = () => {
     fire.auth().signOut(); 
   }
 
+  static getDerivedStateFromProps(props) {
+    return ({
+      tasks: props.usersData
+    })
+  };
+
   render() {
     return (
       <AsideContainer>
-        <UsersItem />
         <button onClick={this.logout} className="btn btn-secondary">Выйти</button>
         <SearchPanel>
           <span></span>
           <SearchInput type="text" placeholder = "Search"/>
         </SearchPanel>
-        <AsideList></AsideList>
-        <AddButton></AddButton>
+        <UserSchedule onClickDay = {this.props.onClickDay} 
+                      usersData = {this.state.tasks}/>
       </AsideContainer> 
     )
   }

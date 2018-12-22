@@ -49,7 +49,12 @@ class Popup extends Component {
   componentDidMount() {
     let taskArray = [];
     if (typeof this.props.tasks.task === 'object') {
-      taskArray = Object.values(this.props.tasks.task);
+      for (let key in this.props.tasks.task) {
+        taskArray.push({
+          key: key,
+          text: this.props.tasks.task[key]
+        });
+      };
     } else {
       taskArray.push(this.props.tasks.task);
     };
@@ -60,7 +65,7 @@ class Popup extends Component {
   }
 
   refreshDataSet = (newTask) => {
-    const { key, task } = newTask;
+    const { task } = newTask;
     const currentTasks = this.state.tasks;
     currentTasks.push(task);
     this.setState({
@@ -70,16 +75,20 @@ class Popup extends Component {
 
   render() {
     return (
-      <Wrapper action = {this.props.closePopup}>
-        <ClosePopupButton action = {this.props.closePopup}/>
+      <Wrapper>
+        <ClosePopupButton closePopup = {this.props.closePopup}/>
         <span>{this.props.tasks === 'String' ? this.props.tasks : null}</span>
         <PopupContainer>
           <PopupHeader>
             {moment(this.props.tasks.date).format('D MMMM')}
           </PopupHeader>
-          {this.state.tasks.map(task => (
-            <PopupListItem text = {task} />
-          ))}
+          <fieldset>
+            <legend>To-Do List</legend>
+            {this.state.tasks.map(task => (
+              <PopupListItem text = {task.text} 
+                             key = {task.key} />
+            ))}
+          </fieldset>
           <AddForm date = {moment(this.props.tasks.date).format('MM-DD-YYYY')} 
                    refreshDataSet = {this.refreshDataSet} />
         </PopupContainer>

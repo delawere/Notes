@@ -31,9 +31,9 @@ const Button = styled.button `
     background-color: #18ad90;
 `
 
-function ClosePopupButton({ action }) {
+function ClosePopupButton({ closePopup }) {
   return (
-      <Button onClick = {action}>
+      <Button onClick = {closePopup}>
         <svg version="1.1" 
              xmlns="http://www.w3.org/2000/svg" 
              width="32" 
