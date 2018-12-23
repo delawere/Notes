@@ -31,7 +31,6 @@ class Home extends Component {
 
   componentDidMount () {
     this.getUsersData();
-
     this.setState({
       currentDayTasks: this.state.tasks[this.state.currentDayDate]
     });

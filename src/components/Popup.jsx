@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fire from '../config/Fire';
 import styled from 'styled-components';
 import * as moment from 'moment';
 
@@ -36,6 +37,9 @@ const PopupHeader = styled.header `
   font-weight: 450;
 `
 
+const database = fire.database();
+const userId = localStorage.getItem('user');
+
 class Popup extends Component {
   constructor(props) {
     super(props);
@@ -65,13 +69,27 @@ class Popup extends Component {
   }
 
   refreshDataSet = (newTask) => {
-    const { task } = newTask;
+    const { key, task } = newTask;
     const currentTasks = this.state.tasks;
-    currentTasks.push(task);
+    currentTasks.push({
+      key,
+      text: task
+    });
     this.setState({
       tasks: currentTasks
     });
   };
+
+  removeTask = (key) => {
+    const currentDate = moment(this.props.tasks.date).format('MM-DD-YYYY');
+    database.ref(`users/${userId}/tasks/${currentDate}/${key}`).remove();
+    const removedElemIndex = this.state.tasks.findIndex((task) => task.key === key);
+    const currentTasks = this.state.tasks;
+    delete currentTasks[removedElemIndex];
+    this.setState({
+      tasks: currentTasks
+    });
+  }
 
   render() {
     return (
@@ -86,7 +104,9 @@ class Popup extends Component {
             <legend>To-Do List</legend>
             {this.state.tasks.map(task => (
               <PopupListItem text = {task.text} 
-                             key = {task.key} />
+                             key = {task.key} 
+                             taskKey = {task.key}
+                             onRemove = {this.removeTask} />
             ))}
           </fieldset>
           <AddForm date = {moment(this.props.tasks.date).format('MM-DD-YYYY')} 

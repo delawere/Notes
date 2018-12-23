@@ -65,6 +65,7 @@ class CalendarContainer extends PureComponent {
       for (let key in tasks) {
         data.push({
           date: moment(key).format('MM.DD.YYYY'),
+          taskKey: key,
           desc: tasks[key]
         });
       };
@@ -76,6 +77,7 @@ class CalendarContainer extends PureComponent {
       data.forEach(task => {
         if (start.format('MM.DD.YYYY') === task.date) {
           currentDay.task = task.desc;
+          currentDay.taskKey = task.taskKey;
         } 
       }); 
 
@@ -108,6 +110,7 @@ class CalendarContainer extends PureComponent {
                                fullDate = {day.fullDate}
                                onClickDay = {this.props.onClickDay}
                                task = {day.task}
+                               taskKey = {day.taskKey}
                 
                 />
         })}

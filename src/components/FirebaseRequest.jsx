@@ -53,7 +53,6 @@ FirebaseRequest.getData = async () => {
     result = snap.val() || {};
   });
   await tasks;
-
   return result
 };
 

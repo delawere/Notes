@@ -20,21 +20,21 @@ const Cell = styled.div `
 const Flag = styled.div `
   position: absolute;
   border-radius: 50%;
-  width: 7px;
-  height: 7px;
-  background-color: rgb(31, 161, 24);
-  top: 30px;
+  width: 4px; 
+  height: 4px;
+  background-color: rgb(31,161,24);
+  top: 8px;
 `
 
 const otherDayStyle = {
   'color': '#9e9e9e'
 };
 
-const ScheduleCell = ({ value, className, fullDate, onClickDay, task }) => {
+const ScheduleCell = ({ value, className, fullDate, onClickDay, task, taskKey }) => {
   const { next, prev } = className;
   return (
     <Cell style = { next || prev ? otherDayStyle  : {} } 
-          onClick = {() => onClickDay({ date: fullDate, task: task ? task : '' })}>
+          onClick = {() => onClickDay({ date: fullDate, task: task ? task : '', taskKey: taskKey })}>
       <Flag style = { task ? {} : {'visibility':'hidden'}}></Flag>
       {value}
     </Cell>

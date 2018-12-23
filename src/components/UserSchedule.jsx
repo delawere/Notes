@@ -92,7 +92,7 @@ class UserSchedule extends PureComponent {
     };
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate () {
     this.setState({
       visible: true
     });
