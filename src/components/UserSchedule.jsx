@@ -7,11 +7,9 @@ import CalendarContainer from './CalendarContainer';
 
 const Wrapper = styled.div `
   z-index: 200;
-  margin: auto;
   position: relative;
-  width: 80%;
+  width: 15%;
   height: 250px;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
   border-radius: 3px;
   justify-content: space-around;
   padding: 20px;
@@ -19,7 +17,9 @@ const Wrapper = styled.div `
   transition-property: opacity;
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
-  background: #4A4A4A;
+  background: inherit;
+  margin: 30px;
+  margin-top: 350px;
 `
 
 const ContainerLeftArrow = styled.div `
@@ -56,6 +56,7 @@ const ContainerRightArrow = styled.div `
 const Title = styled.h2 `
   position: absolute;
   top: 15px;
+  left: 30px;
   color: #f0f0f0;
   font-size: 15px;
 `

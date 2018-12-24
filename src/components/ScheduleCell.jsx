@@ -10,7 +10,7 @@ const Cell = styled.div `
   text-align: center;
   vertical-align: top;
   cursor: pointer;
-  background: #4A4A4A;
+  background: inherit;
   position: relative;
   font-size: 10px;
   font-weigth: 400;

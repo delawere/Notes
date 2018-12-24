@@ -5,24 +5,33 @@ import UserSchedule from './UserSchedule';
 
 const AsideContainer = styled.aside `
   height: 100%;
-  width: 15vw;
+  width: 100vw;
   position: fixed;
-  background: rgba(194, 194, 194);
+/*   background: #242425; */
+  background: #192231;
   top: 0;
   left: 0;
+  border-right: 1px solid #a8a8a8;
 `
 
 const SearchPanel = styled.div `
-  width: 70%;
-  margin: auto;
-  margin-top: 25px;
+  width: 10%;
+  margin: 20px 50px;
 `
 
 const SearchInput = styled.input `
   width: 100%;
-  border-radius: 5px;
-  background-color: rgba(171, 171, 171);
+  background-color: inherit;
   border-style: none;
+  text-align: center;
+  outline: none;
+  border-bottom: 1px solid #0071bc;
+`
+
+const LogOutButton = styled.button `
+  background-color: inherit;
+  border: none;
+  color: #fff;
 `
 
 class AsideMenu extends Component {
@@ -47,9 +56,8 @@ class AsideMenu extends Component {
   render() {
     return (
       <AsideContainer>
-        <button onClick={this.logout} className="btn btn-secondary">Выйти</button>
+        <LogOutButton onClick={this.logout}>Log out</LogOutButton>
         <SearchPanel>
-          <span></span>
           <SearchInput type="text" placeholder = "Search"/>
         </SearchPanel>
         <UserSchedule onClickDay = {this.props.onClickDay} 

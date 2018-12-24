@@ -63,7 +63,6 @@ class Home extends Component {
   render() {
     return (
       <div className="container">
-      { }
         <AsideMenu onClickDay = {this.onClickDay} 
                    usersData = {this.state.tasks}/> 
         { this.state.popupVisible 

@@ -14,14 +14,13 @@ const Wrapper = styled.div `
   z-index: 999;
   top: 0;
   left: 15vw;
-  background: #667db6;
-  background: -webkit-linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6); 
-  background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+/*   background: #242425; */
+  background: #192231;
 `
 
 const PopupContainer = styled.div `
   width: 65%;
-  background-color: rgb(250,250,250);
+  background-color: #24344d;
   border-radius: 10px;
   margin: auto;
   margin-top: 50px;
