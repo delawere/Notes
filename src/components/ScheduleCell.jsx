@@ -12,9 +12,9 @@ const Cell = styled.div `
   cursor: pointer;
   background: inherit;
   position: relative;
-  font-size: 10px;
-  font-weigth: 400;
-  color: #f0f0f0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #242425;
 `
 
 const Flag = styled.div `
@@ -24,6 +24,8 @@ const Flag = styled.div `
   height: 4px;
   background-color: rgb(31,161,24);
   top: 8px;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
 `
 
 const otherDayStyle = {
@@ -35,7 +37,7 @@ const ScheduleCell = ({ value, className, fullDate, onClickDay, task, taskKey })
   return (
     <Cell style = { next || prev ? otherDayStyle  : {} } 
           onClick = {() => onClickDay({ date: fullDate, task: task ? task : '', taskKey: taskKey })}>
-      <Flag style = { task ? {} : {'visibility':'hidden'}}></Flag>
+      <Flag style = { task ? {} : {'opacity':'0'}}></Flag>
       {value}
     </Cell>
   )

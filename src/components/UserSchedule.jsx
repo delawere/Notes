@@ -38,7 +38,7 @@ const SvgArrows = styled.svg `
   transition-property: fill;
   transition-duration: 0.15s;
   transition-timing-function: ease-out;
-  fill: #dbdbdb;
+  fill: #242425;
 
   &:hover {
     fill: #fff;
@@ -57,7 +57,7 @@ const Title = styled.h2 `
   position: absolute;
   top: 15px;
   left: 30px;
-  color: #f0f0f0;
+  color: #242425;
   font-size: 15px;
 `
 
@@ -66,7 +66,7 @@ const WeekDayContainer = styled.div `
   display: flex;
   justify-content: space-around;
   flex-wrap: nowrap;
-  color: #f0f0f0;
+  color: #242425;
   font-size: 12px;
   font-weight: 400;
 `

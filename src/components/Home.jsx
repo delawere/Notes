@@ -67,7 +67,8 @@ class Home extends Component {
                    usersData = {this.state.tasks}/> 
         { this.state.popupVisible 
           ? <Popup tasks = { this.state.currentDayTasks } 
-                   closePopup = {this.closePopup} /> 
+                   closePopup = {this.closePopup}
+                   onAfterSubmit = {this.getUsersData} /> 
           : null }
       </div> 
     );

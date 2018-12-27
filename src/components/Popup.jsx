@@ -15,18 +15,18 @@ const Wrapper = styled.div `
   top: 0;
   left: 15vw;
 /*   background: #242425; */
-  background: #192231;
+  background: #f7f7f7;
+  color: #242425;
 `
 
 const PopupContainer = styled.div `
   width: 65%;
-  background-color: #24344d;
+  background-color: #f7f7f7;
   border-radius: 10px;
   margin: auto;
   margin-top: 50px;
   padding: 40px 15px;
   padding-top: 0;
-  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.3);
 `
 
 const PopupHeader = styled.header `
@@ -59,12 +59,14 @@ class Popup extends Component {
         });
       };
     } else {
-      taskArray.push(this.props.tasks.task);
+      (this.props.tasks.task) 
+        ? taskArray.push(this.props.tasks.task) 
+        : null;
     };
     this.setState({
       date: moment(this.props.tasks.date).format('D MMMM'),
       tasks: taskArray
-    });
+    }, () => console.log(this.state.tasks));
   }
 
   refreshDataSet = (newTask) => {
@@ -77,6 +79,7 @@ class Popup extends Component {
     this.setState({
       tasks: currentTasks
     });
+    this.props.onAfterSubmit();
   };
 
   removeTask = (key) => {
@@ -88,6 +91,7 @@ class Popup extends Component {
     this.setState({
       tasks: currentTasks
     });
+    this.props.onAfterSubmit();
   }
 
   render() {
