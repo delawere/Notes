@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import fire from '../config/Fire';
+import fire from '../../config/Fire';
 import styled from 'styled-components';
 import UserSchedule from './UserSchedule';
-import DateType from './DateType';
 
 const AsideContainer = styled.aside `
   height: 100%;
@@ -61,7 +60,6 @@ class AsideMenu extends Component {
         <SearchPanel>
           <SearchInput type="text" placeholder = "Search"/>
         </SearchPanel>
-        <DateType />
         <UserSchedule onClickDay = {this.props.onClickDay} 
                       usersData = {this.state.tasks}/>
       </AsideContainer> 

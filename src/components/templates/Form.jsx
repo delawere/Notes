@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Login from './Login';
-import Signup from './Signup';
+import Login from '../organisms/Login';
+import Signup from '../organisms/Signup';
 
 class Form extends Component {
   constructor(props) {

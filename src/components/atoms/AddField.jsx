@@ -23,12 +23,10 @@ const Input = styled.input `
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 `
 
-export default function AddField({ name, onChange, value }) {
-  return (
-      <Input value = {value}
-             name = {name}
-             onChange = {onChange}>
-      </Input>
-  );
-}
+export default ({ name, onChange, value }) => (
+  <Input value = {value}
+         name = {name}
+         onChange = {onChange}>
+  </Input>
+);
 

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import fire from '../config/Fire';
-import AsideMenu from './AsideMenu';
-import FirebaseRequest from './FirebaseRequest';
-import Popup from './Popup';
+import fire from '../../config/Fire';
+import AsideMenu from '../organisms/AsideMenu';
+import FirebaseRequest from '../FirebaseRequest';
+import Popup from '../organisms/Popup';
+import * as moment from 'moment';
 
 
 const database = fire.database();
@@ -48,8 +49,14 @@ class Home extends Component {
 
   getUsersData = async () => {
     const usersData = await FirebaseRequest.getData();
+    const { currentDayDate, currentDayTasks} = this.state;
+    const newTask = usersData[moment(currentDayDate).format('MM-DD-YYYY')];
+    if (currentDayTasks) {
+      currentDayTasks.task = newTask;
+    };
     this.setState({
-      tasks: usersData
+      tasks: usersData,
+      currentDayTasks
     });
   };
 

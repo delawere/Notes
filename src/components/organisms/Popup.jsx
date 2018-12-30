@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import fire from '../config/Fire';
+import fire from '../../config/Fire';
 import styled from 'styled-components';
 import * as moment from 'moment';
 
-import PopupListItem from './PopupListItem';
-import AddForm from './AddForm';
-import ClosePopupButton from './ClosePopupButton';
+import PopupListItem from '../molecules/PopupListItem';
+import AddForm from '../molecules/AddForm';
+import ClosePopupButton from '../atoms/ClosePopupButton';
 
 const Wrapper = styled.div `
   position: fixed;
@@ -44,30 +44,30 @@ class Popup extends Component {
     super(props);
 
     this.state = {
+      fullDate: '',
       date: '',
       tasks: []
     }
   }
 
-  componentDidMount() {
+  static getDerivedStateFromProps(props) {
     let taskArray = [];
-    if (typeof this.props.tasks.task === 'object') {
-      for (let key in this.props.tasks.task) {
+    if (typeof props.tasks.task === 'object') {
+      for (let key in props.tasks.task) {
         taskArray.push({
           key: key,
-          text: this.props.tasks.task[key]
+          text: props.tasks.task[key]
         });
       };
     } else {
-      (this.props.tasks.task) 
-        ? taskArray.push(this.props.tasks.task) 
-        : null;
+      props.tasks.task ? taskArray.push(props.tasks.task) : null;
     };
-    this.setState({
-      date: moment(this.props.tasks.date).format('D MMMM'),
+    return({
+      fullDate: props.date,
+      date: moment(props.tasks.date).format('D MMMM'),
       tasks: taskArray
-    }, () => console.log(this.state.tasks));
-  }
+    });
+  };
 
   refreshDataSet = (newTask) => {
     const { key, task } = newTask;

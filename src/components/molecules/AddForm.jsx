@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import AddField from './AddField';
-import AddButton from './AddButton';
-import fire from '../config/Fire'
+import AddField from '../atoms/AddField';
+import AddButton from '../atoms/AddButton';
+import fire from '../../config/Fire'
 
 const db = fire.database();
 const userId = localStorage.getItem('user');
@@ -29,24 +29,28 @@ class AddForm extends Component {
   };
 
   addNewTask = async () => {
-    try {
-      const dayRef = db.ref(`users/${userId}/tasks/`).child(this.props.date);
-      const newTaskKey = dayRef.push().key;
-      const update = {};
-      update[newTaskKey] = this.state.task;
-      await dayRef.update(update);
+    if (this.state.task) {
+      try {
+        const dayRef = db.ref(`users/${userId}/tasks/`).child(this.props.date);
+        const newTaskKey = dayRef.push().key;
+        const update = {};
+        update[newTaskKey] = this.state.task;
+        await dayRef.update(update);
+        this.setState({
+          key: newTaskKey
+        }, () => {
+          this.props.refreshDataSet(this.state);
+        });
+      } catch(error) {
+        console.error(`Add failed. Error: ${error}`)
+      };
+  
       this.setState({
-        key: newTaskKey
-      }, () => {
-        this.props.refreshDataSet(this.state);
-      });
-    } catch(error) {
-      console.error(`Add failed. Error: ${error}`)
+        task: ''
+      })
+    } else {
+      console.error(`You can't add empty task`)
     };
-
-    this.setState({
-      task: ''
-    })
   };
 
   render() {

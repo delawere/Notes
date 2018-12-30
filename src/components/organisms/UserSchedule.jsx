@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import * as moment from 'moment';
 
-import CalendarContainer from './CalendarContainer';
+import CalendarContainer from '../molecules/CalendarContainer';
 
 
 const Wrapper = styled.div `

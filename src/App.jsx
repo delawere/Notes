@@ -3,8 +3,8 @@ import fire from './config/Fire';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import Form from './components/Form';
-import Home from './components/Home';
+import Form from './components/templates/Form';
+import Home from './components/templates/Home';
 
 class App extends Component {
   constructor(props) {

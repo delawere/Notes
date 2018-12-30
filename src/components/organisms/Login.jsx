@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import fire from '../config/Fire';
+import fire from '../../config/Fire';
 
-import Input from './Input';
+import Input from '../atoms/Input';
 
 const containerStyle = { 
   'width': '40%',
