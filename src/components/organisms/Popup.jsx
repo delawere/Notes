@@ -9,11 +9,11 @@ import ClosePopupButton from '../atoms/ClosePopupButton';
 
 const Wrapper = styled.div `
   position: fixed;
-  height: 100%;
-  width: 85vw;
+  height: 80%;
+  width: 60vw;
   z-index: 999;
-  top: 0;
-  left: 15vw;
+  top: 8%;
+  left: 25vw;
 /*   background: #242425; */
   background: #f7f7f7;
   color: #242425;

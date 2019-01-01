@@ -31,12 +31,8 @@ const Button = styled.button `
     background-color: #18ad90;
 `
 
-function AddButton({ addNewTask }) {
-  return (
-      <Button onClick = {addNewTask}>
-        Add
-      </Button>
-  );
-}
-
-export default AddButton;
+export default ({ addNewTask }) => (
+  <Button onClick = {addNewTask}>
+    Add
+  </Button>
+);

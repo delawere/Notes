@@ -8,7 +8,7 @@ import CalendarContainer from '../molecules/CalendarContainer';
 const Wrapper = styled.div `
   z-index: 200;
   position: relative;
-  width: 15%;
+  width: 100%;
   height: 250px;
   border-radius: 3px;
   justify-content: space-around;
@@ -17,8 +17,7 @@ const Wrapper = styled.div `
   transition-property: opacity;
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
-  background: inherit;
-  margin: 30px;
+  background: #f7f7f7;
   margin-top: 350px;
 `
 

@@ -58,7 +58,8 @@ class AddForm extends Component {
      <AddFormContainer>
        <AddField name = "task" 
                  onChange = {this.onChangeInput}
-                 value = {this.state.task} >
+                 value = {this.state.task} 
+                 addNewTask = {this.addNewTask }>
        </AddField>
        <AddButton addNewTask = {this.addNewTask} />
      </AddFormContainer>

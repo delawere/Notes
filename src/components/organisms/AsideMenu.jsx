@@ -5,7 +5,7 @@ import UserSchedule from './UserSchedule';
 
 const AsideContainer = styled.aside `
   height: 100%;
-  width: 100vw;
+  width: 15vw;
   position: fixed;
 /*   background: #242425; */
   background: #f7f7f7;
@@ -15,7 +15,6 @@ const AsideContainer = styled.aside `
 `
 
 const SearchPanel = styled.div `
-  width: 10%;
   margin: 20px 50px;
 `
 

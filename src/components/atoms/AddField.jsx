@@ -23,10 +23,13 @@ const Input = styled.input `
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 `
 
-export default ({ name, onChange, value }) => (
+const enterCharCode = 13;
+
+export default ({ name, onChange, value, addNewTask }) => (
   <Input value = {value}
          name = {name}
-         onChange = {onChange}>
+         onChange = {onChange}
+         onKeyPress = {(event) => event.charCode === enterCharCode ? addNewTask() : null}>
   </Input>
 );
 

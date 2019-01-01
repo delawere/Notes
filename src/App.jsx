@@ -32,7 +32,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{'background': '#000'}}>
         {this.state.user ? (<Home />) : (<Form />)}
       </div>
     );
