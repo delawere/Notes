@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Input = styled.input `
     -webkit-flex: 1;
@@ -25,11 +26,20 @@ const Input = styled.input `
 
 const enterCharCode = 13;
 
-export default ({ name, onChange, value, addNewTask }) => (
+const AddField = ({ name, onChange, value, addNewTask }) => (
   <Input value = {value}
          name = {name}
          onChange = {onChange}
          onKeyPress = {(event) => event.charCode === enterCharCode ? addNewTask() : null}>
   </Input>
 );
+
+AddField.propTypes = {
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
+  addNewTask: PropTypes.func
+};
+
+export default AddField;
 

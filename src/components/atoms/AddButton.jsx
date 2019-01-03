@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Button = styled.button `
   -webkit-font-smoothing: antialiased;
@@ -30,9 +31,14 @@ const Button = styled.button `
   &:hover {
     background-color: #18ad90;
 `
-
-export default ({ addNewTask }) => (
+const AddButton = ({ addNewTask }) => (
   <Button onClick = {addNewTask}>
     Add
   </Button>
 );
+
+AddButton.propTypes = {
+  addNewTask: PropTypes.func
+};
+
+export default AddButton;

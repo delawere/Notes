@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Cell = styled.div `
   display: inline-block;
@@ -10,7 +11,6 @@ const Cell = styled.div `
   text-align: center;
   vertical-align: top;
   cursor: pointer;
-  background: inherit;
   position: relative;
   font-size: 12px;
   font-weight: 500;
@@ -32,7 +32,7 @@ const otherDayStyle = {
   'color': '#9e9e9e'
 };
 
-const ScheduleCell = ({ value, className, fullDate, onClickDay, task, taskKey }) => {
+ const ScheduleCell = ({ value, className, fullDate, onClickDay, task, taskKey }) => {
   const { next, prev } = className;
   return (
     <Cell style = { next || prev ? otherDayStyle  : {} } 
@@ -43,5 +43,13 @@ const ScheduleCell = ({ value, className, fullDate, onClickDay, task, taskKey })
   )
 };
 
-
 export default ScheduleCell;
+
+ScheduleCell.propTypes = {
+  value: PropTypes.string,
+  className: PropTypes.object,
+  fullDate: PropTypes.string,
+  onClickDay: PropTypes.func,
+  task: PropTypes.object,
+  taskKey: PropTypes.string
+};

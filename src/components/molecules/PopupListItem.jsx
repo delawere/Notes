@@ -1,42 +1,44 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
+import EditButton from '../atoms/EditButton';
+import DeleteButton from '../atoms/DeleteButton';
 
 
 const Container = styled.div `
-  padding: 5px 40px;
+  padding: 10px 40px;
   margin: 5px 0;
   font-size: 1.2rem;
-`
-
-const SvgDeleteCircle = styled.svg `
-  width: 20px;
-  heigth: 20px;
-  border-radius: 3px; 
-  background-color: inherit;
-  transition-property: fill;
-  transition-duration: 0.15s;
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  transition-duration: 0.3s;
   transition-timing-function: ease-out;
-  fill: #dbdbdb;
   cursor: pointer;
-
-  &:hover {
-    fill: #9c1c2f;
-  }
 `
 
+const ControlButtons = styled.div `
+  display: flex;
+  justify-content: space-between;
+  width: 70px;
+` 
 
-
-function PopupListItem({ text, taskKey, onRemove }) {
-  return (
-      <Container>
-        <span>{text}</span>
-        <SvgDeleteCircle version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" onClick = {() => onRemove(taskKey)}>
-          <title>cancel-circle</title>
-          <path d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13z"></path>
-          <path d="M21 8l-5 5-5-5-3 3 5 5-5 5 3 3 5-5 5 5 3-3-5-5 5-5z"></path>
-      </SvgDeleteCircle>
-      </Container>
-  );
-}
+const PopupListItem = ({ text, taskKey, onRemove }) => (
+  <Container>
+    <span>{text}</span>
+    <ControlButtons>
+      <EditButton />
+      <DeleteButton onRemove = {onRemove} 
+                    taskKey = {taskKey}/>
+    </ControlButtons>
+  </Container>
+);
 
 export default PopupListItem;
+
+PopupListItem.propTypes = {
+  text: PropTypes.string,
+  taskKey: PropTypes.string,
+  onRemove: PropTypes.func
+};

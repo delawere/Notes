@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import * as moment from 'moment';
+import PropTypes from 'prop-types'
 
 import CalendarContainer from '../molecules/CalendarContainer';
 
@@ -17,7 +18,7 @@ const Wrapper = styled.div `
   transition-property: opacity;
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
-  background: #f7f7f7;
+  background: #fff;
   margin-top: 350px;
 `
 
@@ -156,5 +157,10 @@ class UserSchedule extends PureComponent {
     )
   }
 }
+
+UserSchedule.propTypes = {
+  usersData: PropTypes.object,
+  onClickDay: PropTypes.func
+};
 
 export default UserSchedule;

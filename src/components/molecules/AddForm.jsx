@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import fire from '../../config/Fire'
 
 import AddField from '../atoms/AddField';
 import AddButton from '../atoms/AddButton';
-import fire from '../../config/Fire'
 
 const db = fire.database();
 const userId = localStorage.getItem('user');
 
 const AddFormContainer = styled.div `
-  width: 60%;
+  width: 90%;
   heigth: 50px;
+  margin-top: 15px;
   display: flex;
 `
 
@@ -65,6 +67,11 @@ class AddForm extends Component {
      </AddFormContainer>
     )
   }
+}
+
+AddForm.propTypes = {
+  date: PropTypes.string,
+  refreshDataSet: PropTypes.func
 }
 
 export default AddForm;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Button = styled.button `
   -webkit-font-smoothing: antialiased;
@@ -33,7 +34,7 @@ const Button = styled.button `
     background-color: #ec5e69;
 `
 
-export default ({ closePopup }) => (
+const ClosePopupButton = ({ closePopup }) => (
   <Button onClick = {closePopup}>
     <svg version="1.1" 
          xmlns="http://www.w3.org/2000/svg" 
@@ -45,3 +46,9 @@ export default ({ closePopup }) => (
     </svg>
   </Button>
 );
+
+ClosePopupButton.propTypes = {
+  closePopup: PropTypes.func
+};
+
+export default ClosePopupButton;

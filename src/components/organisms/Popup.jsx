@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fire from '../../config/Fire';
 import styled from 'styled-components';
 import * as moment from 'moment';
+import PropTypes from 'prop-types';
 
 import PopupListItem from '../molecules/PopupListItem';
 import AddForm from '../molecules/AddForm';
@@ -15,13 +16,15 @@ const Wrapper = styled.div `
   top: 8%;
   left: 25vw;
 /*   background: #242425; */
-  background: #f7f7f7;
+  background: #fff;
   color: #242425;
 `
 
 const PopupContainer = styled.div `
-  width: 65%;
-  background-color: #f7f7f7;
+  width: 80%;
+  max-width: 950px;
+  background-color: inherit;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.5);
   border-radius: 10px;
   margin: auto;
   margin-top: 50px;
@@ -60,7 +63,7 @@ class Popup extends Component {
         });
       };
     } else {
-      props.tasks.task ? taskArray.push(props.tasks.task) : null;
+      props.tasks.task && taskArray.push(props.tasks.task);
     };
     return({
       fullDate: props.date,
@@ -83,16 +86,20 @@ class Popup extends Component {
   };
 
   removeTask = (key) => {
-    const currentDate = moment(this.props.tasks.date).format('MM-DD-YYYY');
-    database.ref(`users/${userId}/tasks/${currentDate}/${key}`).remove();
-    const removedElemIndex = this.state.tasks.findIndex((task) => task.key === key);
-    const currentTasks = this.state.tasks;
-    delete currentTasks[removedElemIndex];
-    this.setState({
-      tasks: currentTasks
-    });
-    this.props.onAfterSubmit();
-  }
+    try {
+      const currentDate = moment(this.props.tasks.date).format('MM-DD-YYYY');
+      database.ref(`users/${userId}/tasks/${currentDate}/${key}`).remove();
+      const removedElemIndex = this.state.tasks.findIndex((task) => task.key === key);
+      const currentTasks = this.state.tasks;
+      delete currentTasks[removedElemIndex];
+      this.setState({
+        tasks: currentTasks
+      });
+      this.props.onAfterSubmit();
+    } catch(e) {
+      console.error(`Task doesn't remove. Error: ${e}`);
+    };
+  };
 
   render() {
     return (
@@ -119,5 +126,11 @@ class Popup extends Component {
     )
   }
 }
+
+Popup.propTypes = {
+  tasks: PropTypes.object, 
+  closePopup: PropTypes.func,
+  onAfterSubmit: PropTypes.func
+};
 
 export default Popup;

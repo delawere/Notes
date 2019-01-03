@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import 'moment-range';
+import PropTypes from 'prop-types';
 
 import ScheduleCell from './ScheduleCell';
 
@@ -55,8 +55,8 @@ class CalendarContainer extends PureComponent {
     const month = now.month();
     const currDay = now.date();
     const year = now.year();
-    let days = [];
 
+    let days = [];
     let data = [];
 
     let tasks = this.props.usersData;
@@ -118,5 +118,11 @@ class CalendarContainer extends PureComponent {
     )
   }
 }
+
+CalendarContainer.propTypes = {
+  date: PropTypes.object,
+  onClickDay: PropTypes.func,
+  usersData: PropTypes.object
+};
 
 export default CalendarContainer;
