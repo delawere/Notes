@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "d3": "^5.7.0",
+    "prettier": "^1.15.3",
     "svg-inline-loader": "^0.8.0"
   }
 }

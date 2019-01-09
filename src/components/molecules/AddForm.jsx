@@ -1,33 +1,34 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import fire from '../../config/Fire'
+import React, { Component } from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import fire from "../../config/Fire";
 
-import AddField from '../atoms/AddField';
-import AddButton from '../atoms/AddButton';
+import AddField from "../atoms/AddField";
+import AddButton from "../atoms/AddButton";
+import RadioGroup from "../molecules/RadioGroup";
 
 const db = fire.database();
-const userId = localStorage.getItem('user');
+const userId = localStorage.getItem("user");
 
-const AddFormContainer = styled.div `
+const AddFormContainer = styled.div`
   width: 90%;
   heigth: 50px;
   margin-top: 15px;
   display: flex;
-`
+`;
 
 class AddForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      task: '',
-      key: ''
-    }
+      task: "",
+      key: ""
+    };
   }
 
-  onChangeInput = (e) => {
-    this.setState({ [e.target.name]: e.target.value  });
+  onChangeInput = e => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   addNewTask = async () => {
@@ -38,40 +39,45 @@ class AddForm extends Component {
         const update = {};
         update[newTaskKey] = this.state.task;
         await dayRef.update(update);
-        this.setState({
-          key: newTaskKey
-        }, () => {
-          this.props.refreshDataSet(this.state);
-        });
-      } catch(error) {
-        console.error(`Add failed. Error: ${error}`)
-      };
-  
+        this.setState(
+          {
+            key: newTaskKey
+          },
+          () => {
+            this.props.refreshDataSet(this.state);
+          }
+        );
+      } catch (error) {
+        console.error(`Add failed. Error: ${error}`);
+      }
+
       this.setState({
-        task: ''
-      })
+        task: ""
+      });
     } else {
-      console.error(`You can't add empty task`)
-    };
+      console.error(`You can't add empty task`);
+    }
   };
 
   render() {
     return (
-     <AddFormContainer>
-       <AddField name = "task" 
-                 onChange = {this.onChangeInput}
-                 value = {this.state.task} 
-                 addNewTask = {this.addNewTask }>
-       </AddField>
-       <AddButton addNewTask = {this.addNewTask} />
-     </AddFormContainer>
-    )
+      <AddFormContainer>
+{/*         <RadioGroup /> */}
+        <AddField
+          name="task"
+          onChange={this.onChangeInput}
+          value={this.state.task}
+          addNewTask={this.addNewTask}
+        />
+        <AddButton addNewTask={this.addNewTask} />
+      </AddFormContainer>
+    );
   }
 }
 
 AddForm.propTypes = {
   date: PropTypes.string,
   refreshDataSet: PropTypes.func
-}
+};
 
 export default AddForm;

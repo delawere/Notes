@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import fire from '../../config/Fire';
-import AsideMenu from '../organisms/AsideMenu';
-import FirebaseRequest from '../FirebaseRequest';
-import Popup from '../organisms/Popup';
-import * as moment from 'moment';
-
+import React, { Component } from "react";
+import fire from "../../config/Fire";
+import AsideMenu from "../organisms/AsideMenu";
+import FirebaseRequest from "../FirebaseRequest";
+import Popup from "../organisms/Popup";
+import * as moment from "moment";
 
 const database = fire.database();
-const userId = localStorage.getItem('user');
+const userId = localStorage.getItem("user");
 
 class Home extends Component {
   constructor(props) {
@@ -16,12 +15,12 @@ class Home extends Component {
     this.state = {
       popupVisible: false,
       currentDayTasks: {},
-      currentDayDate: '',
+      currentDayDate: "",
       tasks: {}
-    }
+    };
   }
 
-  onClickDay = (data) => {
+  onClickDay = data => {
     const { date } = data;
     this.setState({
       popupVisible: true,
@@ -30,7 +29,7 @@ class Home extends Component {
     });
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.getUsersData();
     this.setState({
       currentDayTasks: this.state.tasks[this.state.currentDayDate]
@@ -39,21 +38,21 @@ class Home extends Component {
 
   async getTasks() {
     let result = {};
-    const tasks = database.ref(`users/${userId}/tasks`).once('value', snap => {
+    const tasks = database.ref(`users/${userId}/tasks`).once("value", snap => {
       result = snap.val() || {};
     });
     await tasks;
 
-    return result
+    return result;
   }
 
   getUsersData = async () => {
     const usersData = await FirebaseRequest.getData();
-    const { currentDayDate, currentDayTasks} = this.state;
-    const newTask = usersData[moment(currentDayDate).format('MM-DD-YYYY')];
+    const { currentDayDate, currentDayTasks } = this.state;
+    const newTask = usersData[moment(currentDayDate).format("MM-DD-YYYY")];
     if (currentDayTasks) {
       currentDayTasks.task = newTask;
-    };
+    }
     this.setState({
       tasks: usersData,
       currentDayTasks
@@ -69,18 +68,18 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="container" style={{'background': '#f7f7f7'}}>
-        <AsideMenu onClickDay = {this.onClickDay} 
-                   usersData = {this.state.tasks}/> 
-        { this.state.popupVisible 
-          ? <Popup tasks = { this.state.currentDayTasks } 
-                   closePopup = {this.closePopup}
-                   onAfterSubmit = {this.getUsersData} /> 
-          : null }
-      </div> 
+      <div className="container" style={{ background: "#f7f7f7" }}>
+        <AsideMenu onClickDay={this.onClickDay} usersData={this.state.tasks} />
+        {this.state.popupVisible ? (
+          <Popup
+            tasks={this.state.currentDayTasks}
+            closePopup={this.closePopup}
+            onAfterSubmit={this.getUsersData}
+          />
+        ) : null}
+      </div>
     );
   }
-  
 }
 
 export default Home;
