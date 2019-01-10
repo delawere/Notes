@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -15,6 +15,7 @@ const Container = styled.div`
   transition-duration: 0.3s;
   transition-timing-function: ease-out;
   cursor: pointer;
+  border-bottom: 1px solid rgba(222, 222, 222, 0.4);
 `;
 
 const ControlButtons = styled.div`
@@ -23,18 +24,41 @@ const ControlButtons = styled.div`
   width: 70px;
 `;
 
-const PopupListItem = ({ text, taskKey, onRemove, addTaskToRemoveGroup }) => (
-  <Container>
-    <ListItemField
-      text={text}
-      taskKey={taskKey}
-      addTaskToRemoveGroup={addTaskToRemoveGroup}
-    />
-    <ControlButtons>
-      <DeleteButton onRemove={onRemove} taskKey={taskKey} />
-    </ControlButtons>
-  </Container>
-);
+class PopupListItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isMarked: false
+    };
+  }
+
+  onChecked = (taskKey, checked) => {
+    this.setState(
+      {
+        isMarked: !this.state.isMarked
+      },
+      this.props.addTaskToRemoveGroup(taskKey, checked)
+    );
+  };
+
+  render() {
+    const { text, taskKey, onRemove } = this.props;
+    return (
+      <Container>
+        <ListItemField
+          text={text}
+          taskKey={taskKey}
+          addTaskToRemoveGroup={this.onChecked}
+          isMarked={this.state.isMarked}
+        />
+        <ControlButtons>
+          <DeleteButton onRemove={onRemove} taskKey={taskKey} />
+        </ControlButtons>
+      </Container>
+    );
+  }
+}
 
 export default PopupListItem;
 

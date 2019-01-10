@@ -5,7 +5,6 @@ import fire from "../../config/Fire";
 
 import AddField from "../atoms/AddField";
 import AddButton from "../atoms/AddButton";
-import RadioGroup from "../molecules/RadioGroup";
 
 const db = fire.database();
 const userId = localStorage.getItem("user");
@@ -23,7 +22,8 @@ class AddForm extends Component {
 
     this.state = {
       task: "",
-      key: ""
+      key: "",
+      inFocus: false
     };
   }
 
@@ -59,15 +59,20 @@ class AddForm extends Component {
     }
   };
 
+  onFocusAddField = () => {
+    this.setState({ inFocus: !this.state.inFocus });
+  };
+
   render() {
     return (
       <AddFormContainer>
-{/*         <RadioGroup /> */}
         <AddField
           name="task"
           onChange={this.onChangeInput}
           value={this.state.task}
           addNewTask={this.addNewTask}
+          onFocusAddField={this.onFocusAddField}
+          inFocus={this.state.inFocus}
         />
         <AddButton addNewTask={this.addNewTask} />
       </AddFormContainer>

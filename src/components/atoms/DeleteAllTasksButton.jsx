@@ -19,25 +19,20 @@ const Button = styled.button`
   padding: 10px 12px;
   border-radius: 5px;
   border: 0;
-  -webkit-transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
+  -webkit-transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
   fill: #fff;
   background-color: #ec5e69;
   color: #fff;
   font-weight: 500;
 
-  &:focus,
-  &:hover {
-    
+  background-color: ${props => (props.visible ? "#ec5e69" : "grey")};
+  cursor: ${props => (props.visible ? "pointer" : "auto")};
 `;
 
 const ClosePopupButton = ({ deleteMarkedTasks, visible }) => (
-  <Button
-    onClick={deleteMarkedTasks}
-    style={visible ? { display: "inline-block" } : { display: "none" }}
-  >
+  <Button onClick={deleteMarkedTasks} visible={visible} >
     Remove marked tasks
   </Button>
 );

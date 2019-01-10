@@ -94,7 +94,7 @@ class Popup extends Component {
         task => task.key === key
       );
       const currentTasks = this.state.tasks;
-      delete currentTasks[removedElemIndex];
+      currentTasks.splice(removedElemIndex, 1);
       this.setState({
         tasks: currentTasks
       });
@@ -113,7 +113,7 @@ class Popup extends Component {
       const removedElemIndex = this.state.removeList.findIndex(
         taskKey => taskKey === key
       );
-      delete removeList[removedElemIndex];
+      removeList.splice(removedElemIndex, 1);
     }
 
     this.setState({
@@ -140,7 +140,6 @@ class Popup extends Component {
             visible={this.state.removeList.length > 0}
           />
           <fieldset>
-            <legend>To-Do List</legend>
             {this.state.tasks.map(({ text, key }) => (
               <PopupListItem
                 text={text}

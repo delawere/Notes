@@ -2,15 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+const enterCharCode = 13;
+
+const Container = styled.div`
+  position: relative;
+  min-height: 85px;
+  flex: 1;
+  display: flex;
+`;
+
 const Input = styled.input`
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
+    display: inline-block;
+    width: 100%;
+    align-self: flex-end;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 24px;
-    margin-bottom: 15px;
-    color: #898989;
     border-radius: 5px;
     border: 1px solid #ccc;
     cursor: text;
@@ -24,17 +31,45 @@ const Input = styled.input`
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 `;
 
-const enterCharCode = 13;
+const Placeholder = styled.label`
+  display: inline-block;
+  position: absolute;
+  top: 55%;
+  left: 4%;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-out;
+  font-weight: 500;
 
-const AddField = ({ name, onChange, value, addNewTask }) => (
-  <Input
-    value={value}
-    name={name}
-    onChange={onChange}
-    onKeyPress={event =>
-      event.charCode === enterCharCode ? addNewTask() : null
-    }
-  />
+  top: ${props => (props.inFocus ? "5%" : "55%")};
+  left: ${props => (props.inFocus ? "2%" : "4%")};
+  font-size: ${props => (props.inFocus ? "13px;" : "17px")};
+  color: ${props => (props.inFocus ? "#4F4F4F" : "rgba(222, 222, 222, 1)")};
+`;
+
+const AddField = ({
+  name,
+  onChange,
+  value,
+  addNewTask,
+  onFocusAddField,
+  inFocus
+}) => (
+  <Container>
+    <Placeholder inFocus={inFocus} for="fullname">
+      Enter what you want to do
+    </Placeholder>
+    <Input
+      id="fullname"
+      value={value}
+      name={name}
+      onChange={onChange}
+      onFocus={onFocusAddField}
+      onBlur={onFocusAddField}
+      onKeyPress={event =>
+        event.charCode === enterCharCode ? addNewTask() : null
+      }
+    />
+  </Container>
 );
 
 AddField.propTypes = {

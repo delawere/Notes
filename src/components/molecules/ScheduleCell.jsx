@@ -32,10 +32,6 @@ const otherDayStyle = {
   color: "#9e9e9e"
 };
 
-const currentDayStyle = {
-  color: "#205493"
-};
-
 const ScheduleCell = ({
   value,
   className,
