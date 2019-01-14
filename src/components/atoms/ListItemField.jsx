@@ -9,7 +9,7 @@ const FieldContainer = styled.div`
 
 const Label = styled.span`
   display: inline-block;
-  margin-left: 25px;
+  margin-left: 55px;
   font-weight: 400;
 `;
 
@@ -35,7 +35,7 @@ const ListItemField = ({ text, taskKey, addTaskToRemoveGroup, isMarked }) => (
       id={taskKey}
       onChange={e => addTaskToRemoveGroup(taskKey, e.target.checked)}
     />
-    <span htmlFor="{taskKey}">
+    <label htmlFor={taskKey}>
       <CheckBoxIcon
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ const ListItemField = ({ text, taskKey, addTaskToRemoveGroup, isMarked }) => (
         <title>check_box</title>
         <path d="M9.984 17.016l9-9-1.406-1.453-7.594 7.594-3.563-3.563-1.406 1.406zM18.984 3c1.125 0 2.016 0.938 2.016 2.016v13.969c0 1.078-0.891 2.016-2.016 2.016h-13.969c-1.125 0-2.016-0.938-2.016-2.016v-13.969c0-1.078 0.891-2.016 2.016-2.016h13.969z" />
       </CheckBoxIcon>
-    </span>
+    </label>
 
     <Label>{text}</Label>
   </FieldContainer>

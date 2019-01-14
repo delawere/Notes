@@ -4,60 +4,32 @@ import * as moment from "moment";
 import PropTypes from "prop-types";
 
 import CalendarContainer from "../molecules/CalendarContainer";
+import Arrow from "../atoms/Arrow";
 
 const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
   z-index: 200;
-  position: relative;
   width: 100%;
   height: 250px;
   border-radius: 3px;
   justify-content: space-around;
   padding: 20px;
-  padding-top: 75px;
   transition-property: opacity;
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
   background: #fff;
-  margin-top: 350px;
 `;
 
-const ContainerLeftArrow = styled.div`
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  left: 5px;
-  cursor: pointer;
-`;
-
-const SvgArrows = styled.svg`
-  width: 10px;
-  heigth: 10px;
-  border-radius: 3px;
-  background-color: inherit;
-  transition-property: fill;
-  transition-duration: 0.15s;
-  transition-timing-function: ease-out;
-  fill: #242425;
-
-  &:hover {
-    fill: #fff;
-  }
-`;
-
-const ContainerRightArrow = styled.div`
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  right: 5px;
-  cursor: pointer;
+const CalendarWrap = styled.div`
+  flex: 1;
 `;
 
 const Title = styled.h2`
-  position: absolute;
-  top: 15px;
-  left: 30px;
+  margin-top: 320px;
   color: #242425;
   font-size: 15px;
+  margin-left: 30px;
 `;
 
 const WeekDayContainer = styled.div`
@@ -68,6 +40,7 @@ const WeekDayContainer = styled.div`
   color: #242425;
   font-size: 12px;
   font-weight: 400;
+  margin: 0 auto;
 `;
 
 class UserSchedule extends PureComponent {
@@ -122,43 +95,25 @@ class UserSchedule extends PureComponent {
 
   render() {
     return (
-      <Wrapper>
-        <ContainerLeftArrow onClick={this.prevMonth}>
-          <SvgArrows
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-          >
-            <title>left-open</title>
-            <path d="M20.928 5.376l-9.504 9.472 9.504 9.504q0.32 0.32 0.32 0.8t-0.32 0.8l-2.976 2.976q-0.352 0.32-0.8 0.32t-0.8-0.32l-13.248-13.28q-0.352-0.32-0.352-0.8t0.352-0.8l13.248-13.248q0.32-0.352 0.8-0.352t0.8 0.352l2.976 2.976q0.32 0.32 0.32 0.8t-0.32 0.8z" />
-          </SvgArrows>
-        </ContainerLeftArrow>
+      <React.Fragment>
         <Title>{moment(this.state.month).format("MMMM YYYY")}</Title>
-        <WeekDayContainer>
-          {UserSchedule.days.map(weekday => {
-            return <div key={weekday}>{weekday[0]}</div>;
-          })}
-        </WeekDayContainer>
-        <CalendarContainer
-          date={moment(this.state.month)}
-          onClickDay={this.props.onClickDay}
-          usersData={this.props.usersData}
-        />
-        <ContainerRightArrow onClick={this.nextMonth}>
-          <SvgArrows
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-          >
-            <title>right-open</title>
-            <path d="M19.776 15.648l-13.248 13.28q-0.352 0.32-0.8 0.32t-0.8-0.32l-2.976-2.976q-0.352-0.352-0.352-0.8t0.352-0.8l9.472-9.504-9.472-9.472q-0.352-0.352-0.352-0.8t0.352-0.8l2.976-2.976q0.32-0.352 0.8-0.352t0.8 0.352l13.248 13.248q0.32 0.352 0.32 0.8t-0.32 0.8z" />
-          </SvgArrows>
-        </ContainerRightArrow>
-      </Wrapper>
+        <Wrapper>
+          <Arrow arrowSide={"left"} onClick={this.prevMonth} />
+          <CalendarWrap>
+            <WeekDayContainer>
+              {UserSchedule.days.map(weekday => {
+                return <div key={weekday}>{weekday[0]}</div>;
+              })}
+            </WeekDayContainer>
+            <CalendarContainer
+              date={moment(this.state.month)}
+              onClickDay={this.props.onClickDay}
+              usersData={this.props.usersData}
+            />
+          </CalendarWrap>
+          <Arrow arrowSide={"right"} onClick={this.nextMonth} />
+        </Wrapper>
+      </React.Fragment>
     );
   }
 }

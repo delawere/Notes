@@ -15,7 +15,6 @@ const Wrapper = styled.div`
   z-index: 999;
   top: 8%;
   left: 25vw;
-  /*   background: #242425; */
   background: #fff;
   color: #242425;
 `;

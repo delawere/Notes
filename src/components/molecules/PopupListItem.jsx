@@ -8,7 +8,7 @@ import ListItemField from "../atoms/ListItemField";
 const Container = styled.div`
   padding: 10px 40px;
   margin: 5px 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   display: flex;
   width: 90%;
   justify-content: space-between;

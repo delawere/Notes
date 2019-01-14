@@ -31,13 +31,12 @@ const Input = styled.input`
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 `;
 
-const Placeholder = styled.label`
+/* const Placeholder = styled.label`
   display: inline-block;
   position: absolute;
-  top: 55%;
+  top: 55%;x
   left: 4%;
-  transition-duration: 0.5s;
-  transition-timing-function: ease-out;
+  transition: 600ms ease-out;
   font-weight: 500;
 
   top: ${props => (props.inFocus ? "5%" : "55%")};
@@ -45,23 +44,24 @@ const Placeholder = styled.label`
   font-size: ${props => (props.inFocus ? "13px;" : "17px")};
   color: ${props => (props.inFocus ? "#4F4F4F" : "rgba(222, 222, 222, 1)")};
 `;
-
+ */
 const AddField = ({
   name,
   onChange,
   value,
   addNewTask,
   onFocusAddField,
-  inFocus
+  placeholder
 }) => (
   <Container>
-    <Placeholder inFocus={inFocus} for="fullname">
+    {/*   <Placeholder inFocus={inFocus} for="fullname">
       Enter what you want to do
-    </Placeholder>
+    </Placeholder> */}
     <Input
       id="fullname"
       value={value}
       name={name}
+      placeholder={placeholder}
       onChange={onChange}
       onFocus={onFocusAddField}
       onBlur={onFocusAddField}

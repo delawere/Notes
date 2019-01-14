@@ -10,6 +10,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  margin: 0 auto;
 `;
 
 class CalendarContainer extends PureComponent {

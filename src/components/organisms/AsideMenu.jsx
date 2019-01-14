@@ -3,6 +3,7 @@ import fire from "../../config/Fire";
 import styled from "styled-components";
 import UserSchedule from "./UserSchedule";
 import PropTypes from "prop-types";
+import UserInfo from "../molecules/UserInfo";
 
 const AsideContainer = styled.aside`
   height: 100%;
@@ -15,25 +16,6 @@ const AsideContainer = styled.aside`
   border-right: 1px solid #a8a8a8;
 `;
 
-const SearchPanel = styled.div`
-  margin: 20px 50px;
-`;
-
-const SearchInput = styled.input`
-  width: 100%;
-  background-color: inherit;
-  border-style: none;
-  text-align: center;
-  outline: none;
-  border-bottom: 1px solid #0071bc;
-`;
-
-const LogOutButton = styled.button`
-  background-color: inherit;
-  border: none;
-  color: #fff;
-`;
-
 class AsideMenu extends Component {
   constructor(props) {
     super(props);
@@ -42,10 +24,6 @@ class AsideMenu extends Component {
       tasks: {}
     };
   }
-
-  logout = () => {
-    fire.auth().signOut();
-  };
 
   static getDerivedStateFromProps(props) {
     return {
@@ -56,10 +34,7 @@ class AsideMenu extends Component {
   render() {
     return (
       <AsideContainer>
-        <LogOutButton onClick={this.logout}>Log out</LogOutButton>
-        <SearchPanel>
-          <SearchInput type="text" placeholder="Search" />
-        </SearchPanel>
+        <UserInfo />
         <UserSchedule
           onClickDay={this.props.onClickDay}
           usersData={this.state.tasks}

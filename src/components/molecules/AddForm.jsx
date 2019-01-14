@@ -9,11 +9,14 @@ import AddButton from "../atoms/AddButton";
 const db = fire.database();
 const userId = localStorage.getItem("user");
 
+const placeholder = "Enter what you want to do";
+
 const AddFormContainer = styled.div`
   width: 90%;
   heigth: 50px;
   margin-top: 15px;
   display: flex;
+  align-items: flex-end;
 `;
 
 class AddForm extends Component {
@@ -70,6 +73,7 @@ class AddForm extends Component {
           name="task"
           onChange={this.onChangeInput}
           value={this.state.task}
+          placeholder={placeholder}
           addNewTask={this.addNewTask}
           onFocusAddField={this.onFocusAddField}
           inFocus={this.state.inFocus}
