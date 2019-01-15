@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import DeleteButton from "../atoms/DeleteButton";
+import DoneButton from "../atoms/DoneButton";
 import ListItemField from "../atoms/ListItemField";
 
 const Container = styled.div`
@@ -43,7 +44,7 @@ class PopupListItem extends Component {
   };
 
   render() {
-    const { text, taskKey, onRemove } = this.props;
+    const { text, taskKey, onRemove, moveTaskToDone } = this.props;
     return (
       <Container>
         <ListItemField
@@ -54,6 +55,11 @@ class PopupListItem extends Component {
         />
         <ControlButtons>
           <DeleteButton onRemove={onRemove} taskKey={taskKey} />
+          <DoneButton
+            moveTaskToDone={moveTaskToDone}
+            taskKey={taskKey}
+            text={text}
+          />
         </ControlButtons>
       </Container>
     );

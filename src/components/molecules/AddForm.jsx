@@ -37,7 +37,9 @@ class AddForm extends Component {
   addNewTask = async () => {
     if (this.state.task) {
       try {
-        const dayRef = db.ref(`users/${userId}/tasks/`).child(this.props.date);
+        const dayRef = db
+          .ref(`users/${userId}/tasks/active`)
+          .child(this.props.date);
         const newTaskKey = dayRef.push().key;
         const update = {};
         update[newTaskKey] = this.state.task;

@@ -22,41 +22,53 @@ class Home extends Component {
 
   onClickDay = data => {
     const { date } = data;
+
     this.setState({
-      popupVisible: true,
       currentDayTasks: data,
       currentDayDate: date
     });
   };
 
   componentDidMount() {
-    this.getUsersData();
-    this.setState({
-      currentDayTasks: this.state.tasks[this.state.currentDayDate]
-    });
+    this.getUsersData(moment().format("MM-DD-YYYY"));
   }
 
   async getTasks() {
     let result = {};
-    const tasks = database.ref(`users/${userId}/tasks`).once("value", snap => {
-      result = snap.val() || {};
-    });
+    const tasks = database
+      .ref(`users/${userId}/tasks/active`)
+      .once("value", snap => {
+        result = snap.val() || {};
+      });
     await tasks;
 
     return result;
   }
 
-  getUsersData = async () => {
+  getUsersData = async todayDate => {
     const usersData = await FirebaseRequest.getData();
     const { currentDayDate, currentDayTasks } = this.state;
-    const newTask = usersData[moment(currentDayDate).format("MM-DD-YYYY")];
+    const newTask =
+      usersData.active[moment(currentDayDate).format("MM-DD-YYYY")];
     if (currentDayTasks) {
       currentDayTasks.task = newTask;
     }
     this.setState({
-      tasks: usersData,
-      currentDayTasks
+      tasks: usersData.active,
+      currentDayTasks,
+      popupVisible: true
     });
+
+    // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
+    if (todayDate) {
+      const task = {};
+
+      // костыль с task потом убрать
+      this.setState({
+        currentDayTasks: { task: usersData.active[todayDate] },
+        currentDayDate: todayDate
+      });
+    }
   };
 
   closePopup = async () => {

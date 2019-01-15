@@ -88,7 +88,9 @@ class Popup extends Component {
   removeTask = key => {
     try {
       const currentDate = moment(this.props.tasks.date).format("MM-DD-YYYY");
-      database.ref(`users/${userId}/tasks/${currentDate}/${key}`).remove();
+      database
+        .ref(`users/${userId}/tasks/active/${currentDate}/${key}`)
+        .remove();
       const removedElemIndex = this.state.tasks.findIndex(
         task => task.key === key
       );
@@ -126,6 +128,19 @@ class Popup extends Component {
     }
   };
 
+  moveTaskToDone = async (taskKey , text) => {
+    try {
+      const currentDate = moment(this.props.tasks.date).format("MM-DD-YYYY");
+      const dayRef = database.ref(`users/${userId}/tasks/done`).child(currentDate);
+      const newTaskKey = dayRef.push().key;
+      const update = {};
+      update[newTaskKey] = text;
+      await dayRef.update(update);
+    } catch (error) {
+      console.error(`Move failed. Error: ${error}`);
+    }
+  };
+
   render() {
     return (
       <Wrapper>
@@ -146,6 +161,7 @@ class Popup extends Component {
                 taskKey={key}
                 onRemove={this.removeTask}
                 addTaskToRemoveGroup={this.addTaskToRemoveGroup}
+                moveTaskToDone={this.moveTaskToDone}
               />
             ))}
           </fieldset>
