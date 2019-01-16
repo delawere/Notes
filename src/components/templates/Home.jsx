@@ -16,7 +16,8 @@ class Home extends Component {
       popupVisible: false,
       currentDayTasks: {},
       currentDayDate: "",
-      tasks: {}
+      activeTasks: {},
+      doneTasks: {}
     };
   }
 
@@ -54,7 +55,8 @@ class Home extends Component {
       currentDayTasks.task = newTask;
     }
     this.setState({
-      tasks: usersData.active,
+      doneTasks: usersData.done,
+      activeTasks: usersData.active,
       currentDayTasks,
       popupVisible: true
     });
@@ -81,7 +83,11 @@ class Home extends Component {
   render() {
     return (
       <div className="container" style={{ background: "#f7f7f7" }}>
-        <AsideMenu onClickDay={this.onClickDay} usersData={this.state.tasks} />
+        <AsideMenu
+          onClickDay={this.onClickDay}
+          activeTasks={this.state.activeTasks}
+          doneTasks={this.state.doneTasks}
+        />
         {this.state.popupVisible ? (
           <Popup
             tasks={this.state.currentDayTasks}

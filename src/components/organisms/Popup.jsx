@@ -154,6 +154,7 @@ class Popup extends Component {
             visible={this.state.removeList.length > 0}
           />
           <fieldset>
+          <legend>Active</legend>
             {this.state.tasks.map(({ text, key }) => (
               <PopupListItem
                 text={text}
@@ -164,6 +165,9 @@ class Popup extends Component {
                 moveTaskToDone={this.moveTaskToDone}
               />
             ))}
+          </fieldset>
+          <fieldset>
+            <legend>Done</legend>
           </fieldset>
           <AddForm
             date={moment(this.props.tasks.date).format("MM-DD-YYYY")}

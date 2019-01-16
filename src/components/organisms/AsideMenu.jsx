@@ -27,7 +27,7 @@ class AsideMenu extends Component {
 
   static getDerivedStateFromProps(props) {
     return {
-      tasks: props.usersData
+      tasks: props.activeTasks
     };
   }
 
@@ -46,7 +46,7 @@ class AsideMenu extends Component {
 
 AsideMenu.propTypes = {
   onClickDay: PropTypes.func,
-  usersData: PropTypes.object
+  activeTasks: PropTypes.object
 };
 
 export default AsideMenu;
