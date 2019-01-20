@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+/* import PropTypes from "prop-types"; */
 import fire from "../../config/Fire";
 
 const UserInfoContainer = styled.div`

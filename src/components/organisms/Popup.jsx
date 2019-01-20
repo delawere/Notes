@@ -48,39 +48,56 @@ class Popup extends Component {
     this.state = {
       fullDate: "",
       date: "",
-      tasks: [],
+      activeTask: [],
+      doneTask: [],
       removeList: []
     };
   }
 
   static getDerivedStateFromProps(props) {
-    let taskArray = [];
-    if (typeof props.tasks.task === "object") {
-      for (let key in props.tasks.task) {
-        taskArray.push({
+    const activeTasksArray = [];
+    const doneTasksArray = [];
+
+    if (typeof props.tasks.activeTasks === "object") {
+      for (let key in props.tasks.activeTasks) {
+        activeTasksArray.push({
           key: key,
-          text: props.tasks.task[key]
+          text: props.tasks.activeTasks[key]
         });
       }
     } else {
-      props.tasks.task && taskArray.push(props.tasks.task);
+      props.tasks.activeTasks && activeTasksArray.push(props.tasks.activeTasks);
     }
+
+    if (typeof props.tasks.doneTasks === "object") {
+      for (let key in props.tasks.doneTasks) {
+        doneTasksArray.push({
+          key: key,
+          text: props.tasks.doneTasks[key]
+        });
+      }
+    } else {
+      props.tasks.doneTasks && doneTasksArray.push(props.tasks.doneTasks);
+    }
+
     return {
       fullDate: props.date,
       date: moment(props.tasks.date).format("D MMMM"),
-      tasks: taskArray
+      activeTask: activeTasksArray,
+      doneTask: doneTasksArray
     };
   }
 
   refreshDataSet = newTask => {
+    debugger;
     const { key, task } = newTask;
-    const currentTasks = this.state.tasks;
+    const currentTasks = this.state.activeTask;
     currentTasks.push({
       key,
       text: task
     });
     this.setState({
-      tasks: currentTasks
+      activeTask: currentTasks
     });
     this.props.onAfterSubmit();
   };
@@ -91,13 +108,13 @@ class Popup extends Component {
       database
         .ref(`users/${userId}/tasks/active/${currentDate}/${key}`)
         .remove();
-      const removedElemIndex = this.state.tasks.findIndex(
+      const removedElemIndex = this.state.activeTask.findIndex(
         task => task.key === key
       );
-      const currentTasks = this.state.tasks;
+      const currentTasks = this.state.activeTask;
       currentTasks.splice(removedElemIndex, 1);
       this.setState({
-        tasks: currentTasks
+        activeTask: currentTasks
       });
       this.props.onAfterSubmit();
     } catch (e) {
@@ -128,14 +145,16 @@ class Popup extends Component {
     }
   };
 
-  moveTaskToDone = async (taskKey , text) => {
+  moveTaskToDone = async (taskKey, text) => {
     try {
       const currentDate = moment(this.props.tasks.date).format("MM-DD-YYYY");
-      const dayRef = database.ref(`users/${userId}/tasks/done`).child(currentDate);
+      const dayRef = database
+        .ref(`users/${userId}/tasks/done`)
+        .child(currentDate);
       const newTaskKey = dayRef.push().key;
       const update = {};
       update[newTaskKey] = text;
-      await dayRef.update(update);
+      await dayRef.update(update).then(() => this.removeTask(taskKey));
     } catch (error) {
       console.error(`Move failed. Error: ${error}`);
     }
@@ -154,8 +173,8 @@ class Popup extends Component {
             visible={this.state.removeList.length > 0}
           />
           <fieldset>
-          <legend>Active</legend>
-            {this.state.tasks.map(({ text, key }) => (
+            <legend>Active</legend>
+            {this.state.activeTask.map(({ text, key }) => (
               <PopupListItem
                 text={text}
                 key={key}
@@ -168,6 +187,9 @@ class Popup extends Component {
           </fieldset>
           <fieldset>
             <legend>Done</legend>
+            {this.state.doneTask.map(({ text, key }) => (
+              <PopupListItem text={text} key={key} taskKey={key} />
+            ))}
           </fieldset>
           <AddForm
             date={moment(this.props.tasks.date).format("MM-DD-YYYY")}
@@ -180,7 +202,6 @@ class Popup extends Component {
 }
 
 Popup.propTypes = {
-  tasks: PropTypes.object,
   closePopup: PropTypes.func,
   onAfterSubmit: PropTypes.func
 };

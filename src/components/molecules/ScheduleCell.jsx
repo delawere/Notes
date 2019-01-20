@@ -37,7 +37,8 @@ const ScheduleCell = ({
   className,
   fullDate,
   onClickDay,
-  task,
+  activeTasks,
+  doneTasks,
   taskKey
 }) => {
   const { next, prev } = className;
@@ -45,10 +46,15 @@ const ScheduleCell = ({
     <Cell
       style={next || prev ? otherDayStyle : {}}
       onClick={() =>
-        onClickDay({ date: fullDate, task: task ? task : "", taskKey: taskKey })
+        onClickDay({
+          date: fullDate,
+          activeTasks: activeTasks ? activeTasks : "",
+          doneTasks: doneTasks ? doneTasks : "",
+          taskKey: taskKey
+        })
       }
     >
-      <Flag style={task ? {} : { opacity: "0" }} />
+      <Flag style={activeTasks ? {} : { opacity: "0" }} />
       {value}
     </Cell>
   );
@@ -61,6 +67,7 @@ ScheduleCell.propTypes = {
   className: PropTypes.object,
   fullDate: PropTypes.string,
   onClickDay: PropTypes.func,
-  task: PropTypes.object,
+  activeTasks: PropTypes.object,
+  doneTasks: PropTypes.object,
   taskKey: PropTypes.string
 };

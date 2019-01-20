@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import fire from "../../config/Fire";
 import styled from "styled-components";
 import UserSchedule from "./UserSchedule";
 import PropTypes from "prop-types";
@@ -21,23 +20,28 @@ class AsideMenu extends Component {
     super(props);
 
     this.state = {
-      tasks: {}
+      activeTasks: {},
+      doneTasks: {}
     };
   }
 
   static getDerivedStateFromProps(props) {
+    const { activeTasks, doneTasks } = props;
     return {
-      tasks: props.activeTasks
+      activeTasks,
+      doneTasks
     };
   }
 
   render() {
+    const { activeTasks, doneTasks } = this.state;
     return (
       <AsideContainer>
         <UserInfo />
         <UserSchedule
           onClickDay={this.props.onClickDay}
-          usersData={this.state.tasks}
+          activeTasks={activeTasks}
+          doneTasks={doneTasks}
         />
       </AsideContainer>
     );
@@ -46,7 +50,8 @@ class AsideMenu extends Component {
 
 AsideMenu.propTypes = {
   onClickDay: PropTypes.func,
-  activeTasks: PropTypes.object
+  activeTasks: PropTypes.object,
+  doneTasks: PropTypes.object
 };
 
 export default AsideMenu;

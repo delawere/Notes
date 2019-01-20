@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+/* import PropTypes from "prop-types"; */
 
 const SvgDoneButton = styled.svg`
   width: 32px;
@@ -28,6 +28,6 @@ const DoneButton = ({ moveTaskToDone, taskKey, text }) => (
   </SvgDoneButton>
 );
 
-DoneButton.propTypes = {};
+/* DoneButton.propTypes = {}; */
 
 export default DoneButton;

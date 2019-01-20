@@ -52,7 +52,7 @@ class Home extends Component {
     const newTask =
       usersData.active[moment(currentDayDate).format("MM-DD-YYYY")];
     if (currentDayTasks) {
-      currentDayTasks.task = newTask;
+      currentDayTasks.activeTasks = newTask;
     }
     this.setState({
       doneTasks: usersData.done,
@@ -63,7 +63,6 @@ class Home extends Component {
 
     // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
     if (todayDate) {
-      const task = {};
 
       // костыль с task потом убрать
       this.setState({
