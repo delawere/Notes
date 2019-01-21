@@ -49,11 +49,14 @@ class Home extends Component {
   getUsersData = async todayDate => {
     const usersData = await FirebaseRequest.getData();
     const { currentDayDate, currentDayTasks } = this.state;
-    const newTask =
-      usersData.active[moment(currentDayDate).format("MM-DD-YYYY")];
-    if (currentDayTasks) {
-      currentDayTasks.activeTasks = newTask;
-    }
+    const { active, done } = usersData;
+    const currentDateFormatted = moment(currentDayDate).format("MM-DD-YYYY");
+    const newActiveTask = active[currentDateFormatted];
+    const newDoneTask = done[currentDateFormatted];
+
+    currentDayTasks.activeTasks = newActiveTask || {};
+    currentDayTasks.doneTasks = newDoneTask || {};
+
     this.setState({
       doneTasks: usersData.done,
       activeTasks: usersData.active,
@@ -63,7 +66,6 @@ class Home extends Component {
 
     // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
     if (todayDate) {
-
       // костыль с task потом убрать
       this.setState({
         currentDayTasks: { task: usersData.active[todayDate] },

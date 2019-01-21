@@ -55,50 +55,56 @@ class Popup extends Component {
   }
 
   static getDerivedStateFromProps(props) {
-    const activeTasksArray = [];
-    const doneTasksArray = [];
+    const { activeTasks, doneTasks, date } = props.tasks;
+    const activeTaskArray = [];
+    const doneTaskArray = [];
 
-    if (typeof props.tasks.activeTasks === "object") {
-      for (let key in props.tasks.activeTasks) {
-        activeTasksArray.push({
+    //Переписать, в компонент должны приходить данные в готовом виде.
+
+    if (typeof activeTasks === "object") {
+      for (let key in activeTasks) {
+        activeTaskArray.push({
           key: key,
-          text: props.tasks.activeTasks[key]
+          text: activeTasks[key]
         });
       }
     } else {
-      props.tasks.activeTasks && activeTasksArray.push(props.tasks.activeTasks);
+      activeTasks && activeTaskArray.push(activeTasks);
     }
 
-    if (typeof props.tasks.doneTasks === "object") {
-      for (let key in props.tasks.doneTasks) {
-        doneTasksArray.push({
+    if (typeof doneTasks === "object") {
+      for (let key in doneTasks) {
+        doneTaskArray.push({
           key: key,
-          text: props.tasks.doneTasks[key]
+          text: doneTasks[key]
         });
       }
     } else {
-      props.tasks.doneTasks && doneTasksArray.push(props.tasks.doneTasks);
+      doneTasks && doneTaskArray.push(doneTasks);
     }
 
     return {
       fullDate: props.date,
-      date: moment(props.tasks.date).format("D MMMM"),
-      activeTask: activeTasksArray,
-      doneTask: doneTasksArray
+      date: moment(date).format("D MMMM"),
+      activeTask: activeTaskArray || [],
+      doneTask: doneTaskArray || []
     };
   }
 
-  refreshDataSet = newTask => {
-    debugger;
+  refreshDataSet = (newTask, active) => {
     const { key, task } = newTask;
-    const currentTasks = this.state.activeTask;
-    currentTasks.push({
-      key,
-      text: task
-    });
+    const activeTask = this.state.activeTask;
+    const doneTask = this.state.doneTask;
+
+    active
+      ? activeTask.push({ key, text: task })
+      : doneTask.push({ key, text: task });
+
     this.setState({
-      activeTask: currentTasks
+      activeTask,
+      doneTask
     });
+
     this.props.onAfterSubmit();
   };
 
@@ -155,6 +161,7 @@ class Popup extends Component {
       const update = {};
       update[newTaskKey] = text;
       await dayRef.update(update).then(() => this.removeTask(taskKey));
+      this.refreshDataSet({ taskKey, text }, false);
     } catch (error) {
       console.error(`Move failed. Error: ${error}`);
     }

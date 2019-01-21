@@ -49,7 +49,7 @@ class AddForm extends Component {
             key: newTaskKey
           },
           () => {
-            this.props.refreshDataSet(this.state);
+            this.props.refreshDataSet(this.state, true);
           }
         );
       } catch (error) {
