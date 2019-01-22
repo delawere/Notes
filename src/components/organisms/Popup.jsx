@@ -13,11 +13,19 @@ const Wrapper = styled.div`
   height: 80%;
   width: 60vw;
   z-index: 999;
-  top: 8%;
+  top: 3%;
   left: 25vw;
   background: #fff;
   color: #242425;
 `;
+
+const Title = styled.div `
+  color: rgba(175,47,47,0.15);
+  margin: 0 auto;
+  text-align: center;
+  font-size: 54px;
+  font-weight: 500;
+`
 
 const PopupContainer = styled.div`
   width: 80%;
@@ -26,7 +34,7 @@ const PopupContainer = styled.div`
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   margin: auto;
-  margin-top: 50px;
+  margin-top: 25px;
   padding: 40px 15px;
   padding-top: 0;
 `;
@@ -54,40 +62,12 @@ class Popup extends Component {
     };
   }
 
-  static getDerivedStateFromProps(props) {
-    const { activeTasks, doneTasks, date } = props.tasks;
-    const activeTaskArray = [];
-    const doneTaskArray = [];
-
-    //Переписать, в компонент должны приходить данные в готовом виде.
-
-    if (typeof activeTasks === "object") {
-      for (let key in activeTasks) {
-        activeTaskArray.push({
-          key: key,
-          text: activeTasks[key]
-        });
-      }
-    } else {
-      activeTasks && activeTaskArray.push(activeTasks);
-    }
-
-    if (typeof doneTasks === "object") {
-      for (let key in doneTasks) {
-        doneTaskArray.push({
-          key: key,
-          text: doneTasks[key]
-        });
-      }
-    } else {
-      doneTasks && doneTaskArray.push(doneTasks);
-    }
-
+  static getDerivedStateFromProps({ tasks, date }) {
     return {
-      fullDate: props.date,
+      fullDate: date,
       date: moment(date).format("D MMMM"),
-      activeTask: activeTaskArray || [],
-      doneTask: doneTaskArray || []
+      activeTask: tasks.activeTasks || [],
+      doneTask: tasks.doneTasks || []
     };
   }
 
@@ -105,12 +85,12 @@ class Popup extends Component {
       doneTask
     });
 
-    this.props.onAfterSubmit();
+  this.props.onAfterSubmit(); 
   };
 
   removeTask = key => {
     try {
-      const currentDate = moment(this.props.tasks.date).format("MM-DD-YYYY");
+      const currentDate = moment(this.props.date).format("MM-DD-YYYY");
       database
         .ref(`users/${userId}/tasks/active/${currentDate}/${key}`)
         .remove();
@@ -153,7 +133,7 @@ class Popup extends Component {
 
   moveTaskToDone = async (taskKey, text) => {
     try {
-      const currentDate = moment(this.props.tasks.date).format("MM-DD-YYYY");
+      const currentDate = moment(this.props.date).format("MM-DD-YYYY");
       const dayRef = database
         .ref(`users/${userId}/tasks/done`)
         .child(currentDate);
@@ -161,19 +141,20 @@ class Popup extends Component {
       const update = {};
       update[newTaskKey] = text;
       await dayRef.update(update).then(() => this.removeTask(taskKey));
-      this.refreshDataSet({ taskKey, text }, false);
+      this.refreshDataSet({ key: taskKey, task: text }, false);
     } catch (error) {
       console.error(`Move failed. Error: ${error}`);
     }
   };
 
   render() {
+    console.log(this.state)
     return (
       <Wrapper>
-        <span>{this.props.tasks === "String" ? this.props.tasks : null}</span>
+        <Title>todos</Title>
         <PopupContainer>
           <PopupHeader>
-            {moment(this.props.tasks.date).format("D MMMM")}
+            {moment(this.props.date).format("D MMMM")}
           </PopupHeader>
           <DeleteAllTasksButton
             deleteMarkedTasks={this.deleteMarkedTasks}
@@ -199,7 +180,7 @@ class Popup extends Component {
             ))}
           </fieldset>
           <AddForm
-            date={moment(this.props.tasks.date).format("MM-DD-YYYY")}
+            date={moment(this.props.date).format("MM-DD-YYYY")}
             refreshDataSet={this.refreshDataSet}
           />
         </PopupContainer>
@@ -210,7 +191,8 @@ class Popup extends Component {
 
 Popup.propTypes = {
   closePopup: PropTypes.func,
-  onAfterSubmit: PropTypes.func
+  onAfterSubmit: PropTypes.func,
+  tasks: PropTypes.object
 };
 
 export default Popup;

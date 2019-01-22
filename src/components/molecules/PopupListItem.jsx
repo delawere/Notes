@@ -17,11 +17,18 @@ const Container = styled.div`
   transition-timing-function: ease-out;
   cursor: pointer;
   border-bottom: 1px solid rgba(222, 222, 222, 0.4);
+
+    &:hover .ControlButtons{
+      opacity: 1;
+    } 
 `;
 
 const ControlButtons = styled.div`
   display: flex;
-  justify-content: space-between;
+  opacity: 0;
+  justify-content: center;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
   width: 70px;
 `;
 
@@ -53,13 +60,15 @@ class PopupListItem extends Component {
           addTaskToRemoveGroup={this.onChecked}
           isMarked={this.state.isMarked}
         />
-        <ControlButtons>
+        <ControlButtons className="ControlButtons">
           <DeleteButton onRemove={onRemove} taskKey={taskKey} />
-          <DoneButton
-            moveTaskToDone={moveTaskToDone}
-            taskKey={taskKey}
-            text={text}
-          />
+          {moveTaskToDone ? (
+            <DoneButton
+              moveTaskToDone={moveTaskToDone}
+              taskKey={taskKey}
+              text={text}
+            />
+          ) : null}
         </ControlButtons>
       </Container>
     );

@@ -14,18 +14,38 @@ class Home extends Component {
 
     this.state = {
       popupVisible: false,
-      currentDayTasks: {},
+      currentDayTasks: {
+        doneTasks: [],
+        activeTasks: []
+      },
       currentDayDate: "",
       activeTasks: {},
       doneTasks: {}
     };
   }
 
+  parseTasksObjectToArray = data => {
+    const result = [];
+    for (let key in data) {
+      result.push({
+        key: key,
+        text: data[key]
+      });
+    }
+
+    return result;
+  };
+
   onClickDay = data => {
     const { date } = data;
+    const doneTasks = this.parseTasksObjectToArray(data.doneTasks);
+    const activeTasks = this.parseTasksObjectToArray(data.activeTasks);
 
     this.setState({
-      currentDayTasks: data,
+      currentDayTasks: {
+        doneTasks: doneTasks,
+        activeTasks: activeTasks
+      },
       currentDayDate: date
     });
   };
@@ -47,15 +67,25 @@ class Home extends Component {
   }
 
   getUsersData = async todayDate => {
-    const usersData = await FirebaseRequest.getData();
     const { currentDayDate, currentDayTasks } = this.state;
+    //Обновлять попап нужно либо по клику, либо при инициализации. 
+    //Второе выполняется в componentDidMount. Соответственно, одна из дат должна присутствовать.
+    if (!currentDayDate && !todayDate) {
+      return;
+    }
+    const usersData = await FirebaseRequest.getData();
     const { active, done } = usersData;
-    const currentDateFormatted = moment(currentDayDate).format("MM-DD-YYYY");
-    const newActiveTask = active[currentDateFormatted];
-    const newDoneTask = done[currentDateFormatted];
+    const currentDate = currentDayDate || todayDate;
+    const currentDateFormatted = moment(currentDate).format("MM-DD-YYYY");
+    const newActiveTask = this.parseTasksObjectToArray(
+      active[currentDateFormatted]
+    );
+    const newDoneTask = this.parseTasksObjectToArray(
+      done[currentDateFormatted]
+    );
 
-    currentDayTasks.activeTasks = newActiveTask || {};
-    currentDayTasks.doneTasks = newDoneTask || {};
+    currentDayTasks.activeTasks = newActiveTask || [];
+    currentDayTasks.doneTasks = newDoneTask || [];
 
     this.setState({
       doneTasks: usersData.done,
@@ -67,8 +97,9 @@ class Home extends Component {
     // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
     if (todayDate) {
       // костыль с task потом убрать
+
       this.setState({
-        currentDayTasks: { task: usersData.active[todayDate] },
+        currentDayTasks,
         currentDayDate: todayDate
       });
     }
@@ -92,6 +123,7 @@ class Home extends Component {
         {this.state.popupVisible ? (
           <Popup
             tasks={this.state.currentDayTasks}
+            date={this.state.currentDayDate}
             closePopup={this.closePopup}
             onAfterSubmit={this.getUsersData}
           />

@@ -74,7 +74,8 @@ const ListItemField = ({ text, taskKey, addTaskToRemoveGroup, isMarked }) => (
 ListItemField.propTypes = {
   text: PropTypes.string,
   taskKey: PropTypes.string,
-  addTaskToRemoveGroup: PropTypes.func
+  addTaskToRemoveGroup: PropTypes.func,
+  isMarked: PropTypes.bool
 };
 
 export default ListItemField;

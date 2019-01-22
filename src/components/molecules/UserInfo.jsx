@@ -9,20 +9,20 @@ const UserInfoContainer = styled.div`
   padding: 15px;
   display: flex;
   flex-direction: column;
-  background: rgba(187, 187, 187, 0.3);
+  background: rgba(0, 0, 0, 0.008);
   justify-content: space-between;
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 `;
 
 const UserName = styled.p`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
   margin: 0;
 `;
 
 const UserEmail = styled.p`
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 300;
-  font-style: italic;
   margin: 0;
 `;
 
@@ -35,7 +35,8 @@ const LogOutButton = styled.button`
   border-radius: 3px;
   box-sizing: content-box;
   align-self: flex-end;
-  background: rgba(187, 187, 187, 0.8);
+  color: #fff;
+  background: #9bdaf1;
 `;
 
 class UserInfo extends PureComponent {
