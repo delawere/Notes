@@ -1,5 +1,4 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
 import PropTypes from "prop-types";
 
 const Input = ({ type, name, value, onChange, className, placeholder }) => (

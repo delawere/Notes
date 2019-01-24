@@ -11,6 +11,7 @@ const Label = styled.span`
   display: inline-block;
   margin-left: 55px;
   font-weight: 400;
+  text-decoration: ${props => (props.isLineThrought ? "line-through" : "none")};
 `;
 
 const CheckBox = styled.input`
@@ -28,7 +29,7 @@ const CheckBoxIcon = styled.svg`
   top: 0;
 `;
 
-const ListItemField = ({ text, taskKey, addTaskToRemoveGroup, isMarked }) => (
+const ListItemField = ({ text, taskKey, addTaskToRemoveGroup, isMarked, isLineThrought }) => (
   <FieldContainer>
     <CheckBox
       type="checkbox"
@@ -67,7 +68,7 @@ const ListItemField = ({ text, taskKey, addTaskToRemoveGroup, isMarked }) => (
       </CheckBoxIcon>
     </label>
 
-    <Label>{text}</Label>
+    <Label isLineThrought={isLineThrought}>{text}</Label>
   </FieldContainer>
 );
 

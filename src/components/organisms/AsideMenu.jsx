@@ -8,7 +8,6 @@ const AsideContainer = styled.aside`
   height: 100%;
   width: 15vw;
   position: fixed;
-  /*   background: #242425; */
   background: #fff;
   top: 0;
   left: 0;

@@ -6,6 +6,10 @@ import PropTypes from "prop-types";
 import CalendarContainer from "../molecules/CalendarContainer";
 import Arrow from "../atoms/Arrow";
 
+const Container = styled.div `
+  margin-top: 75px;
+`
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-around;
@@ -26,10 +30,10 @@ const CalendarWrap = styled.div`
 `;
 
 const Title = styled.h2`
-  margin-top: 320px;
   color: #242425;
-  font-size: 15px;
-  margin-left: 30px;
+  font-size: 16px;
+  margin-left: 50px;
+  font-weight: 600;
 `;
 
 const WeekDayContainer = styled.div`
@@ -38,9 +42,11 @@ const WeekDayContainer = styled.div`
   justify-content: space-around;
   flex-wrap: nowrap;
   color: #242425;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 13px;
+  font-weight: 500;
   margin: 0 auto;
+  padding-bottom: 8px;
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.08);
 `;
 
 class UserSchedule extends PureComponent {
@@ -95,7 +101,7 @@ class UserSchedule extends PureComponent {
 
   render() {
     return (
-      <React.Fragment>
+      <Container>
         <Title>{moment(this.state.month).format("MMMM YYYY")}</Title>
         <Wrapper>
           <Arrow arrowSide={"left"} onClick={this.prevMonth} />
@@ -114,7 +120,7 @@ class UserSchedule extends PureComponent {
           </CalendarWrap>
           <Arrow arrowSide={"right"} onClick={this.nextMonth} />
         </Wrapper>
-      </React.Fragment>
+      </Container>
     );
   }
 }

@@ -3,18 +3,19 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const Cell = styled.div`
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  padding: 13px;
+  display: flex;
+  width: 26px;
+  height: 26px;
   margin: 0px;
-  text-align: center;
-  vertical-align: top;
+  margin-top: 2px;
+  align-items: flex-end;
+  justify-content: center;
   cursor: pointer;
   position: relative;
   font-size: 12px;
   font-weight: 500;
   color: #242425;
+  border: 1px solid rgba(0, 0, 0, 0.035);
 `;
 
 const Flag = styled.div`
@@ -23,8 +24,10 @@ const Flag = styled.div`
   width: 4px;
   height: 4px;
   background-color: rgb(31, 161, 24);
-  top: 8px;
+  top: 4px;
+  -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 `;
 

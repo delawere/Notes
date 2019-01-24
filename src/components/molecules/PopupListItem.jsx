@@ -18,9 +18,9 @@ const Container = styled.div`
   cursor: pointer;
   border-bottom: 1px solid rgba(222, 222, 222, 0.4);
 
-    &:hover .ControlButtons{
-      opacity: 1;
-    } 
+  &:hover .ControlButtons {
+    opacity: 1;
+  }
 `;
 
 const ControlButtons = styled.div`
@@ -51,14 +51,15 @@ class PopupListItem extends Component {
   };
 
   render() {
-    const { text, taskKey, onRemove, moveTaskToDone } = this.props;
+    const { text, taskKey, onRemove, moveTaskToDone, isLineThrought } = this.props;
     return (
-      <Container>
+      <Container isLineThrought={isLineThrought}>
         <ListItemField
           text={text}
           taskKey={taskKey}
           addTaskToRemoveGroup={this.onChecked}
           isMarked={this.state.isMarked}
+          isLineThrought={isLineThrought}
         />
         <ControlButtons className="ControlButtons">
           <DeleteButton onRemove={onRemove} taskKey={taskKey} />

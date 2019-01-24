@@ -4,39 +4,22 @@ import styled from "styled-components";
 import fire from "../../config/Fire";
 
 const UserInfoContainer = styled.div`
+  color: #0070c9;
   width: 100%;
-  min-height: 120px;
   padding: 15px;
-  display: flex;
-  flex-direction: column;
-  background: rgba(0, 0, 0, 0.008);
-  justify-content: space-between;
-  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3;
 `;
 
-const UserName = styled.p`
-  font-size: 20px;
+const UserName = styled.span`
+  font-size: 16px;
   font-weight: 500;
   margin: 0;
 `;
 
-const UserEmail = styled.p`
-  font-size: 16px;
-  font-weight: 300;
-  margin: 0;
-`;
-
-const LogOutButton = styled.button`
-  border: none;
-  max-width: 110px;
-  font-size: 14px;
-  font-weight: 400;
-  padding: 5px 25px;
-  border-radius: 3px;
-  box-sizing: content-box;
-  align-self: flex-end;
-  color: #fff;
-  background: #9bdaf1;
+const SVG = styled.svg`
+  margin-right: 12px;
+  fill: #0070c9;
 `;
 
 class UserInfo extends PureComponent {
@@ -70,11 +53,17 @@ class UserInfo extends PureComponent {
   render() {
     return (
       <UserInfoContainer>
-        <div>
-          <UserName>{this.state.userName}</UserName>
-          <UserEmail>{this.state.userEmail}</UserEmail>
-        </div>
-        <LogOutButton onClick={this.logout}>Log out</LogOutButton>
+        <SVG
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 32 32"
+        >
+          <title>person</title>
+          <path d="M18 22.082v-1.649c2.203-1.241 4-4.337 4-7.432 0-4.971 0-9-6-9s-6 4.029-6 9c0 3.096 1.797 6.191 4 7.432v1.649c-6.784 0.555-12 3.888-12 7.918h28c0-4.030-5.216-7.364-12-7.918z" />
+        </SVG>
+        <UserName>Log out {this.state.userName}</UserName>
       </UserInfoContainer>
     );
   }

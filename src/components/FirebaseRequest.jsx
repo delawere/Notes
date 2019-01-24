@@ -3,20 +3,28 @@ import fire from "../config/Fire";
 const database = fire.database();
 const userId = localStorage.getItem("user");
 
-const FirebaseRequest = {
-  getData: ""
-};
+const FirebaseRequest = {};
 
 FirebaseRequest.getData = async () => {
   let result = {};
-  const tasks = database
-    .ref(`users/${userId}/tasks`)
-    .once("value", snap => {
-      result = snap.val() || {};
-    });
+  const tasks = database.ref(`users/${userId}/tasks`).once("value", snap => {
+    result = snap.val() || {};
+  });
   await tasks;
 
   return result;
+};
+
+FirebaseRequest.removeTask = async (key, date) => {
+  await database.ref(`users/${userId}/tasks/active/${date}/${key}`).remove();
+};
+
+FirebaseRequest.moveTaskToDone = async (text, date) => {
+  const dayRef = database.ref(`users/${userId}/tasks/done`).child(date);
+  const newTaskKey = dayRef.push().key;
+  const update = {};
+  update[newTaskKey] = text;
+  await dayRef.update(update);
 };
 
 export default FirebaseRequest;

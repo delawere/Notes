@@ -16,6 +16,7 @@ const SvgArrows = styled.svg`
   width: 10px;
   heigth: 10px;
   border-radius: 3px;
+  margin-top: 50px;
   background-color: inherit;
   transition-property: fill;
   transition-duration: 0.15s;
@@ -23,7 +24,7 @@ const SvgArrows = styled.svg`
   fill: #242425;
 
   &:hover {
-    fill: #fff;
+    fill: rgba(0, 0, 0, 0.25);
   }
 `;
 
