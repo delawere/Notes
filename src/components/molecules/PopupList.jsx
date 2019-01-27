@@ -5,11 +5,12 @@ import PopupListItem from "../molecules/PopupListItem";
 const PopupList = ({
   title,
   tasksList,
+  visible,
   onRemove,
   addTaskToRemoveGroup,
   moveTaskToDone
 }) => (
-  <fieldset>
+  <fieldset style={{ display: visible ? "flex" : "none"}}>
     <legend>{title}</legend>
     {tasksList.map(({ text, key }) => (
       <PopupListItem
@@ -19,7 +20,7 @@ const PopupList = ({
         onRemove={onRemove || ""}
         addTaskToRemoveGroup={addTaskToRemoveGroup || ""}
         moveTaskToDone={moveTaskToDone || ""}
-        isLineThrought={title === 'Done' ? true : false}
+        isLineThrought={title === "Done" ? true : false}
       />
     ))}
   </fieldset>

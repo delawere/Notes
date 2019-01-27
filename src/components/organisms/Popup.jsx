@@ -15,25 +15,18 @@ const Wrapper = styled.div`
   height: 80%;
   width: 60vw;
   z-index: 999;
-  top: 3%;
+  top: 8%;
   left: 25vw;
   color: #242425;
 `;
 
-const Title = styled.div`
-  color: rgba(175, 47, 47, 0.35);
-  margin: 0 auto;
-  text-align: center;
-  font-size: 54px;
-  font-weight: 500;
-`;
-
 const PopupContainer = styled.div`
   width: 80%;
+  transition: 5s ease-out;
   max-width: 950px;
   background-color: #fff;
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  border-radius: 8px;
   margin: auto;
   margin-top: 25px;
   padding: 5px 15px;
@@ -56,7 +49,8 @@ class Popup extends Component {
       date: "",
       activeTask: [],
       doneTask: [],
-      removeList: []
+      removeList: [],
+      visibleList: "all"
     };
   }
 
@@ -128,10 +122,16 @@ class Popup extends Component {
     }
   };
 
+  hideList = listName => {
+    this.setState({
+      visibleList: listName
+    }, () => console.log(this.state));
+  };
+
   render() {
+    const { visibleList } = this.state;
     return (
       <Wrapper>
-        <Title>todos</Title>
         <PopupContainer>
           <PopupHeader>{moment(this.props.date).format("D MMMM")}</PopupHeader>
           <DeleteAllTasksButton
@@ -141,6 +141,9 @@ class Popup extends Component {
           <PopupList
             title="Active"
             tasksList={this.state.activeTask}
+            visible={
+              visibleList === "active" || visibleList === "all" ? true : false
+            }
             onRemove={this.removeTask}
             addTaskToRemoveGroup={this.addTaskToRemoveGroup}
             moveTaskToDone={this.moveTaskToDone}
@@ -148,6 +151,9 @@ class Popup extends Component {
           <PopupList
             title="Done"
             tasksList={this.state.doneTask}
+            visible={
+              visibleList === "done" || visibleList === "all" ? true : false
+            }
             onRemove={this.removeTask}
             addTaskToRemoveGroup={this.addTaskToRemoveGroup}
           />
@@ -155,7 +161,7 @@ class Popup extends Component {
             date={moment(this.props.date).format("MM-DD-YYYY")}
             refreshDataSet={this.refreshDataSet}
           />
-          <ShowListControls />
+          <ShowListControls hideList={this.hideList} activeButton={this.state.visibleList}/>
         </PopupContainer>
       </Wrapper>
     );

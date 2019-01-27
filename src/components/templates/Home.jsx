@@ -3,6 +3,8 @@ import fire from "../../config/Fire";
 import AsideMenu from "../organisms/AsideMenu";
 import FirebaseRequest from "../FirebaseRequest";
 import Popup from "../organisms/Popup";
+import Header from "../organisms/Header";
+import Footer from "../organisms/Footer";
 import * as moment from "moment";
 
 const database = fire.database();
@@ -115,6 +117,7 @@ class Home extends Component {
   render() {
     return (
       <div className="container" style={{ background: "#f7f7f7" }}>
+        <Header />
         <AsideMenu
           onClickDay={this.onClickDay}
           activeTasks={this.state.activeTasks}
@@ -128,6 +131,7 @@ class Home extends Component {
             onAfterSubmit={this.getUsersData}
           />
         ) : null}
+        <Footer />
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import ShowListButton from "../atoms/ShowListButton";
 
 const List = styled.ul`
   padding: 0;
@@ -7,29 +8,21 @@ const List = styled.ul`
   text-align: center;
   padding-top: 22px;
 `;
-const Item = styled.li`
-  display: inline;
-  color: inherit;
-  margin: 3px;
-  padding: 3px 7px;
-  text-decoration: none;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  cursor: pointer;
-`;
 
-const ShowListControls = () => (
-  <List>
-    <Item>
-      <a>All</a>
-    </Item>
-    <Item>
-      <a>Active</a>
-    </Item>
-    <Item>
-      <a>Done</a>
-    </Item>
-  </List>
-);
+const ButtonsText = ["All", "Active", "Done"];
+
+const ShowListControls = ({ hideList, activeButton }) => {
+  return (
+    <List>
+      {ButtonsText.map(text => (
+        <ShowListButton
+          text={text}
+          hideList={hideList}
+          active={activeButton === text.toLowerCase() ? true : false}
+        />
+      ))}
+    </List>
+  );
+};
 
 export default ShowListControls;

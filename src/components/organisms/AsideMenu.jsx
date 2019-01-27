@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 import UserInfo from "../molecules/UserInfo";
 
 const AsideContainer = styled.aside`
-  height: 100%;
   width: 15vw;
-  position: fixed;
+  position: absolute;
   background: #fff;
-  top: 0;
-  left: 0;
-  border-right: 1px solid #a8a8a8;
+  top: 120px;
+  left: 15px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
 `;
 
 class AsideMenu extends Component {
@@ -36,7 +36,7 @@ class AsideMenu extends Component {
     const { activeTasks, doneTasks } = this.state;
     return (
       <AsideContainer>
-        <UserInfo />
+        {/* <UserInfo /> */}
         <UserSchedule
           onClickDay={this.props.onClickDay}
           activeTasks={activeTasks}

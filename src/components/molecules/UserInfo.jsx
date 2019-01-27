@@ -5,7 +5,6 @@ import fire from "../../config/Fire";
 
 const UserInfoContainer = styled.div`
   color: #0070c9;
-  width: 100%;
   padding: 15px;
   padding-bottom: 4px;
   border-bottom: 1px solid #e3e3e3;

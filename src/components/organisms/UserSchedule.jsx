@@ -6,10 +6,6 @@ import PropTypes from "prop-types";
 import CalendarContainer from "../molecules/CalendarContainer";
 import Arrow from "../atoms/Arrow";
 
-const Container = styled.div `
-  margin-top: 75px;
-`
-
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-around;
@@ -101,7 +97,7 @@ class UserSchedule extends PureComponent {
 
   render() {
     return (
-      <Container>
+      <React.Fragment>
         <Title>{moment(this.state.month).format("MMMM YYYY")}</Title>
         <Wrapper>
           <Arrow arrowSide={"left"} onClick={this.prevMonth} />
@@ -120,7 +116,7 @@ class UserSchedule extends PureComponent {
           </CalendarWrap>
           <Arrow arrowSide={"right"} onClick={this.nextMonth} />
         </Wrapper>
-      </Container>
+      </React.Fragment>
     );
   }
 }
