@@ -40,6 +40,11 @@ const PopupHeader = styled.header`
   font-weight: 450;
 `;
 
+const ControlsContainer = styled.div`
+  display: flex;
+  padding-top: 15px;
+`;
+
 class Popup extends Component {
   constructor(props) {
     super(props);
@@ -123,9 +128,12 @@ class Popup extends Component {
   };
 
   hideList = listName => {
-    this.setState({
-      visibleList: listName
-    }, () => console.log(this.state));
+    this.setState(
+      {
+        visibleList: listName
+      },
+      () => console.log(this.state)
+    );
   };
 
   render() {
@@ -133,11 +141,17 @@ class Popup extends Component {
     return (
       <Wrapper>
         <PopupContainer>
+          <ControlsContainer>
+            <DeleteAllTasksButton
+              deleteMarkedTasks={this.deleteMarkedTasks}
+              visible={this.state.removeList.length > 0}
+            />
+            <DeleteAllTasksButton
+              deleteMarkedTasks={this.deleteMarkedTasks}
+              visible={this.state.removeList.length > 0}
+            />
+          </ControlsContainer>
           <PopupHeader>{moment(this.props.date).format("D MMMM")}</PopupHeader>
-          <DeleteAllTasksButton
-            deleteMarkedTasks={this.deleteMarkedTasks}
-            visible={this.state.removeList.length > 0}
-          />
           <PopupList
             title="Active"
             tasksList={this.state.activeTask}
@@ -161,7 +175,10 @@ class Popup extends Component {
             date={moment(this.props.date).format("MM-DD-YYYY")}
             refreshDataSet={this.refreshDataSet}
           />
-          <ShowListControls hideList={this.hideList} activeButton={this.state.visibleList}/>
+          <ShowListControls
+            hideList={this.hideList}
+            activeButton={this.state.visibleList}
+          />
         </PopupContainer>
       </Wrapper>
     );

@@ -21,12 +21,10 @@ const Button = styled.button`
   -webkit-transition: all 0.15s ease-in-out;
   -webkit-transition: all 0.15s ease-in-out;
   transition: all 0.15s ease-in-out;
-  fill: #fff;
-  background-color: #ec5e69;
-  color: #fff;
+  color: #000;
   font-weight: 500;
 
-  background-color: ${props => (props.visible ? "#ec5e69" : "grey")};
+  border: 1px solid ${props => (props.visible ? "#ec5e69" : "rgba(0,0,0,.15)")};
   cursor: ${props => (props.visible ? "pointer" : "auto")};
 `;
 
