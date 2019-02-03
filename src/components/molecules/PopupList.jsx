@@ -7,7 +7,7 @@ const PopupList = ({
   tasksList,
   visible,
   onRemove,
-  addTaskToRemoveGroup,
+  addTaskToMarkedGroup,
   moveTaskToDone
 }) => (
   <fieldset style={{ display: visible ? "flex" : "none"}}>
@@ -18,7 +18,7 @@ const PopupList = ({
         key={key}
         taskKey={key}
         onRemove={onRemove || ""}
-        addTaskToRemoveGroup={addTaskToRemoveGroup || ""}
+        addTaskToMarkedGroup={addTaskToMarkedGroup || ""}
         moveTaskToDone={moveTaskToDone || ""}
         isLineThrought={title === "Done" ? true : false}
       />
@@ -30,7 +30,7 @@ PopupList.propTypes = {
   title: PropTypes.string,
   tasksList: PropTypes.array,
   onRemove: PropTypes.func,
-  addTaskToRemoveGroup: PropTypes.func,
+  addTaskToMarkedGroup: PropTypes.func,
   moveTaskToDone: PropTypes.func
 };
 

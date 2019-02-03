@@ -6,9 +6,10 @@ import FirebaseRequest from "../FirebaseRequest";
 
 import PopupList from "../molecules/PopupList";
 import AddForm from "../molecules/AddForm";
-import DeleteAllTasksButton from "../atoms/DeleteAllTasksButton";
 import PopupActions from "./PopupActions";
 import ShowListControls from "../molecules/ShowListControls";
+import MenuButton from "../atoms/MenuButton";
+import Menu from "../molecules/Menu";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -29,8 +30,8 @@ const PopupContainer = styled.div`
   border-radius: 8px;
   margin: auto;
   margin-top: 25px;
-  padding: 5px 15px;
-  padding-top: 0;
+  padding: 10px 45px;
+  padding-bottom: 5px;
 `;
 
 const PopupHeader = styled.header`
@@ -38,11 +39,8 @@ const PopupHeader = styled.header`
   padding: 20px 0;
   font-size: 1.8rem;
   font-weight: 450;
-`;
-
-const ControlsContainer = styled.div`
   display: flex;
-  padding-top: 15px;
+  justify-content: space-between;
 `;
 
 class Popup extends Component {
@@ -54,8 +52,9 @@ class Popup extends Component {
       date: "",
       activeTask: [],
       doneTask: [],
-      removeList: [],
-      visibleList: "all"
+      markedList: [],
+      visibleList: "all",
+      showMenu: false
     };
   }
 
@@ -86,11 +85,15 @@ class Popup extends Component {
   removeTask = async key => {
     try {
       const currentDate = moment(this.props.date).format("MM-DD-YYYY");
-      const currentTasks = await PopupActions.removeTask(currentDate, key, [
-        ...this.state.activeTask
-      ]);
+      const currentTasks = await PopupActions.removeTask(
+        currentDate,
+        key,
+        [...this.state.activeTask],
+        [...this.state.doneTask]
+      );
+      debugger;
       this.setState({
-        activeTask: currentTasks
+        [currentTasks.categoryName]: currentTasks.currentTasks
       });
       this.props.onAfterSubmit();
     } catch (e) {
@@ -98,22 +101,16 @@ class Popup extends Component {
     }
   };
 
-  addTaskToRemoveGroup = (key, checked) => {
-    const removeList = PopupActions.addToRemoveGroup(
-      [...this.state.removeList],
-      key,
+  addTaskToMarkedGroup = (task, checked) => {
+    const markedList = PopupActions.addToMarkedGroup(
+      [...this.state.markedList],
+      task,
       checked
     );
 
     this.setState({
-      removeList
+      markedList
     });
-  };
-
-  deleteMarkedTasks = () => {
-    if (this.state.removeList.length > 0) {
-      this.state.removeList.forEach(taskKey => this.removeTask(taskKey));
-    }
   };
 
   moveTaskToDone = async (taskKey, text) => {
@@ -123,35 +120,46 @@ class Popup extends Component {
       await this.removeTask(taskKey);
       this.refreshDataSet({ key: taskKey, task: text }, false);
     } catch (error) {
-      console.error(`Move failed. Error: ${error}`);
+      console.error(`Move failed. ${error}`);
+    }
+  };
+
+  applyChange = (list, callback) => {
+    if (list.length > 0) {
+      list.forEach(it => callback(it.taskKey, it.text));
     }
   };
 
   hideList = listName => {
-    this.setState(
-      {
-        visibleList: listName
-      },
-      () => console.log(this.state)
-    );
+    this.setState({
+      visibleList: listName
+    });
+  };
+
+  showMenu = () => {
+    this.setState({
+      showMenu: !this.state.showMenu
+    });
   };
 
   render() {
-    const { visibleList } = this.state;
+    const { visibleList, markedList } = this.state;
     return (
       <Wrapper>
         <PopupContainer>
-          <ControlsContainer>
-            <DeleteAllTasksButton
-              deleteMarkedTasks={this.deleteMarkedTasks}
-              visible={this.state.removeList.length > 0}
+          <PopupHeader>
+            {moment(this.props.date).format("D MMMM")}
+            <Menu
+              visible={this.state.showMenu}
+              addMarkedTasksToDone={() =>
+                this.applyChange(markedList, this.moveTaskToDone)
+              }
+              deleteMarkedTasks={() =>
+                this.applyChange(markedList, this.removeTask)
+              }
             />
-            <DeleteAllTasksButton
-              deleteMarkedTasks={this.deleteMarkedTasks}
-              visible={this.state.removeList.length > 0}
-            />
-          </ControlsContainer>
-          <PopupHeader>{moment(this.props.date).format("D MMMM")}</PopupHeader>
+            <MenuButton showMenu={this.showMenu} />
+          </PopupHeader>
           <PopupList
             title="Active"
             tasksList={this.state.activeTask}
@@ -159,7 +167,7 @@ class Popup extends Component {
               visibleList === "active" || visibleList === "all" ? true : false
             }
             onRemove={this.removeTask}
-            addTaskToRemoveGroup={this.addTaskToRemoveGroup}
+            addTaskToMarkedGroup={this.addTaskToMarkedGroup}
             moveTaskToDone={this.moveTaskToDone}
           />
           <PopupList
@@ -169,7 +177,7 @@ class Popup extends Component {
               visibleList === "done" || visibleList === "all" ? true : false
             }
             onRemove={this.removeTask}
-            addTaskToRemoveGroup={this.addTaskToRemoveGroup}
+            addTaskToMarkedGroup={this.addTaskToMarkedGroup}
           />
           <AddForm
             date={moment(this.props.date).format("MM-DD-YYYY")}

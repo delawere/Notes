@@ -12,7 +12,6 @@ const userId = localStorage.getItem("user");
 const placeholder = "Enter what you want to do";
 
 const AddFormContainer = styled.div`
-  width: 90%;
   heigth: 50px;
   margin-top: 15px;
   display: flex;
@@ -80,7 +79,7 @@ class AddForm extends Component {
           onFocusAddField={this.onFocusAddField}
           inFocus={this.state.inFocus}
         />
-        <AddButton addNewTask={this.addNewTask} />
+        <AddButton addNewTask={this.addNewTask} title="Add" />
       </AddFormContainer>
     );
   }

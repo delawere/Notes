@@ -29,12 +29,12 @@ const CheckBoxIcon = styled.svg`
   top: 0;
 `;
 
-const ListItemField = ({ text, taskKey, addTaskToRemoveGroup, isMarked, isLineThrought }) => (
+const ListItemField = ({ text, taskKey, addTaskToMarkedGroup, isMarked, isLineThrought }) => (
   <FieldContainer>
     <CheckBox
       type="checkbox"
       id={taskKey}
-      onChange={e => addTaskToRemoveGroup(taskKey, e.target.checked)}
+      onChange={e => addTaskToMarkedGroup({taskKey, text}, e.target.checked)}
     />
     <label htmlFor={taskKey}>
       <CheckBoxIcon
@@ -75,7 +75,7 @@ const ListItemField = ({ text, taskKey, addTaskToRemoveGroup, isMarked, isLineTh
 ListItemField.propTypes = {
   text: PropTypes.string,
   taskKey: PropTypes.string,
-  addTaskToRemoveGroup: PropTypes.func,
+  addTaskToMarkedGroup: PropTypes.func,
   isMarked: PropTypes.bool
 };
 

@@ -11,26 +11,33 @@ PopupActions.refreshDataSet = (newTask, activeTasks, doneTasks, active) => {
   return { activeTasks, doneTasks };
 };
 
-PopupActions.removeTask = async (date, key, activeTasks) => {
+PopupActions.removeTask = async (date, key, activeTasks, doneTasks) => {
   await FirebaseRequest.removeTask(key, date);
-  const removedElemIndex = activeTasks.findIndex(task => task.key === key);
-  const currentTasks = activeTasks;
+  let currentTasks = [];
+  let categoryName = "";
+  let removedElemIndex = activeTasks.findIndex(task => task.key === key);
+  if (removedElemIndex === -1) {
+    removedElemIndex = doneTasks.findIndex(task => task.key === key);
+    currentTasks = doneTasks;
+    categoryName = "doneTask";
+  } else {
+    currentTasks = activeTasks;
+    categoryName = "activeTask";
+  }
+
   currentTasks.splice(removedElemIndex, 1);
 
-  return currentTasks;
+  return { categoryName, currentTasks };
 };
 
-PopupActions.addToRemoveGroup = (removeList, key, checked) => {
+PopupActions.addToMarkedGroup = (markedList, task, checked) => {
   if (checked) {
-    removeList.push(key);
+    markedList.push(task);
   } else {
-    const removedElemIndex = this.state.removeList.findIndex(
-      taskKey => taskKey === key
-    );
-    removeList.splice(removedElemIndex, 1);
+    const removedElemIndex = markedList.findIndex(it => it.key === task.key);
+    markedList.splice(removedElemIndex, 1);
   }
-  return removeList;
+  return markedList;
 };
-
 
 export default PopupActions;

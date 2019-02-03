@@ -46,18 +46,24 @@ class PopupListItem extends Component {
       {
         isMarked: !this.state.isMarked
       },
-      this.props.addTaskToRemoveGroup(taskKey, checked)
+      this.props.addTaskToMarkedGroup(taskKey, checked)
     );
   };
 
   render() {
-    const { text, taskKey, onRemove, moveTaskToDone, isLineThrought } = this.props;
+    const {
+      text,
+      taskKey,
+      onRemove,
+      moveTaskToDone,
+      isLineThrought
+    } = this.props;
     return (
       <Container isLineThrought={isLineThrought}>
         <ListItemField
           text={text}
           taskKey={taskKey}
-          addTaskToRemoveGroup={this.onChecked}
+          addTaskToMarkedGroup={this.onChecked}
           isMarked={this.state.isMarked}
           isLineThrought={isLineThrought}
         />
