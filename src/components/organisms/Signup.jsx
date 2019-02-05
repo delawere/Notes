@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import fire from "../../config/Fire";
 
 import Input from "../atoms/Input";
+import LoginFormTitle from "../atoms/LoginFormTitle";
 
 const containerStyle = {
   width: "60%",
@@ -60,56 +61,59 @@ class Signup extends Component {
 
   render() {
     return (
-      <form className="container" style={containerStyle}>
-        <Input
-          type="text"
-          name="name"
-          value={this.state.name}
-          onChange={this.handleChange}
-          onFocus={this.showHelp}
-          className="form-control"
-          placeholder="Имя"
-        />
+      <div>
+        <LoginFormTitle name={"Sign Up"} />
+        <form className="container" style={containerStyle}>
+          <Input
+            type="text"
+            name="name"
+            value={this.state.name}
+            onChange={this.handleChange}
+            onFocus={this.showHelp}
+            className="form-control"
+            placeholder="Name"
+          />
 
-        <Input
-          type="text"
-          name="surname"
-          value={this.state.surname}
-          onChange={this.handleChange}
-          onFocus={this.showHelp}
-          className="form-control"
-          placeholder="Фамилия"
-        />
+          <Input
+            type="text"
+            name="surname"
+            value={this.state.surname}
+            onChange={this.handleChange}
+            onFocus={this.showHelp}
+            className="form-control"
+            placeholder="Surname"
+          />
 
-        <Input
-          type="email"
-          name="email"
-          value={this.state.email}
-          onChange={this.handleChange}
-          onFocus={this.showHelp}
-          className="form-control"
-          placeholder="email"
-        />
+          <Input
+            type="email"
+            name="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+            onFocus={this.showHelp}
+            className="form-control"
+            placeholder="email"
+          />
 
-        <Input
-          type="password"
-          name="password"
-          value={this.state.password}
-          onChange={this.handleChange}
-          onFocus={this.showHelp}
-          className="form-control"
-          placeholder="Пароль"
-        />
+          <Input
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            onFocus={this.showHelp}
+            className="form-control"
+            placeholder="Password"
+          />
 
-        <div className="form-group row">
-          <button
-            onClick={this.signup}
-            className="btn btn-success center-block col-6"
-          >
-            Регистрация
-          </button>
-        </div>
-      </form>
+          <div className="form-group row">
+            <button
+              onClick={this.signup}
+              className="btn btn-success center-block col-6"
+            >
+              Sign Up
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }

@@ -67,6 +67,21 @@ class Popup extends Component {
     };
   }
 
+  componentDidMount() {
+    document.addEventListener("click", this.handleClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("click", this.handleClick);
+  }
+
+  handleClick = e => {
+    e.preventDefault();
+    this.setState({
+      showMenu: false
+    });
+  };
+
   refreshDataSet = (newTask, active) => {
     const { activeTask, doneTask } = PopupActions.refreshDataSet(
       newTask,
@@ -91,7 +106,6 @@ class Popup extends Component {
         [...this.state.activeTask],
         [...this.state.doneTask]
       );
-      debugger;
       this.setState({
         [currentTasks.categoryName]: currentTasks.currentTasks
       });
@@ -136,12 +150,6 @@ class Popup extends Component {
     });
   };
 
-  showMenu = () => {
-    this.setState({
-      showMenu: !this.state.showMenu
-    });
-  };
-
   render() {
     const { visibleList, markedList } = this.state;
     return (
@@ -158,7 +166,7 @@ class Popup extends Component {
                 this.applyChange(markedList, this.removeTask)
               }
             />
-            <MenuButton showMenu={this.showMenu} />
+            <MenuButton />
           </PopupHeader>
           <PopupList
             title="Active"

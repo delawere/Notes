@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import fire from "../../config/Fire";
 
 import Input from "../atoms/Input";
+import LoginFormTitle from "../atoms/LoginFormTitle";
 
 const containerStyle = {
   width: "40%",
@@ -35,34 +36,37 @@ class Login extends Component {
 
   render() {
     return (
-      <form className="container" style={containerStyle}>
-        <Input
-          type="email"
-          name="email"
-          value={this.state.email}
-          onChange={this.handleChange}
-          className="form-control"
-          placeholder="email"
-        />
+      <div>
+        <LoginFormTitle name={"Log In"} />
+        <form className="container" style={containerStyle}>
+          <Input
+            type="email"
+            name="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+            className="form-control"
+            placeholder="email"
+          />
 
-        <Input
-          type="password"
-          name="password"
-          value={this.state.password}
-          onChange={this.handleChange}
-          className="form-control"
-          placeholder="Пароль"
-        />
+          <Input
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            className="form-control"
+            placeholder="Password"
+          />
 
-        <div className="form-group row">
-          <button
-            onClick={this.login}
-            className="btn btn-primary center-block  col-6"
-          >
-            Войти
-          </button>
-        </div>
-      </form>
+          <div className="form-group row">
+            <button
+              onClick={this.login}
+              className="btn btn-primary center-block  col-6"
+            >
+              Log in
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }

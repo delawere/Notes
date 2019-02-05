@@ -53,6 +53,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    debugger;
     this.getUsersData(moment().format("MM-DD-YYYY"));
   }
 
@@ -70,7 +71,7 @@ class Home extends Component {
 
   getUsersData = async todayDate => {
     const { currentDayDate, currentDayTasks } = this.state;
-    //Обновлять попап нужно либо по клику, либо при инициализации. 
+    //Обновлять попап нужно либо по клику, либо при инициализации.
     //Второе выполняется в componentDidMount. Соответственно, одна из дат должна присутствовать.
     if (!currentDayDate && !todayDate) {
       return;
@@ -79,15 +80,22 @@ class Home extends Component {
     const { active, done } = usersData;
     const currentDate = currentDayDate || todayDate;
     const currentDateFormatted = moment(currentDate).format("MM-DD-YYYY");
-    const newActiveTask = this.parseTasksObjectToArray(
-      active[currentDateFormatted]
-    );
-    const newDoneTask = this.parseTasksObjectToArray(
-      done[currentDateFormatted]
-    );
 
-    currentDayTasks.activeTasks = newActiveTask || [];
-    currentDayTasks.doneTasks = newDoneTask || [];
+    if (active) {
+      const newActiveTask = this.parseTasksObjectToArray(
+        active[currentDateFormatted]
+      );
+
+      currentDayTasks.activeTasks = newActiveTask || [];
+    }
+
+    if (done) {
+      const newDoneTask = this.parseTasksObjectToArray(
+        done[currentDateFormatted]
+      );
+
+      currentDayTasks.doneTasks = newDoneTask || [];
+    }
 
     this.setState({
       doneTasks: usersData.done,
@@ -117,7 +125,7 @@ class Home extends Component {
   render() {
     return (
       <div className="container" style={{ background: "#f7f7f7" }}>
-        <Header />
+        <Header  userLogged={this.props.currentUser} />
         <AsideMenu
           onClickDay={this.onClickDay}
           activeTasks={this.state.activeTasks}

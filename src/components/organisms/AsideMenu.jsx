@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import UserSchedule from "./UserSchedule";
 import PropTypes from "prop-types";
-import UserInfo from "../molecules/UserInfo";
 
 const AsideContainer = styled.aside`
   width: 15vw;
@@ -36,7 +35,6 @@ class AsideMenu extends Component {
     const { activeTasks, doneTasks } = this.state;
     return (
       <AsideContainer>
-        {/* <UserInfo /> */}
         <UserSchedule
           onClickDay={this.props.onClickDay}
           activeTasks={activeTasks}

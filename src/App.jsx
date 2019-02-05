@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import fire from './config/Fire';
-import './App.css';
+import React, { Component } from "react";
+import fire from "./config/Fire";
+import "./App.css";
 
-import Form from './components/templates/Form';
-import Home from './components/templates/Home';
+import Form from "./components/templates/Form";
+import Home from "./components/templates/Home";
 
 class App extends Component {
   constructor(props) {
-      super(props);
-      this.state = {
-        user:{},
-      }
+    super(props);
+    this.state = {
+      user: null
+    };
   }
 
   componentDidMount() {
@@ -18,21 +18,21 @@ class App extends Component {
   }
 
   authListener() {
-    fire.auth().onAuthStateChanged((user) => {
+    fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
-        localStorage.setItem('user', user.uid);
+        localStorage.setItem("user", user.uid);
       } else {
         this.setState({ user: null });
-        localStorage.removeItem( 'user' );
+        localStorage.removeItem("user");
       }
     });
   }
 
   render() {
     return (
-      <div style={{'background': '#000'}}>
-        {this.state.user ? (<Home />) : (<Form />)}
+      <div>
+        {this.state.user ? <Home currentUser={this.state.user}/> : <Form/>}
       </div>
     );
   }
