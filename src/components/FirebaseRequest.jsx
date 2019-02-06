@@ -1,9 +1,22 @@
 import fire from "../config/Fire";
+import { createStore } from "redux";
 
 const database = fire.database();
 const userId = localStorage.getItem("user");
 
 const FirebaseRequest = {};
+
+const setUser = (state = [], action) => {
+  if (action.type === "GET_DATA") {
+    return [...state, action.payload];
+  }
+};
+
+const store = createStore(setUser);
+
+store.subscribe(() => {
+  console.log("subscribe", store.getState());
+});
 
 FirebaseRequest.getData = async () => {
   let result = {};
@@ -11,6 +24,11 @@ FirebaseRequest.getData = async () => {
     result = snap.val() || {};
   });
   await tasks;
+
+  store.dispatch({
+    type: 'GET_DATA',
+    payload: result
+  });
 
   return result;
 };

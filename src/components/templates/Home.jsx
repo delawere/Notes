@@ -53,7 +53,6 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    debugger;
     this.getUsersData(moment().format("MM-DD-YYYY"));
   }
 
@@ -125,7 +124,7 @@ class Home extends Component {
   render() {
     return (
       <div className="container" style={{ background: "#f7f7f7" }}>
-        <Header  userLogged={this.props.currentUser} />
+        <Header userLogged={this.props.currentUser} />
         <AsideMenu
           onClickDay={this.onClickDay}
           activeTasks={this.state.activeTasks}

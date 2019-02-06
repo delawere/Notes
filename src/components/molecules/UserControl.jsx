@@ -8,6 +8,7 @@ const UserInfoContainer = styled.div`
   padding: 15px;
   padding-bottom: 4px;
   border-bottom: 1px solid #e3e3e3;
+  cursor: pointer;
 `;
 
 const UserName = styled.p`
@@ -41,6 +42,7 @@ class UserControl extends PureComponent {
   }
 
   logout = () => {
+    localStorage.removeItem("user");
     fire.auth().signOut();
   };
 

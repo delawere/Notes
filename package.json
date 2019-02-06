@@ -12,7 +12,10 @@
     "react": "^16.5.1",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.1",
+    "react-redux": "^6.0.0",
     "react-scripts": "1.1.5",
+    "redux-thunk": "^2.3.0",
+    "seamless-immutable": "^7.1.4",
     "styled-components": "^4.0.2"
   },
   "scripts": {
@@ -28,6 +31,7 @@
     "jest": "^24.0.0",
     "prettier": "^1.15.3",
     "react-test-renderer": "^16.7.0",
+    "redux": "^4.0.1",
     "svg-inline-loader": "^0.8.0"
   }
 }

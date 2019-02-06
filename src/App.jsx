@@ -14,7 +14,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.authListener();
+    const user = localStorage.getItem("user");
+    if (user) {
+      this.setState({
+        user
+      });
+    } else {
+      this.authListener();
+    }
   }
 
   authListener() {
@@ -32,7 +39,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.state.user ? <Home currentUser={this.state.user}/> : <Form/>}
+        {this.state.user ? <Home currentUser={this.state.user} /> : <Form />}
       </div>
     );
   }

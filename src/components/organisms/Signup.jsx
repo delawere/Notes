@@ -5,7 +5,7 @@ import Input from "../atoms/Input";
 import LoginFormTitle from "../atoms/LoginFormTitle";
 
 const containerStyle = {
-  width: "60%",
+  width: "40%",
   marginTop: "50px",
   padding: "30px"
 };
@@ -64,26 +64,6 @@ class Signup extends Component {
       <div>
         <LoginFormTitle name={"Sign Up"} />
         <form className="container" style={containerStyle}>
-          <Input
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-            onFocus={this.showHelp}
-            className="form-control"
-            placeholder="Name"
-          />
-
-          <Input
-            type="text"
-            name="surname"
-            value={this.state.surname}
-            onChange={this.handleChange}
-            onFocus={this.showHelp}
-            className="form-control"
-            placeholder="Surname"
-          />
-
           <Input
             type="email"
             name="email"
