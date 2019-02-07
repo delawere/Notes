@@ -12,24 +12,19 @@ import MenuButton from "../atoms/MenuButton";
 import Menu from "../molecules/Menu";
 
 const Wrapper = styled.div`
-  position: fixed;
-  height: 80%;
+  height: 700px;
   width: 60vw;
+  margin-left: 85px;
   z-index: 999;
-  top: 8%;
-  left: 25vw;
   color: #242425;
 `;
 
 const PopupContainer = styled.div`
-  width: 80%;
-  transition: 5s ease-out;
-  max-width: 950px;
+  height: 100%;
+  width: 100%;
   background-color: #fff;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   margin: auto;
-  margin-top: 25px;
   padding: 10px 45px;
   padding-bottom: 5px;
 `;

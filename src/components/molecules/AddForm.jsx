@@ -12,10 +12,11 @@ const userId = localStorage.getItem("user");
 const placeholder = "Enter what you want to do";
 
 const AddFormContainer = styled.div`
-  heigth: 50px;
+  margin: 0 auto;
   margin-top: 15px;
   display: flex;
   align-items: flex-end;
+  width: 80%;
 `;
 
 class AddForm extends Component {

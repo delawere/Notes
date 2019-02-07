@@ -5,12 +5,10 @@ import PropTypes from "prop-types";
 
 const AsideContainer = styled.aside`
   width: 15vw;
-  position: absolute;
+  min-height: 700px;
   background: #fff;
-  top: 120px;
-  left: 15px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  justify-self: self-end;
 `;
 
 class AsideMenu extends Component {

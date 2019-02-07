@@ -6,9 +6,19 @@ import Popup from "../organisms/Popup";
 import Header from "../organisms/Header";
 import Footer from "../organisms/Footer";
 import * as moment from "moment";
+import styled from "styled-components";
 
 const database = fire.database();
 const userId = localStorage.getItem("user");
+
+const Container = styled.main`
+  background: rgb(247, 247, 247);
+  display: flex;
+  padding-top: 4.5vw;
+  padding: 25px 30px;
+  width: 100%;
+  padding-top: 10vh;
+`;
 
 class Home extends Component {
   constructor(props) {
@@ -123,7 +133,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="container" style={{ background: "#f7f7f7" }}>
+      <Container className="container" style={{ background: "#f7f7f7" }}>
         <Header userLogged={this.props.currentUser} />
         <AsideMenu
           onClickDay={this.onClickDay}
@@ -139,7 +149,7 @@ class Home extends Component {
           />
         ) : null}
         <Footer />
-      </div>
+      </Container>
     );
   }
 }
