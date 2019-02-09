@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import fire from "../../config/Fire";
 import AsideMenu from "../organisms/AsideMenu";
 import FirebaseRequest from "../FirebaseRequest";
 import Popup from "../organisms/Popup";
@@ -7,9 +6,6 @@ import Header from "../organisms/Header";
 import Footer from "../organisms/Footer";
 import * as moment from "moment";
 import styled from "styled-components";
-
-const database = fire.database();
-const userId = localStorage.getItem("user");
 
 const Container = styled.main`
   background: rgb(247, 247, 247);
@@ -64,18 +60,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.getUsersData(moment().format("MM-DD-YYYY"));
-  }
-
-  async getTasks() {
-    let result = {};
-    const tasks = database
-      .ref(`users/${userId}/tasks/active`)
-      .once("value", snap => {
-        result = snap.val() || {};
-      });
-    await tasks;
-
-    return result;
   }
 
   getUsersData = async todayDate => {
