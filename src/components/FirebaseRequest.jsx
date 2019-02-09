@@ -1,22 +1,9 @@
 import fire from "../config/Fire";
-import { createStore } from "redux";
 
 const database = fire.database();
 const userId = localStorage.getItem("user");
 
 const FirebaseRequest = {};
-
-const setUser = (state = [], action) => {
-  if (action.type === "GET_DATA") {
-    return [...state, action.payload];
-  }
-};
-
-const store = createStore(setUser);
-
-store.subscribe(() => {
-  console.log("subscribe", store.getState());
-});
 
 FirebaseRequest.getData = async () => {
   let result = {};
@@ -24,11 +11,6 @@ FirebaseRequest.getData = async () => {
     result = snap.val() || {};
   });
   await tasks;
-
-  store.dispatch({
-    type: 'GET_DATA',
-    payload: result
-  });
 
   return result;
 };
@@ -43,6 +25,25 @@ FirebaseRequest.moveTaskToDone = async (text, date) => {
   const update = {};
   update[newTaskKey] = text;
   await dayRef.update(update);
+};
+
+FirebaseRequest.addNewTask = async (task, date) => {
+  if (!task) {
+    console.error("You can't add empty task");
+  }
+
+  try {
+    const dayRef = database
+      .ref(`users/${userId}/tasks/active`)
+      .child(date);
+    const newTaskKey = dayRef.push().key;
+    const update = {};
+    update[newTaskKey] = task;
+    await dayRef.update(update);
+    return newTaskKey;
+  } catch (error) {
+    console.error(`Add failed. Error: ${error}`);
+  }
 };
 
 export default FirebaseRequest;

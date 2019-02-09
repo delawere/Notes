@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import fire from "../../config/Fire";
+import FirebaseRequest from "../FirebaseRequest";
 
 import AddField from "../atoms/AddField";
 import AddButton from "../atoms/AddButton";
-
-const db = fire.database();
-const userId = localStorage.getItem("user");
 
 const placeholder = "Enter what you want to do";
 
@@ -25,7 +22,6 @@ class AddForm extends Component {
 
     this.state = {
       task: "",
-      key: "",
       inFocus: false
     };
   }
@@ -35,33 +31,18 @@ class AddForm extends Component {
   };
 
   addNewTask = async () => {
-    if (this.state.task) {
-      try {
-        const dayRef = db
-          .ref(`users/${userId}/tasks/active`)
-          .child(this.props.date);
-        const newTaskKey = dayRef.push().key;
-        const update = {};
-        update[newTaskKey] = this.state.task;
-        await dayRef.update(update);
-        this.setState(
-          {
-            key: newTaskKey
-          },
-          () => {
-            this.props.refreshDataSet(this.state, true);
-          }
-        );
-      } catch (error) {
-        console.error(`Add failed. Error: ${error}`);
-      }
-
-      this.setState({
-        task: ""
-      });
-    } else {
-      console.error(`You can't add empty task`);
-    }
+    const { task } = this.state;
+    const { date, refreshDataSet } = this.props;
+    const key = await FirebaseRequest.addNewTask(task, date);
+    await refreshDataSet({
+        task,
+        key
+      },
+      true
+    );
+    this.setState({
+      task: ""
+    });
   };
 
   onFocusAddField = () => {
