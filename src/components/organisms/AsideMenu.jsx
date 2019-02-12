@@ -2,14 +2,22 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import UserSchedule from "./UserSchedule";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 const AsideContainer = styled.aside`
   width: 15vw;
   min-height: 700px;
   background: #fff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   justify-self: self-end;
 `;
+
+const putStateToProps = state => {
+  return {
+    activeTasks: state.tasks.active,
+    doneTasks: state.tasks.done
+  };
+};
 
 class AsideMenu extends Component {
   constructor(props) {
@@ -48,5 +56,7 @@ AsideMenu.propTypes = {
   activeTasks: PropTypes.object,
   doneTasks: PropTypes.object
 };
+
+AsideMenu = connect(putStateToProps)(AsideMenu);
 
 export default AsideMenu;

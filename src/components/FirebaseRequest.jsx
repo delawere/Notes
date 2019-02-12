@@ -2,7 +2,6 @@ import fire from "../config/Fire";
 
 const database = fire.database();
 const userId = localStorage.getItem("user");
-
 const FirebaseRequest = {};
 
 FirebaseRequest.getData = async () => {
@@ -33,9 +32,7 @@ FirebaseRequest.addNewTask = async (task, date) => {
   }
 
   try {
-    const dayRef = database
-      .ref(`users/${userId}/tasks/active`)
-      .child(date);
+    const dayRef = database.ref(`users/${userId}/tasks/active`).child(date);
     const newTaskKey = dayRef.push().key;
     const update = {};
     update[newTaskKey] = task;

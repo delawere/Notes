@@ -64,12 +64,15 @@ class Home extends Component {
 
   getUsersData = async todayDate => {
     const { currentDayDate, currentDayTasks } = this.state;
+    const { addTasks } = this.props;
+
     //Обновлять попап нужно либо по клику, либо при инициализации.
     //Второе выполняется в componentDidMount. Соответственно, одна из дат должна присутствовать.
     if (!currentDayDate && !todayDate) {
       return;
     }
     const usersData = await FirebaseRequest.getData();
+
     const { active, done } = usersData;
     const currentDate = currentDayDate || todayDate;
     const currentDateFormatted = moment(currentDate).format("MM-DD-YYYY");
@@ -89,6 +92,11 @@ class Home extends Component {
 
       currentDayTasks.doneTasks = newDoneTask || [];
     }
+
+    addTasks({
+      active: usersData.active,
+      done: usersData.done
+    });
 
     this.setState({
       doneTasks: usersData.done,
@@ -121,8 +129,6 @@ class Home extends Component {
         <Header userLogged={this.props.currentUser} />
         <AsideMenu
           onClickDay={this.onClickDay}
-          activeTasks={this.state.activeTasks}
-          doneTasks={this.state.doneTasks}
         />
         {this.state.popupVisible ? (
           <Popup
