@@ -16,19 +16,16 @@ const Container = styled.main`
   padding-top: 10vh;
 `;
 
-class Home extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      popupVisible: false,
       currentDayTasks: {
         doneTasks: [],
         activeTasks: []
       },
       currentDayDate: "",
-      activeTasks: {},
-      doneTasks: {}
     };
   }
 
@@ -99,10 +96,7 @@ class Home extends Component {
     });
 
     this.setState({
-      doneTasks: usersData.done,
-      activeTasks: usersData.active,
-      currentDayTasks,
-      popupVisible: true
+      currentDayTasks
     });
 
     // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
@@ -118,9 +112,6 @@ class Home extends Component {
 
   closePopup = async () => {
     await this.getUsersData();
-    this.setState({
-      popupVisible: false
-    });
   };
 
   render() {
@@ -130,18 +121,14 @@ class Home extends Component {
         <AsideMenu
           onClickDay={this.onClickDay}
         />
-        {this.state.popupVisible ? (
           <Popup
             tasks={this.state.currentDayTasks}
             date={this.state.currentDayDate}
             closePopup={this.closePopup}
             onAfterSubmit={this.getUsersData}
           />
-        ) : null}
         <Footer />
       </Container>
     );
   }
 }
-
-export default Home;

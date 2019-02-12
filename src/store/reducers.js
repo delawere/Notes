@@ -1,6 +1,4 @@
-import {
-  ACTION_ADD_DATA
-} from "./action-types";
+import { ACTION_ADD_DATA } from "./action-types";
 
 const initialState = {
   tasks: {
