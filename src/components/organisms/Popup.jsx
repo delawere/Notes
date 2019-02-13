@@ -3,6 +3,7 @@ import styled from "styled-components";
 import * as moment from "moment";
 import PropTypes from "prop-types";
 import FirebaseRequest from "../FirebaseRequest";
+import { connect } from "react-redux";
 
 import PopupList from "../molecules/PopupList";
 import AddForm from "../molecules/AddForm";
@@ -37,6 +38,13 @@ const PopupHeader = styled.header`
   display: flex;
   justify-content: space-between;
 `;
+
+const putStateToProps = state => {
+  return {
+    active: state.currentDayTasks.active,
+    done: state.currentDayTasks.done
+  };
+};
 
 class Popup extends Component {
   constructor(props) {
@@ -195,6 +203,8 @@ class Popup extends Component {
     );
   }
 }
+
+Popup = connect(putStateToProps)(Popup);
 
 Popup.propTypes = {
   closePopup: PropTypes.func,

@@ -43,8 +43,16 @@ export default class Home extends Component {
 
   onClickDay = data => {
     const { date } = data;
+    const { addCurrentDayTasks } = this.props;
     const doneTasks = this.parseTasksObjectToArray(data.doneTasks);
     const activeTasks = this.parseTasksObjectToArray(data.activeTasks);
+
+    addCurrentDayTasks({
+      currentDayTasks: {
+        activeTasks,
+        doneTasks
+      }
+    });
 
     this.setState({
       currentDayTasks: {
@@ -60,8 +68,9 @@ export default class Home extends Component {
   }
 
   getUsersData = async todayDate => {
-    const { currentDayDate, currentDayTasks } = this.state;
-    const { addTasks } = this.props;
+    const { currentDayDate} = this.state;
+    const { addTasks, currentDayTasks } = this.props;
+    console.log(this.props);
 
     //Обновлять попап нужно либо по клику, либо при инициализации.
     //Второе выполняется в componentDidMount. Соответственно, одна из дат должна присутствовать.
@@ -79,7 +88,7 @@ export default class Home extends Component {
         active[currentDateFormatted]
       );
 
-      currentDayTasks.activeTasks = newActiveTask || [];
+      currentDayTasks.active = newActiveTask || [];
     }
 
     if (done) {
@@ -87,7 +96,7 @@ export default class Home extends Component {
         done[currentDateFormatted]
       );
 
-      currentDayTasks.doneTasks = newDoneTask || [];
+      currentDayTasks.done = newDoneTask || [];
     }
 
     addTasks({
@@ -118,15 +127,13 @@ export default class Home extends Component {
     return (
       <Container className="container" style={{ background: "#f7f7f7" }}>
         <Header userLogged={this.props.currentUser} />
-        <AsideMenu
-          onClickDay={this.onClickDay}
+        <AsideMenu onClickDay={this.onClickDay} />
+        <Popup
+          tasks={this.state.currentDayTasks}
+          date={this.state.currentDayDate}
+          closePopup={this.closePopup}
+          onAfterSubmit={this.getUsersData}
         />
-          <Popup
-            tasks={this.state.currentDayTasks}
-            date={this.state.currentDayDate}
-            closePopup={this.closePopup}
-            onAfterSubmit={this.getUsersData}
-          />
         <Footer />
       </Container>
     );

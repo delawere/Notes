@@ -1,10 +1,15 @@
-import { ACTION_ADD_DATA } from "./action-types";
+import { ACTION_ADD_TASKS, ACTION_ADD_CURRENT_DAY_TASKS } from "./action-types";
 
-const addTasks = (tasks) => {
+export const addTasks = (tasks) => {
   return {
-    type: ACTION_ADD_DATA,
+    type: ACTION_ADD_TASKS,
     payload: tasks
   }
 };
 
-export default addTasks;
+export const addCurrentDayTasks = (currentDayTasks) => {
+  return {
+    type: ACTION_ADD_CURRENT_DAY_TASKS,
+    payload: currentDayTasks
+  }
+};

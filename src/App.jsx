@@ -5,18 +5,25 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Form from "./components/templates/Form";
 import Home from "./components/templates/Home";
-import addTasks from "./store/actions";
+import { addTasks, addCurrentDayTasks } from "./store/actions";
 
 const putStateToProps = state => {
   return {
-    active: state.tasks.active,
-    done: state.tasks.done
+    tasks: {
+      active: state.tasks.active,
+      done: state.tasks.done,
+    },
+    currentDayTasks: {
+      active: state.currentDayTasks.active,
+      done: state.currentDayTasks.done
+    }
   };
 };
 
 const putActionsToProps = dispatch => {
   return {
-    addTasks: bindActionCreators(addTasks, dispatch)
+    addTasks: bindActionCreators(addTasks, dispatch),
+    addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch)
   };
 };
 
