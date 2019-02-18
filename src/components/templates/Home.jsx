@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import AsideMenu from "../organisms/AsideMenu";
 import FirebaseRequest from "../FirebaseRequest";
 import Popup from "../organisms/Popup";
@@ -10,16 +10,19 @@ import styled from "styled-components";
 const Container = styled.main`
   background: rgb(247, 247, 247);
   display: flex;
+  flex-direction: column;
   padding-top: 4.5vw;
-  padding: 25px 30px;
-  width: 100%;
+  padding: 15px 30px;
+  width: 100vw;
+  height: 100vh;
   padding-top: 10vh;
 `;
 
-export default class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
+const MainContainer = styled.div`
+  display: flex;
+`;
+
+export default class Home extends PureComponent {
 
   parseTasksObjectToArray = data => {
     const result = [];
@@ -97,7 +100,6 @@ export default class Home extends Component {
 
     // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
     if (todayDate) {
-
       addCurrentDayDate(todayDate);
 
       addCurrentDayTasks({
@@ -107,19 +109,16 @@ export default class Home extends Component {
     }
   };
 
-  closePopup = async () => {
-    await this.getUsersData();
-  };
-
   render() {
     return (
       <Container className="container" style={{ background: "#f7f7f7" }}>
         <Header userLogged={this.props.currentUser} />
-        <AsideMenu onClickDay={this.onClickDay} />
-        <Popup
-          closePopup={this.closePopup}
-          onAfterSubmit={this.getUsersData}
-        />
+        <MainContainer>
+          <AsideMenu onClickDay={this.onClickDay} />
+          <Popup
+            onAfterSubmit={this.getUsersData}
+          />
+        </MainContainer>
         <Footer />
       </Container>
     );

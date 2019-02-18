@@ -3,15 +3,13 @@ import PropTypes from "prop-types";
 import PopupListItem from "../molecules/PopupListItem";
 
 const PopupList = ({
-  title,
   tasksList,
   visible,
   onRemove,
-  addTaskToMarkedGroup,
-  moveTaskToDone
+  addTaskToMarkedGroup
 }) => (
-  <fieldset style={{ display: visible ? "flex" : "none"}}>
-    <legend>{title}</legend>
+  <fieldset style={{ display: visible ? "flex" : "none" }}>
+    <legend>todo</legend>
     {tasksList.map(({ text, key }) => (
       <PopupListItem
         text={text}
@@ -19,8 +17,6 @@ const PopupList = ({
         taskKey={key}
         onRemove={onRemove || ""}
         addTaskToMarkedGroup={addTaskToMarkedGroup || ""}
-        moveTaskToDone={moveTaskToDone || ""}
-        isLineThrought={title === "Done" ? true : false}
       />
     ))}
   </fieldset>

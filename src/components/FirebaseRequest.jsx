@@ -18,14 +18,6 @@ FirebaseRequest.removeTask = async (key, date) => {
   await database.ref(`users/${userId}/tasks/active/${date}/${key}`).remove();
 };
 
-FirebaseRequest.moveTaskToDone = async (text, date) => {
-  const dayRef = database.ref(`users/${userId}/tasks/done`).child(date);
-  const newTaskKey = dayRef.push().key;
-  const update = {};
-  update[newTaskKey] = text;
-  await dayRef.update(update);
-};
-
 FirebaseRequest.addNewTask = async (task, date) => {
   if (!task) {
     console.error("You can't add empty task");

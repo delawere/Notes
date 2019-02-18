@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import * as moment from "moment";
 import PropTypes from "prop-types";
-import FirebaseRequest from "../FirebaseRequest";
 import { connect } from "react-redux";
 import { addCurrentDayTasks, addNewTask } from "../../store/actions";
 import { bindActionCreators } from "redux";
@@ -15,7 +14,9 @@ import MenuButton from "../atoms/MenuButton";
 import Menu from "../molecules/Menu";
 
 const Wrapper = styled.div`
-  height: 700px;
+  min-height: 60vh;
+  margin-top: 25px;
+  margin-bottom: 35px;
   width: 60vw;
   margin-left: 85px;
   z-index: 999;
@@ -71,7 +72,7 @@ class Popup extends Component {
     };
   }
 
-  static getDerivedStateFromProps({currentData, active, done}) {
+  static getDerivedStateFromProps({ currentData, active, done }) {
     return {
       fullDate: currentData,
       date: moment(currentData).format("D MMMM"),
@@ -81,7 +82,7 @@ class Popup extends Component {
   }
 
   refreshDataSet = (newTask, active) => {
-    const { addCurrentDayTasks } = this.props
+    const { addCurrentDayTasks } = this.props;
     const { activeTasks, doneTasks } = PopupActions.refreshDataSet(
       newTask,
       [...this.props.active],
@@ -133,17 +134,6 @@ class Popup extends Component {
     });
   };
 
-  moveTaskToDone = async (taskKey, text) => {
-    try {
-      const currentDate = moment(this.props.date).format("MM-DD-YYYY");
-      await FirebaseRequest.moveTaskToDone(text, currentDate);
-      await this.removeTask(taskKey);
-      this.refreshDataSet({ key: taskKey, task: text }, false);
-    } catch (error) {
-      console.error(`Move failed. ${error}`);
-    }
-  };
-
   applyChange = (list, callback) => {
     if (list.length > 0) {
       list.forEach(it => callback(it.taskKey, it.text));
@@ -158,7 +148,7 @@ class Popup extends Component {
 
   render() {
     const { visibleList, markedList } = this.state;
-    const { currentDate, active, done } = this.props; 
+    const { currentDate, active } = this.props;
     return (
       <Wrapper>
         <PopupContainer>
@@ -166,9 +156,6 @@ class Popup extends Component {
             {moment(currentDate).format("D MMMM")}
             <Menu
               visible={this.state.showMenu}
-              addMarkedTasksToDone={() =>
-                this.applyChange(markedList, this.moveTaskToDone)
-              }
               deleteMarkedTasks={() =>
                 this.applyChange(markedList, this.removeTask)
               }
@@ -176,7 +163,6 @@ class Popup extends Component {
             <MenuButton />
           </PopupHeader>
           <PopupList
-            title="Active"
             tasksList={active}
             visible={
               visibleList === "active" || visibleList === "all" ? true : false
@@ -184,15 +170,6 @@ class Popup extends Component {
             onRemove={this.removeTask}
             addTaskToMarkedGroup={this.addTaskToMarkedGroup}
             moveTaskToDone={this.moveTaskToDone}
-          />
-          <PopupList
-            title="Done"
-            tasksList={done}
-            visible={
-              visibleList === "done" || visibleList === "all" ? true : false
-            }
-            onRemove={this.removeTask}
-            addTaskToMarkedGroup={this.addTaskToMarkedGroup}
           />
           <AddForm
             date={moment(currentDate).format("MM-DD-YYYY")}
@@ -208,7 +185,10 @@ class Popup extends Component {
   }
 }
 
-Popup = connect(putStateToProps, putActionsToProps)(Popup);
+Popup = connect(
+  putStateToProps,
+  putActionsToProps
+)(Popup);
 
 Popup.propTypes = {
   closePopup: PropTypes.func,

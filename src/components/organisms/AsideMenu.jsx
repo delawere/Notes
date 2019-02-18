@@ -5,8 +5,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const AsideContainer = styled.aside`
-  width: 15vw;
-  min-height: 700px;
+  width: 20vw;
+  min-height: 60vh;
+  margin-top: 25px;
+  margin-bottom: 35px;
   background: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   justify-self: self-end;
