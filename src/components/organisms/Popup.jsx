@@ -4,6 +4,8 @@ import * as moment from "moment";
 import PropTypes from "prop-types";
 import FirebaseRequest from "../FirebaseRequest";
 import { connect } from "react-redux";
+import { addCurrentDayTasks, addNewTask } from "../../store/actions";
+import { bindActionCreators } from "redux";
 
 import PopupList from "../molecules/PopupList";
 import AddForm from "../molecules/AddForm";
@@ -41,8 +43,16 @@ const PopupHeader = styled.header`
 
 const putStateToProps = state => {
   return {
+    currentDate: state.currentDayDate,
     active: state.currentDayTasks.active,
     done: state.currentDayTasks.done
+  };
+};
+
+const putActionsToProps = dispatch => {
+  return {
+    addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
+    addNewTask: bindActionCreators(addNewTask, dispatch)
   };
 };
 
@@ -61,40 +71,27 @@ class Popup extends Component {
     };
   }
 
-  static getDerivedStateFromProps({ tasks, date }) {
+  static getDerivedStateFromProps({currentData, active, done}) {
     return {
-      fullDate: date,
-      date: moment(date).format("D MMMM"),
-      activeTask: tasks.activeTasks || [],
-      doneTask: tasks.doneTasks || []
+      fullDate: currentData,
+      date: moment(currentData).format("D MMMM"),
+      activeTask: active || [],
+      doneTask: done || []
     };
   }
 
-  componentDidMount() {
-    document.addEventListener("click", this.handleClick);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("click", this.handleClick);
-  }
-
-  handleClick = e => {
-    e.preventDefault();
-    this.setState({
-      showMenu: false
-    });
-  };
-
   refreshDataSet = (newTask, active) => {
-    const { activeTask, doneTask } = PopupActions.refreshDataSet(
+    const { addCurrentDayTasks } = this.props
+    const { activeTasks, doneTasks } = PopupActions.refreshDataSet(
       newTask,
-      [...this.state.activeTask],
-      [...this.state.doneTask],
+      [...this.props.active],
+      [...this.props.done],
       active
     );
-    this.setState({
-      activeTask,
-      doneTask
+
+    addCurrentDayTasks({
+      active: activeTasks,
+      done: doneTasks
     });
 
     this.props.onAfterSubmit();
@@ -109,9 +106,15 @@ class Popup extends Component {
         [...this.state.activeTask],
         [...this.state.doneTask]
       );
+
       this.setState({
         [currentTasks.categoryName]: currentTasks.currentTasks
       });
+
+      this.props.addNewTask({
+        [currentTasks.categoryName]: currentTasks.currentTasks
+      });
+
       this.props.onAfterSubmit();
     } catch (e) {
       console.error(`Task doesn't remove. Error: ${e}`);
@@ -155,11 +158,12 @@ class Popup extends Component {
 
   render() {
     const { visibleList, markedList } = this.state;
+    const { currentDate, active, done } = this.props; 
     return (
       <Wrapper>
         <PopupContainer>
           <PopupHeader>
-            {moment(this.props.date).format("D MMMM")}
+            {moment(currentDate).format("D MMMM")}
             <Menu
               visible={this.state.showMenu}
               addMarkedTasksToDone={() =>
@@ -173,7 +177,7 @@ class Popup extends Component {
           </PopupHeader>
           <PopupList
             title="Active"
-            tasksList={this.state.activeTask}
+            tasksList={active}
             visible={
               visibleList === "active" || visibleList === "all" ? true : false
             }
@@ -183,7 +187,7 @@ class Popup extends Component {
           />
           <PopupList
             title="Done"
-            tasksList={this.state.doneTask}
+            tasksList={done}
             visible={
               visibleList === "done" || visibleList === "all" ? true : false
             }
@@ -191,7 +195,7 @@ class Popup extends Component {
             addTaskToMarkedGroup={this.addTaskToMarkedGroup}
           />
           <AddForm
-            date={moment(this.props.date).format("MM-DD-YYYY")}
+            date={moment(currentDate).format("MM-DD-YYYY")}
             refreshDataSet={this.refreshDataSet}
           />
           <ShowListControls
@@ -204,7 +208,7 @@ class Popup extends Component {
   }
 }
 
-Popup = connect(putStateToProps)(Popup);
+Popup = connect(putStateToProps, putActionsToProps)(Popup);
 
 Popup.propTypes = {
   closePopup: PropTypes.func,

@@ -19,14 +19,6 @@ const Container = styled.main`
 export default class Home extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      currentDayTasks: {
-        doneTasks: [],
-        activeTasks: []
-      },
-      currentDayDate: "",
-    };
   }
 
   parseTasksObjectToArray = data => {
@@ -43,15 +35,15 @@ export default class Home extends Component {
 
   onClickDay = data => {
     const { date } = data;
-    const { addCurrentDayTasks } = this.props;
+    const { addCurrentDayTasks, addCurrentDayDate } = this.props;
     const doneTasks = this.parseTasksObjectToArray(data.doneTasks);
     const activeTasks = this.parseTasksObjectToArray(data.activeTasks);
 
+    addCurrentDayDate(date);
+
     addCurrentDayTasks({
-      currentDayTasks: {
-        activeTasks,
-        doneTasks
-      }
+      active: activeTasks,
+      done: doneTasks
     });
 
     this.setState({
@@ -68,9 +60,8 @@ export default class Home extends Component {
   }
 
   getUsersData = async todayDate => {
-    const { currentDayDate} = this.state;
-    const { addTasks, currentDayTasks } = this.props;
-    console.log(this.props);
+    const { addTasks, currentDayTasks, currentDayDate } = this.props;
+    const { addCurrentDayTasks, addCurrentDayDate } = this.props;
 
     //Обновлять попап нужно либо по клику, либо при инициализации.
     //Второе выполняется в componentDidMount. Соответственно, одна из дат должна присутствовать.
@@ -104,17 +95,14 @@ export default class Home extends Component {
       done: usersData.done
     });
 
-    this.setState({
-      currentDayTasks
-    });
-
     // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
     if (todayDate) {
-      // костыль с task потом убрать
 
-      this.setState({
-        currentDayTasks,
-        currentDayDate: todayDate
+      addCurrentDayDate(todayDate);
+
+      addCurrentDayTasks({
+        active: currentDayTasks.active,
+        done: currentDayTasks.done
       });
     }
   };
@@ -129,8 +117,6 @@ export default class Home extends Component {
         <Header userLogged={this.props.currentUser} />
         <AsideMenu onClickDay={this.onClickDay} />
         <Popup
-          tasks={this.state.currentDayTasks}
-          date={this.state.currentDayDate}
           closePopup={this.closePopup}
           onAfterSubmit={this.getUsersData}
         />

@@ -1,6 +1,7 @@
-import { ACTION_ADD_TASKS, ACTION_ADD_CURRENT_DAY_TASKS } from "./action-types";
+import { ACTION_ADD_CURRENT_DAY_DATE, ACTION_ADD_TASKS, ACTION_ADD_CURRENT_DAY_TASKS, ACTION_ADD_NEW_TASK } from "./action-types";
 
 const initialState = {
+  currentDayDate: '',
   tasks: {
     active: {},
     done: {},
@@ -13,6 +14,11 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ACTION_ADD_CURRENT_DAY_DATE:
+      return {
+      ...state,
+      currentDayDate: action.payload
+    };
     case ACTION_ADD_TASKS:
       return {
         ...state,
@@ -23,6 +29,13 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         currentDayTasks: action.payload
       };
+    case ACTION_ADD_NEW_TASK:
+      return {
+        ...state,
+        currentDayTasks: {
+          active: action.payload
+        }
+      }
     default:
       return {
         ...state

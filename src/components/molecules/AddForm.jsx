@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import FirebaseRequest from "../FirebaseRequest";
+import { connect } from "react-redux";
+import { addCurrentDayTasks } from "../../store/actions";
+import { bindActionCreators } from "redux";
 
 import AddField from "../atoms/AddField";
 import AddButton from "../atoms/AddButton";
@@ -15,6 +18,12 @@ const AddFormContainer = styled.div`
   align-items: flex-end;
   width: 80%;
 `;
+
+const putActionsToProps = dispatch => {
+  return {
+    addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
+  };
+};
 
 class AddForm extends Component {
   constructor(props) {
@@ -66,6 +75,8 @@ class AddForm extends Component {
     );
   }
 }
+
+AddForm = connect(null, putActionsToProps)(AddForm);
 
 AddForm.propTypes = {
   date: PropTypes.string,

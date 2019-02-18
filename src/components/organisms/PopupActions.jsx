@@ -19,10 +19,10 @@ PopupActions.removeTask = async (date, key, activeTasks, doneTasks) => {
   if (removedElemIndex === -1) {
     removedElemIndex = doneTasks.findIndex(task => task.key === key);
     currentTasks = doneTasks;
-    categoryName = "doneTask";
+    categoryName = "done";
   } else {
     currentTasks = activeTasks;
-    categoryName = "activeTask";
+    categoryName = "active";
   }
 
   currentTasks.splice(removedElemIndex, 1);
