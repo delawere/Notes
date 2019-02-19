@@ -3,18 +3,18 @@ import AsideMenu from "../organisms/AsideMenu";
 import FirebaseRequest from "../FirebaseRequest";
 import Popup from "../organisms/Popup";
 import Header from "../organisms/Header";
-import Footer from "../organisms/Footer";
 import * as moment from "moment";
 import styled from "styled-components";
 
 const Container = styled.main`
+  position: relative;
   background: rgb(247, 247, 247);
   display: flex;
   flex-direction: column;
   padding-top: 4.5vw;
   padding: 15px 30px;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   padding-top: 10vh;
 `;
 
@@ -119,7 +119,6 @@ export default class Home extends PureComponent {
             onAfterSubmit={this.getUsersData}
           />
         </MainContainer>
-        <Footer />
       </Container>
     );
   }

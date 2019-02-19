@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.footer`
+const Container = styled.div`
   background: inherit;
   display: flex;
   justify-content: start;
@@ -11,7 +11,7 @@ const Container = styled.footer`
 
 const IconContainer = styled.div`
   height: 35px;
-  align-self: flex-end;
+  align-self: center;
 `;
 
 const Icon = styled.svg`
@@ -25,7 +25,7 @@ const Icon = styled.svg`
   }
 `;
 
-const Footer = () => (
+const ContactButtons = () => (
   <Container>
     <IconContainer>
       <a href="https://t.me/dmitriyZhiganov">
@@ -44,4 +44,4 @@ const Footer = () => (
   </Container>
 );
 
-export default Footer;
+export default ContactButtons;

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import ContactButtons from "../organisms/ContactButtons";
 import UserControl from "../molecules/UserControl";
 import UserLoginForm from "../molecules/UserLoginForm";
 
@@ -10,7 +11,7 @@ const Container = styled.header`
   width: 100%;
   background: #fff;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   border-bottom: 1px solid #dadce0;
 `;
 
@@ -27,6 +28,7 @@ const Title = styled.p`
 const Header = ({ userLogged, openForm }) => (
   <Container>
     <Title>todos</Title>
+    <ContactButtons></ContactButtons>
     {!userLogged ? <UserLoginForm openForm={openForm} /> : <UserControl />}
   </Container>
 );

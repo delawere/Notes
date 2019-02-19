@@ -19,12 +19,10 @@ const Wrapper = styled.div`
   margin-bottom: 35px;
   width: 60vw;
   margin-left: 85px;
-  z-index: 999;
   color: #242425;
 `;
 
 const PopupContainer = styled.div`
-  height: 100%;
   width: 100%;
   background-color: #fff;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);

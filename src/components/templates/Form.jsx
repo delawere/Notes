@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Login from "../organisms/Login";
 import Signup from "../organisms/Signup";
 import Header from "../organisms/Header";
-import Footer from "../organisms/Footer";
 
 const LogForm = styled.div`
   margin: 0 auto;
@@ -36,7 +35,6 @@ class Form extends Component {
           {this.state.login ? <Login /> : null}
           {this.state.signup ? <Signup /> : null}
         </LogForm>
-        <Footer />
       </main>
     );
   }
