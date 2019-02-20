@@ -11,12 +11,10 @@ const putStateToProps = state => {
   return {
     addCurrentDayDate: state.currentDayDate,
     tasks: {
-      active: state.tasks.active,
-      done: state.tasks.done,
+      active: state.tasks
     },
     currentDayTasks: {
-      active: state.currentDayTasks.active,
-      done: state.currentDayTasks.done
+      active: state.currentDayTasks
     }
   };
 };

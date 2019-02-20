@@ -111,7 +111,6 @@ class UserSchedule extends PureComponent {
               date={moment(this.state.month)}
               onClickDay={this.props.onClickDay}
               activeTasks={this.props.activeTasks}
-              doneTasks={this.props.doneTasks}
             />
           </CalendarWrap>
           <Arrow arrowSide={"right"} onClick={this.nextMonth} />
@@ -123,7 +122,6 @@ class UserSchedule extends PureComponent {
 
 UserSchedule.propTypes = {
   activeTasks: PropTypes.object,
-  doneTasks: PropTypes.object,
   onClickDay: PropTypes.func
 };
 

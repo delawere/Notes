@@ -60,7 +60,7 @@ class CalendarContainer extends PureComponent {
     let days = [];
     let data = [];
 
-    const { activeTasks, doneTasks } = this.props;
+    const { activeTasks } = this.props;
 
     if (activeTasks) {
       for (let key in activeTasks) {
@@ -72,35 +72,12 @@ class CalendarContainer extends PureComponent {
       }
     }
 
-    //Проверяем, есть ли неактивные задачи
-    if (doneTasks) {
-      for (let doneKey in doneTasks) {
-        //Ищем в уже существующем объекте, со всеми задачами, совпадения даты
-        let index = data.findIndex(
-          it => it.date === moment(doneKey).format("MM.DD.YYYY")
-        );
-        //Если на эту дату, уже есть запись, то добавляем к ней
-        if (index !== -1) {
-          data[index].doneDesc = doneTasks[doneKey];
-
-          //Если нет, то создаем новую
-        } else {
-          data.push({
-            date: moment(doneKey).format("MM.DD.YYYY"),
-            taskKey: doneKey,
-            doneDesc: doneTasks[doneKey]
-          });
-        }
-      }
-    }
-
     for (; start < end; start.add(1, "day").clone()) {
       const currentDay = {};
 
-      data.forEach(({ date, activeDesc, doneDesc, taskKey }) => {
+      data.forEach(({ date, activeDesc, taskKey }) => {
         if (start.format("MM.DD.YYYY") === date) {
           currentDay.activeDesc = activeDesc;
-          currentDay.doneDesc = doneDesc;
           currentDay.taskKey = taskKey;
         }
       });
@@ -132,7 +109,6 @@ class CalendarContainer extends PureComponent {
             curr,
             today,
             activeDesc,
-            doneDesc,
             taskKey
           }) => {
             return (
@@ -148,7 +124,6 @@ class CalendarContainer extends PureComponent {
                 fullDate={fullDate}
                 onClickDay={this.props.onClickDay}
                 activeTasks={activeDesc}
-                doneTasks={doneDesc}
                 taskKey={taskKey}
               />
             );
@@ -162,8 +137,7 @@ class CalendarContainer extends PureComponent {
 CalendarContainer.propTypes = {
   date: PropTypes.object,
   onClickDay: PropTypes.func,
-  activeTasks: PropTypes.object,
-  doneTasks: PropTypes.object
+  activeTasks: PropTypes.object
 };
 
 export default CalendarContainer;

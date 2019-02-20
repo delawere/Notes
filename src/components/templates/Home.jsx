@@ -39,23 +39,10 @@ export default class Home extends PureComponent {
   onClickDay = data => {
     const { date } = data;
     const { addCurrentDayTasks, addCurrentDayDate } = this.props;
-    const doneTasks = this.parseTasksObjectToArray(data.doneTasks);
     const activeTasks = this.parseTasksObjectToArray(data.activeTasks);
 
     addCurrentDayDate(date);
-
-    addCurrentDayTasks({
-      active: activeTasks,
-      done: doneTasks
-    });
-
-    this.setState({
-      currentDayTasks: {
-        doneTasks: doneTasks,
-        activeTasks: activeTasks
-      },
-      currentDayDate: date
-    });
+    addCurrentDayTasks(activeTasks);
   };
 
   componentDidMount() {
@@ -73,7 +60,7 @@ export default class Home extends PureComponent {
     }
     const usersData = await FirebaseRequest.getData();
 
-    const { active, done } = usersData;
+    const { active } = usersData;
     const currentDate = currentDayDate || todayDate;
     const currentDateFormatted = moment(currentDate).format("MM-DD-YYYY");
 
@@ -85,27 +72,13 @@ export default class Home extends PureComponent {
       currentDayTasks.active = newActiveTask || [];
     }
 
-    if (done) {
-      const newDoneTask = this.parseTasksObjectToArray(
-        done[currentDateFormatted]
-      );
-
-      currentDayTasks.done = newDoneTask || [];
-    }
-
-    addTasks({
-      active: usersData.active,
-      done: usersData.done
-    });
+    addTasks(usersData.active);
 
     // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
     if (todayDate) {
       addCurrentDayDate(todayDate);
 
-      addCurrentDayTasks({
-        active: currentDayTasks.active,
-        done: currentDayTasks.done
-      });
+      addCurrentDayTasks(currentDayTasks.active);
     }
   };
 

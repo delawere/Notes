@@ -41,7 +41,6 @@ const ScheduleCell = ({
   fullDate,
   onClickDay,
   activeTasks,
-  doneTasks,
   taskKey
 }) => {
   const { next, prev } = className;
@@ -52,7 +51,6 @@ const ScheduleCell = ({
         onClickDay({
           date: fullDate,
           activeTasks: activeTasks ? activeTasks : "",
-          doneTasks: doneTasks ? doneTasks : "",
           taskKey: taskKey
         })
       }
@@ -71,6 +69,5 @@ ScheduleCell.propTypes = {
   fullDate: PropTypes.string,
   onClickDay: PropTypes.func,
   activeTasks: PropTypes.object,
-  doneTasks: PropTypes.object,
   taskKey: PropTypes.string
 };

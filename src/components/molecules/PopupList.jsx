@@ -26,8 +26,7 @@ PopupList.propTypes = {
   title: PropTypes.string,
   tasksList: PropTypes.array,
   onRemove: PropTypes.func,
-  addTaskToMarkedGroup: PropTypes.func,
-  moveTaskToDone: PropTypes.func
+  addTaskToMarkedGroup: PropTypes.func
 };
 
 export default PopupList;

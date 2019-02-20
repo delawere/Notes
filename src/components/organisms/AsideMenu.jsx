@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 const AsideContainer = styled.aside`
   width: 20vw;
-  min-height: 60vh;
+  height: 300px;
   margin-top: 25px;
   margin-bottom: 35px;
   background: #fff;
@@ -16,8 +16,7 @@ const AsideContainer = styled.aside`
 
 const putStateToProps = state => {
   return {
-    activeTasks: state.tasks.active,
-    doneTasks: state.tasks.done
+    activeTasks: state.tasks
   };
 };
 
@@ -26,27 +25,24 @@ class AsideMenu extends Component {
     super(props);
 
     this.state = {
-      activeTasks: {},
-      doneTasks: {}
+      activeTasks: {}
     };
   }
 
   static getDerivedStateFromProps(props) {
-    const { activeTasks, doneTasks } = props;
+    const { activeTasks } = props;
     return {
-      activeTasks,
-      doneTasks
+      activeTasks
     };
   }
 
   render() {
-    const { activeTasks, doneTasks } = this.state;
+    const { activeTasks } = this.state;
     return (
       <AsideContainer>
         <UserSchedule
           onClickDay={this.props.onClickDay}
           activeTasks={activeTasks}
-          doneTasks={doneTasks}
         />
       </AsideContainer>
     );
@@ -56,7 +52,6 @@ class AsideMenu extends Component {
 AsideMenu.propTypes = {
   onClickDay: PropTypes.func,
   activeTasks: PropTypes.object,
-  doneTasks: PropTypes.object
 };
 
 AsideMenu = connect(putStateToProps)(AsideMenu);

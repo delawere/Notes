@@ -43,8 +43,7 @@ const PopupHeader = styled.header`
 const putStateToProps = state => {
   return {
     currentDate: state.currentDayDate,
-    active: state.currentDayTasks.active,
-    done: state.currentDayTasks.done
+    active: state.currentDayTasks
   };
 };
 
@@ -63,56 +62,48 @@ class Popup extends Component {
       fullDate: "",
       date: "",
       activeTask: [],
-      doneTask: [],
       markedList: [],
       visibleList: "all",
       showMenu: false
     };
   }
 
-  static getDerivedStateFromProps({ currentData, active, done }) {
+  static getDerivedStateFromProps({ currentData, active }) {
     return {
       fullDate: currentData,
       date: moment(currentData).format("D MMMM"),
-      activeTask: active || [],
-      doneTask: done || []
+      activeTask: active || []
     };
   }
 
   refreshDataSet = (newTask, active) => {
     const { addCurrentDayTasks } = this.props;
-    const { activeTasks, doneTasks } = PopupActions.refreshDataSet(
+    const { activeTasks } = PopupActions.refreshDataSet(
       newTask,
       [...this.props.active],
-      [...this.props.done],
       active
     );
 
-    addCurrentDayTasks({
-      active: activeTasks,
-      done: doneTasks
-    });
+    addCurrentDayTasks(activeTasks);
 
     this.props.onAfterSubmit();
   };
 
   removeTask = async key => {
     try {
-      const currentDate = moment(this.props.date).format("MM-DD-YYYY");
+      const currentDate = moment(this.props.currentDate).format("MM-DD-YYYY");
+      debugger;
       const currentTasks = await PopupActions.removeTask(
         currentDate,
         key,
-        [...this.state.activeTask],
-        [...this.state.doneTask]
+        [...this.state.activeTask]
       );
 
       this.setState({
         [currentTasks.categoryName]: currentTasks.currentTasks
       });
 
-      this.props.addNewTask({
-        [currentTasks.categoryName]: currentTasks.currentTasks
-      });
+      this.props.addNewTask(currentTasks.currentTasks);
 
       this.props.onAfterSubmit();
     } catch (e) {
@@ -160,15 +151,14 @@ class Popup extends Component {
             />
             <MenuButton />
           </PopupHeader>
-          <PopupList
+           <PopupList
             tasksList={active}
             visible={
               visibleList === "active" || visibleList === "all" ? true : false
             }
             onRemove={this.removeTask}
             addTaskToMarkedGroup={this.addTaskToMarkedGroup}
-            moveTaskToDone={this.moveTaskToDone}
-          />
+          /> 
           <AddForm
             date={moment(currentDate).format("MM-DD-YYYY")}
             refreshDataSet={this.refreshDataSet}
