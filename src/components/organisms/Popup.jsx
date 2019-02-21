@@ -3,7 +3,12 @@ import styled from "styled-components";
 import * as moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addCurrentDayTasks, addNewTask } from "../../store/actions";
+import {
+  addCurrentDayTasks,
+  addNewTask,
+  switchShowedTasksList,
+  addTaskToMarkedTasksList
+} from "../../store/actions";
 import { bindActionCreators } from "redux";
 
 import PopupList from "../molecules/PopupList";
@@ -43,31 +48,25 @@ const PopupHeader = styled.header`
 const putStateToProps = state => {
   return {
     currentDate: state.currentDayDate,
-    active: state.currentDayTasks
+    active: state.currentDayTasks,
+    showedTasksList: state.showedTasksList,
+    markedList: state.markedList
   };
 };
 
 const putActionsToProps = dispatch => {
   return {
     addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
-    addNewTask: bindActionCreators(addNewTask, dispatch)
+    addNewTask: bindActionCreators(addNewTask, dispatch),
+    switchShowedTasksList: bindActionCreators(switchShowedTasksList, dispatch),
+    addTaskToMarkedTasksList: addTaskToMarkedTasksList(
+      addTaskToMarkedTasksList,
+      dispatch
+    )
   };
 };
 
 class Popup extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      fullDate: "",
-      date: "",
-      activeTask: [],
-      markedList: [],
-      visibleList: "all",
-      showMenu: false
-    };
-  }
-
   static getDerivedStateFromProps({ currentData, active }) {
     return {
       fullDate: currentData,
@@ -77,7 +76,7 @@ class Popup extends Component {
   }
 
   refreshDataSet = (newTask, active) => {
-    const { addCurrentDayTasks } = this.props;
+    const { addCurrentDayTasks, onAfterSubmit } = this.props;
     const { activeTasks } = PopupActions.refreshDataSet(
       newTask,
       [...this.props.active],
@@ -85,27 +84,19 @@ class Popup extends Component {
     );
 
     addCurrentDayTasks(activeTasks);
-
-    this.props.onAfterSubmit();
+    onAfterSubmit();
   };
 
   removeTask = async key => {
     try {
+      const { addNewTask, onAfterSubmit } = this.props;
       const currentDate = moment(this.props.currentDate).format("MM-DD-YYYY");
-      debugger;
-      const currentTasks = await PopupActions.removeTask(
-        currentDate,
-        key,
-        [...this.state.activeTask]
-      );
+      const currentTasks = await PopupActions.removeTask(currentDate, key, [
+        ...this.props.active
+      ]);
 
-      this.setState({
-        [currentTasks.categoryName]: currentTasks.currentTasks
-      });
-
-      this.props.addNewTask(currentTasks.currentTasks);
-
-      this.props.onAfterSubmit();
+      addNewTask(currentTasks.currentTasks);
+      onAfterSubmit();
     } catch (e) {
       console.error(`Task doesn't remove. Error: ${e}`);
     }
@@ -113,14 +104,12 @@ class Popup extends Component {
 
   addTaskToMarkedGroup = (task, checked) => {
     const markedList = PopupActions.addToMarkedGroup(
-      [...this.state.markedList],
+      [...this.props.markedList],
       task,
       checked
     );
 
-    this.setState({
-      markedList
-    });
+    addTaskToMarkedTasksList(markedList);
   };
 
   applyChange = (list, callback) => {
@@ -133,39 +122,40 @@ class Popup extends Component {
     this.setState({
       visibleList: listName
     });
+    this.props.switchShowedTasksList(listName);
   };
 
   render() {
-    const { visibleList, markedList } = this.state;
-    const { currentDate, active } = this.props;
+    const { currentDate, active, showedTasksList, markedList } = this.props;
     return (
       <Wrapper>
         <PopupContainer>
           <PopupHeader>
             {moment(currentDate).format("D MMMM")}
             <Menu
-              visible={this.state.showMenu}
               deleteMarkedTasks={() =>
                 this.applyChange(markedList, this.removeTask)
               }
             />
             <MenuButton />
           </PopupHeader>
-           <PopupList
+          <PopupList
             tasksList={active}
             visible={
-              visibleList === "active" || visibleList === "all" ? true : false
+              showedTasksList === "active" || showedTasksList === "all"
+                ? true
+                : false
             }
             onRemove={this.removeTask}
             addTaskToMarkedGroup={this.addTaskToMarkedGroup}
-          /> 
+          />
           <AddForm
             date={moment(currentDate).format("MM-DD-YYYY")}
             refreshDataSet={this.refreshDataSet}
           />
           <ShowListControls
             hideList={this.hideList}
-            activeButton={this.state.visibleList}
+            activeButton={showedTasksList}
           />
         </PopupContainer>
       </Wrapper>

@@ -20,6 +20,4 @@ const ShowListButton = ({ text, active, hideList}) => (
   </Item>
 );
 
-/* DoneButton.propTypes = {}; */
-
 export default ShowListButton;
