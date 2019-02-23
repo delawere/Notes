@@ -1,11 +1,20 @@
 import {
+  ACTION_ADD_USER,
   ACTION_ADD_CURRENT_DAY_DATE,
   ACTION_ADD_TASKS,
   ACTION_ADD_CURRENT_DAY_TASKS,
   ACTION_ADD_NEW_TASK,
   ACTION_SWITCH_SHOWED_TASKS_LIST,
-  ACTION_CHECK_TASK
+  ACTION_CHECK_TASK,
+  ACTION_ADD_CURRENT_MONTH_TASKS
 } from "./action-types";
+
+export const addUser = user => {
+  return {
+    type: ACTION_ADD_USER,
+    payload: user
+  };
+};
 
 export const addCurrentDayDate = currentDayDate => {
   return {
@@ -46,5 +55,12 @@ export const addTaskToMarkedTasksList = markedList => {
   return {
     type: ACTION_CHECK_TASK,
     payload: markedList
+  };
+};
+
+export const addCurrentMonthTasks = tasksList => {
+  return {
+    type: ACTION_ADD_CURRENT_MONTH_TASKS,
+    payload: tasksList
   };
 };

@@ -2,6 +2,9 @@ import React, { PureComponent } from "react";
 import styled from "styled-components";
 import moment from "moment";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { addCurrentMonthTasks } from "../../store/actions";
 
 import ScheduleCell from "./ScheduleCell";
 
@@ -13,13 +16,21 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
+const putStateToProps = state => {
+  return {
+    currentMonthTasks: state.currentMonthTasks
+  };
+};
+
+const putActionsToProps = dispatch => {
+  return {
+    addCurrentMonthTasks: bindActionCreators(addCurrentMonthTasks, dispatch)
+  };
+};
+
 class CalendarContainer extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      days: []
-    };
   }
 
   async componentDidUpdate(prevProps) {
@@ -29,17 +40,13 @@ class CalendarContainer extends PureComponent {
 
     const days = await this.getDays();
 
-    this.setState({
-      days
-    });
+    this.props.addCurrentMonthTasks(days);
   }
 
   async componentDidMount() {
     const days = await this.getDays();
-
-    this.setState({
-      days
-    });
+    debugger;
+    this.props.addCurrentMonthTasks(days);
   }
 
   async getDays() {
@@ -100,7 +107,7 @@ class CalendarContainer extends PureComponent {
   render() {
     return (
       <Container>
-        {this.state.days.map(
+        {this.props.currentMonthTasks.map(
           ({
             label,
             fullDate,
@@ -133,6 +140,11 @@ class CalendarContainer extends PureComponent {
     );
   }
 }
+
+CalendarContainer = connect(
+  putStateToProps,
+  putActionsToProps
+)(CalendarContainer);
 
 CalendarContainer.propTypes = {
   date: PropTypes.object,
