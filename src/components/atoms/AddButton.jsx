@@ -28,7 +28,11 @@ const Button = styled.button`
   &:hover {
     background-color: #18ad90;
 `;
-const AddButton = ({ addNewTask, title }) => <Button onClick={addNewTask}>{title}</Button>;
+
+
+const AddButton = ({ addNewTask, title }) => (
+  <Button onClick={addNewTask}>{title}</Button>
+);
 
 AddButton.propTypes = {
   addNewTask: PropTypes.func

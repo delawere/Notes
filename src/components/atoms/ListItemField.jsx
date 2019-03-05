@@ -16,11 +16,9 @@ const Label = styled.span`
 
 const CheckBox = styled.input`
   display: inline-block;
-  opacity: 0;
-  width: 50px;
-  height: 100%;
+  appearance: none;
+  -webkit-appearance: none;
   position: absolute;
-  z-index: 999;
 `;
 
 const CheckBoxIcon = styled.svg`

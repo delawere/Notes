@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import fire from "../../config/Fire";
+import { addUser } from "../../store/actions";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 import Input from "../atoms/Input";
 import LoginFormTitle from "../atoms/LoginFormTitle";
@@ -8,6 +12,18 @@ const containerStyle = {
   width: "40%",
   marginTop: "50px",
   padding: "30px"
+};
+
+const putActionsToProps = dispatch => {
+  return {
+    addUser: bindActionCreators(addUser, dispatch)
+  };
+};
+
+const putStateToProps = state => {
+  return {
+    user: state.user
+  };
 };
 
 class Login extends Component {
@@ -24,7 +40,9 @@ class Login extends Component {
     fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(u => {})
+      .then(u => {
+        this.props.addUser(u.user.uid);
+      })
       .catch(error => {
         console.error(error);
       });
@@ -35,6 +53,9 @@ class Login extends Component {
   };
 
   render() {
+    if (this.props.user) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
         <LoginFormTitle name={"Log In"} />
@@ -70,5 +91,10 @@ class Login extends Component {
     );
   }
 }
+
+Login = connect(
+  putStateToProps,
+  putActionsToProps
+)(Login);
 
 export default Login;

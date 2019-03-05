@@ -2,6 +2,9 @@ import React, { PureComponent } from "react";
 import styled from "styled-components";
 /* import PropTypes from "prop-types"; */
 import fire from "../../config/Fire";
+import { addUser } from "../../store/actions";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux"
 
 const UserInfoContainer = styled.div`
   color: #0070c9;
@@ -16,6 +19,12 @@ const UserName = styled.p`
   font-weight: 500;
   margin: 0;
 `;
+
+const putActionToProps = dispatch => {
+  return {
+    addUser: bindActionCreators(addUser, dispatch)
+  };
+};
 
 class UserControl extends PureComponent {
   constructor(props) {
@@ -44,6 +53,8 @@ class UserControl extends PureComponent {
   logout = () => {
     localStorage.removeItem("user");
     fire.auth().signOut();
+
+    this.props.addUser('');
   };
 
   render() {
@@ -54,6 +65,11 @@ class UserControl extends PureComponent {
     );
   }
 }
+
+UserControl = connect(
+  null,
+  putActionToProps
+)(UserControl);
 
 UserControl.propTypes = {};
 

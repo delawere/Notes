@@ -5,6 +5,7 @@ import Popup from "../organisms/Popup";
 import Header from "../organisms/Header";
 import * as moment from "moment";
 import styled from "styled-components";
+import { Redirect } from "react-router";
 
 const Container = styled.main`
   position: relative;
@@ -20,10 +21,11 @@ const Container = styled.main`
 
 const MainContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 `;
 
 export default class Home extends PureComponent {
-
   parseTasksObjectToArray = data => {
     const result = [];
     for (let key in data) {
@@ -83,16 +85,17 @@ export default class Home extends PureComponent {
   };
 
   render() {
-    return (
-      <Container className="container" style={{ background: "#f7f7f7" }}>
-        <Header userLogged={this.props.currentUser} />
-        <MainContainer>
-          <AsideMenu onClickDay={this.onClickDay} />
-          <Popup
-            onAfterSubmit={this.getUsersData}
-          />
-        </MainContainer>
-      </Container>
-    );
+    if (this.props.user) {
+      return (
+        <Container className="container" style={{ background: "#f7f7f7" }}>
+          <Header userLogged={this.props.user} />
+          <MainContainer>
+            <AsideMenu onClickDay={this.onClickDay} />
+            <Popup onAfterSubmit={this.getUsersData} />
+          </MainContainer>
+        </Container>
+      );
+    }
+    return <Redirect to="/login" />;
   }
 }

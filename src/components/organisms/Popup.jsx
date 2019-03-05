@@ -19,18 +19,17 @@ import MenuButton from "../atoms/MenuButton";
 import Menu from "../molecules/Menu";
 
 const Wrapper = styled.div`
-  min-height: 60vh;
+  min-height: 300px;
+  background-color: #fff;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   margin-top: 25px;
   margin-bottom: 35px;
-  width: 60vw;
-  margin-left: 85px;
+  flex: 2;
   color: #242425;
 `;
 
 const PopupContainer = styled.div`
   width: 100%;
-  background-color: #fff;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   margin: auto;
   padding: 10px 45px;
   padding-bottom: 5px;
@@ -82,7 +81,6 @@ class Popup extends Component {
       [...this.props.active],
       active
     );
-
     addCurrentDayTasks(activeTasks);
     onAfterSubmit();
   };
@@ -123,6 +121,17 @@ class Popup extends Component {
       visibleList: listName
     });
     this.props.switchShowedTasksList(listName);
+  };
+
+  markAsDone = key => {
+    const { currentDayTasks } = this.props.active;
+    const result = currentDayTasks.map(task => {
+      if (task.key === key) {
+        return task.done = true;
+      };
+      return task;
+    });
+    return result;
   };
 
   render() {

@@ -5,11 +5,19 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Form from "./components/templates/Form";
 import Home from "./components/templates/Home";
-import { addTasks, addCurrentDayTasks, addCurrentDayDate } from "./store/actions";
+import {
+  addUser,
+  addTasks,
+  addCurrentDayTasks,
+  addCurrentDayDate
+} from "./store/actions";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 const putStateToProps = state => {
   return {
+    user: state.user,
     addCurrentDayDate: state.currentDayDate,
+    currentDayDate: state.currentDayDate,
     tasks: {
       active: state.tasks
     },
@@ -21,9 +29,10 @@ const putStateToProps = state => {
 
 const putActionsToProps = dispatch => {
   return {
+    addUser: bindActionCreators(addUser, dispatch),
     addTasks: bindActionCreators(addTasks, dispatch),
     addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
-    addCurrentDayDate: bindActionCreators(addCurrentDayDate, dispatch),
+    addCurrentDayDate: bindActionCreators(addCurrentDayDate, dispatch)
   };
 };
 
@@ -43,6 +52,7 @@ class App extends Component {
   componentDidMount() {
     const user = localStorage.getItem("user");
     if (user) {
+      this.props.addUser(user);
       this.setState({
         user
       });
@@ -65,11 +75,18 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.user ? (<WrappedHomeComponent currentUser={this.state.user} />) : ( <Form />)}
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" render={() => (
+            <WrappedHomeComponent currentUser={this.state.user} /> 
+           )}></Route>
+           <Route path="/login" component={Form}></Route>
+        </Switch>
+      </BrowserRouter> 
     );
   }
 }
+
+App = connect(null, putActionsToProps)(App);
 
 export default App;

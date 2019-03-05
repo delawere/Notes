@@ -29,10 +29,6 @@ const putActionsToProps = dispatch => {
 };
 
 class CalendarContainer extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
   async componentDidUpdate(prevProps) {
     if (prevProps.date === this.props.date) {
       return;
@@ -45,7 +41,6 @@ class CalendarContainer extends PureComponent {
 
   async componentDidMount() {
     const days = await this.getDays();
-    debugger;
     this.props.addCurrentMonthTasks(days);
   }
 
