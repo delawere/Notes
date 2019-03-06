@@ -4,6 +4,7 @@ import { addUser } from "../../store/actions";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
+import { LANDING } from "../../router/constants";
 
 import Input from "../atoms/Input";
 import LoginFormTitle from "../atoms/LoginFormTitle";
@@ -54,7 +55,7 @@ class Login extends Component {
 
   render() {
     if (this.props.user) {
-      return <Redirect to="/" />;
+      return <Redirect to={LANDING} />;
     }
     return (
       <div>
