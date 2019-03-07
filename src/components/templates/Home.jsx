@@ -6,7 +6,8 @@ import Header from "../organisms/Header";
 import * as moment from "moment";
 import styled from "styled-components";
 import { Redirect } from "react-router";
-
+import { LOGIN } from "../../router/constants";
+ 
 const Container = styled.main`
   position: relative;
   background: rgb(247, 247, 247);
@@ -96,6 +97,6 @@ export default class Home extends PureComponent {
         </Container>
       );
     }
-    return <Redirect to="/login" />;
+    return <Redirect to={LOGIN} />;
   }
 }

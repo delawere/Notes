@@ -12,6 +12,7 @@ import {
   addCurrentDayDate
 } from "./store/actions";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { LANDING, LOGIN } from "../../router/constants";
 
 const putStateToProps = state => {
   return {
@@ -77,10 +78,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" render={() => (
+          <Route exact path={LANDING} render={() => (
             <WrappedHomeComponent currentUser={this.state.user} /> 
            )}></Route>
-           <Route path="/login" component={Form}></Route>
+           <Route path={LOGIN} component={Form}></Route>
         </Switch>
       </BrowserRouter> 
     );
