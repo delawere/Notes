@@ -127,8 +127,8 @@ class Popup extends Component {
     const { currentDayTasks } = this.props.active;
     const result = currentDayTasks.map(task => {
       if (task.key === key) {
-        return task.done = true;
-      };
+        return (task.done = true);
+      }
       return task;
     });
     return result;
@@ -140,7 +140,9 @@ class Popup extends Component {
       <Wrapper>
         <PopupContainer>
           <PopupHeader>
-            {moment(currentDate).format("D MMMM")}
+            {currentDate
+              ? moment(currentDate).format("D MMMM")
+              : moment().format("D MMMM")}
             <Menu
               deleteMarkedTasks={() =>
                 this.applyChange(markedList, this.removeTask)

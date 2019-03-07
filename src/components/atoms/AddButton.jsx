@@ -35,7 +35,8 @@ const AddButton = ({ addNewTask, title }) => (
 );
 
 AddButton.propTypes = {
-  addNewTask: PropTypes.func
+  addNewTask: PropTypes.func,
+  title: PropTypes.string
 };
 
 export default AddButton;
