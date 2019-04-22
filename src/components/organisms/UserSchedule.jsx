@@ -33,7 +33,6 @@ const Title = styled.h2`
 `;
 
 const WeekDayContainer = styled.div`
-  width: 200px;
   display: flex;
   justify-content: space-around;
   flex-wrap: nowrap;
@@ -43,6 +42,15 @@ const WeekDayContainer = styled.div`
   margin: 0 auto;
   padding-bottom: 8px;
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.08);
+`;
+
+const WeakDayCell = styled.div `
+  text-align: center;
+  width: 14.285%;
+`;
+
+const HolidayCell = styled(WeakDayCell) `
+  color: tomato;
 `;
 
 class UserSchedule extends PureComponent {
@@ -103,8 +111,11 @@ class UserSchedule extends PureComponent {
           <Arrow arrowSide={"left"} onClick={this.prevMonth} />
           <CalendarWrap>
             <WeekDayContainer>
-              {UserSchedule.days.map(weekday => {
-                return <div key={weekday}>{weekday[0]}</div>;
+              {UserSchedule.days.map(weakday => {
+                if (weakday[0] !== 'S') {
+                  return <WeakDayCell key={weakday}>{weakday}</WeakDayCell>;
+                };
+                return <HolidayCell key={weakday}>{weakday}</HolidayCell>;  
               })}
             </WeekDayContainer>
             <CalendarContainer

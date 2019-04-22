@@ -6,7 +6,8 @@ import {
   ACTION_ADD_NEW_TASK,
   ACTION_SWITCH_SHOWED_TASKS_LIST,
   ACTION_CHECK_TASK,
-  ACTION_ADD_CURRENT_MONTH_TASKS
+  ACTION_ADD_CURRENT_MONTH_TASKS,
+  ACTION_PUT_POPUP_COORDINATES
 } from "./action-types";
 
 export const addUser = user => {
@@ -64,3 +65,10 @@ export const addCurrentMonthTasks = tasksList => {
     payload: tasksList
   };
 };
+
+export const putPopupCoordinates = coordinates => {
+  return {
+    type: ACTION_PUT_POPUP_COORDINATES,
+    payload: coordinates
+  }
+}

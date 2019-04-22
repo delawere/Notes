@@ -40,12 +40,13 @@ export default class Home extends PureComponent {
   };
 
   onClickDay = data => {
-    const { date } = data;
-    const { addCurrentDayTasks, addCurrentDayDate } = this.props;
+    const { date, coordinates } = data;
+    const { addCurrentDayTasks, addCurrentDayDate, putPopupCoordinates } = this.props;
     const activeTasks = this.parseTasksObjectToArray(data.activeTasks);
 
     addCurrentDayDate(date);
     addCurrentDayTasks(activeTasks);
+    putPopupCoordinates(coordinates);
   };
 
   componentDidMount() {

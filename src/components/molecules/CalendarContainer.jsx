@@ -9,7 +9,6 @@ import { addCurrentMonthTasks } from "../../store/actions";
 import ScheduleCell from "./ScheduleCell";
 
 const Container = styled.div`
-  width: 200px;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;

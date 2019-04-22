@@ -6,8 +6,7 @@ import { connect } from "react-redux";
 
 const AsideContainer = styled.aside`
   flex: 1;
-  max-width: 300px;
-  height: 300px;
+  height: 80vh;
   margin-top: 25px;
   margin-bottom: 35px;
   margin-right: 50px;

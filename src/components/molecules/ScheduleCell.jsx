@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 
 const Cell = styled.div`
   display: flex;
-  width: 26px;
-  height: 26px;
+  width: 14.285%;
+  height: 10vh;
   margin: 0px;
   margin-top: 2px;
   align-items: flex-end;
@@ -35,6 +35,22 @@ const otherDayStyle = {
   color: "#9e9e9e"
 };
 
+const onClickHandler = (
+  coordinates,
+  fullDate,
+  activeTasks,
+  onClickDay,
+  taskKey
+) => {
+  const { x, y } = coordinates;
+  onClickDay({
+    date: fullDate,
+    activeTasks: activeTasks ? activeTasks : "",
+    taskKey: taskKey,
+    coordinates: { x, y }
+  });
+};
+
 const ScheduleCell = ({
   value,
   className,
@@ -47,12 +63,14 @@ const ScheduleCell = ({
   return (
     <Cell
       style={next || prev ? otherDayStyle : {}}
-      onClick={() =>
-        onClickDay({
-          date: fullDate,
-          activeTasks: activeTasks ? activeTasks : "",
-          taskKey: taskKey
-        })
+      onClick={e =>
+        onClickHandler(
+          e.target.getBoundingClientRect(),
+          fullDate,
+          activeTasks,
+          onClickDay,
+          taskKey
+        )
       }
     >
       <Flag style={activeTasks ? {} : { opacity: "0" }} />

@@ -9,10 +9,11 @@ import {
   addUser,
   addTasks,
   addCurrentDayTasks,
-  addCurrentDayDate
+  addCurrentDayDate,
+  putPopupCoordinates
 } from "./store/actions";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { LANDING, LOGIN } from "../../router/constants";
+import { LANDING, LOGIN } from "./router/constants";
 
 const putStateToProps = state => {
   return {
@@ -33,7 +34,8 @@ const putActionsToProps = dispatch => {
     addUser: bindActionCreators(addUser, dispatch),
     addTasks: bindActionCreators(addTasks, dispatch),
     addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
-    addCurrentDayDate: bindActionCreators(addCurrentDayDate, dispatch)
+    addCurrentDayDate: bindActionCreators(addCurrentDayDate, dispatch),
+    putPopupCoordinates: bindActionCreators(putPopupCoordinates, dispatch)
   };
 };
 
@@ -78,16 +80,23 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path={LANDING} render={() => (
-            <WrappedHomeComponent currentUser={this.state.user} /> 
-           )}></Route>
-           <Route path={LOGIN} component={Form}></Route>
+          <Route
+            exact
+            path={LANDING}
+            render={() => (
+              <WrappedHomeComponent currentUser={this.state.user} />
+            )}
+          />
+          <Route path={LOGIN} component={Form} />
         </Switch>
-      </BrowserRouter> 
+      </BrowserRouter>
     );
   }
 }
 
-App = connect(null, putActionsToProps)(App);
+App = connect(
+  null,
+  putActionsToProps
+)(App);
 
 export default App;

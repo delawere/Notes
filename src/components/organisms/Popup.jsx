@@ -26,6 +26,9 @@ const Wrapper = styled.div`
   margin-bottom: 35px;
   flex: 2;
   color: #242425;
+  position: absolute;
+  top: ${props => props.x}px;
+  left: ${props => props.y}px;
 `;
 
 const PopupContainer = styled.div`
@@ -49,7 +52,8 @@ const putStateToProps = state => {
     currentDate: state.currentDayDate,
     active: state.currentDayTasks,
     showedTasksList: state.showedTasksList,
-    markedList: state.markedList
+    markedList: state.markedList,
+    coordinates: state.coordinates
   };
 };
 
@@ -135,9 +139,15 @@ class Popup extends Component {
   };
 
   render() {
-    const { currentDate, active, showedTasksList, markedList } = this.props;
+    const {
+      currentDate,
+      active,
+      showedTasksList,
+      markedList,
+      coordinates
+    } = this.props;
     return (
-      <Wrapper>
+      <Wrapper x={coordinates.x} y={coordinates.y}>
         <PopupContainer>
           <PopupHeader>
             {currentDate

@@ -6,7 +6,8 @@ import {
   ACTION_ADD_NEW_TASK,
   ACTION_SWITCH_SHOWED_TASKS_LIST,
   ACTION_CHECK_TASK,
-  ACTION_ADD_CURRENT_MONTH_TASKS
+  ACTION_ADD_CURRENT_MONTH_TASKS,
+  ACTION_PUT_POPUP_COORDINATES
 } from "./action-types";
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
   tasks: {},
   currentDayTasks: [],
   markedList: [],
-  currentMonthTasks: []
+  currentMonthTasks: [],
+  coordinates: { x: 0, y: 0 }
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -61,6 +63,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         currentMonthTasks: action.payload
       };
+    case ACTION_PUT_POPUP_COORDINATES:
+      return {
+        ...state,
+        coordinates: action.payload
+      }
     default:
       return {
         ...state
