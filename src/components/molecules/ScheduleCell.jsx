@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import * as moment from "moment";
 
 const Cell = styled.div`
   display: flex;
@@ -10,9 +12,10 @@ const Cell = styled.div`
   margin-top: 2px;
   align-items: flex-end;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
   position: relative;
-  font-size: 12px;
+  font-size: 1.3rem;
   font-weight: 500;
   color: #242425;
   border: 1px solid rgba(0, 0, 0, 0.035);
@@ -21,18 +24,20 @@ const Cell = styled.div`
 const Flag = styled.div`
   position: absolute;
   border-radius: 50%;
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
   background-color: rgb(31, 161, 24);
-  top: 4px;
+  top: 6px;
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 `;
 
-const otherDayStyle = {
-  color: "#9e9e9e"
+const putStateToProps = state => {
+  return {
+    currentDayDate: state.currentDayDate,
+  };
 };
 
 const onClickHandler = (
@@ -57,12 +62,16 @@ const ScheduleCell = ({
   fullDate,
   onClickDay,
   activeTasks,
-  taskKey
+  taskKey,
+  currentDayDate
 }) => {
   const { next, prev } = className;
   return (
     <Cell
-      style={next || prev ? otherDayStyle : {}}
+      style={{
+        color: next || prev ? "#9e9e9e" : "#242425",
+        "background": moment(currentDayDate).format("MM.DD.YYYY") === fullDate ? "#85C1E9" : ""
+      }}
       onClick={e =>
         onClickHandler(
           e.target.getBoundingClientRect(),
@@ -79,7 +88,11 @@ const ScheduleCell = ({
   );
 };
 
-export default ScheduleCell;
+const ScheduleCellWrapper = connect(
+  putStateToProps
+)(ScheduleCell);
+
+export default ScheduleCellWrapper;
 
 ScheduleCell.propTypes = {
   value: PropTypes.string,

@@ -20,15 +20,18 @@ import Menu from "../molecules/Menu";
 
 const Wrapper = styled.div`
   min-height: 300px;
-  background-color: #fff;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  width: 500px;
+  background-color: #f5f5f5;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
   margin-top: 25px;
   margin-bottom: 35px;
   flex: 2;
   color: #242425;
   position: absolute;
-  top: ${props => props.x}px;
-  left: ${props => props.y}px;
+  top: ${props => props.y}px;
+  left: calc(${props => props.x}px + 185px);
+  opacity: 0.92;
+  transition: 0.7s;
 `;
 
 const PopupContainer = styled.div`
@@ -68,6 +71,8 @@ const putActionsToProps = dispatch => {
     )
   };
 };
+
+const clientWidth = document.documentElement.clientWidth;
 
 class Popup extends Component {
   static getDerivedStateFromProps({ currentData, active }) {
@@ -146,8 +151,10 @@ class Popup extends Component {
       markedList,
       coordinates
     } = this.props;
+
+    const x = (coordinates.x + 185 + 500) >= clientWidth ? (coordinates.x - 370 - 315) : coordinates.x
     return (
-      <Wrapper x={coordinates.x} y={coordinates.y}>
+      <Wrapper x={x} y={coordinates.y}>
         <PopupContainer>
           <PopupHeader>
             {currentDate

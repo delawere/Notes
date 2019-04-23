@@ -6,6 +6,7 @@
     "@babel/cli": "^7.2.3",
     "eslint": "^5.15.0",
     "firebase": "^5.5.0",
+    "firebase-tools": "^6.7.1",
     "install": "^0.12.1",
     "moment": "^2.22.2",
     "moment-range": "^4.0.1",
@@ -36,5 +37,17 @@
     "react-test-renderer": "^16.7.0",
     "redux": "^4.0.1",
     "svg-inline-loader": "^0.8.0"
-  }
+  },
+  "description": "Todo app with calendar and authorization. Worked on React + Firebase.",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delawere/react-meeting-planer-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/delawere/react-meeting-planer-app/issues"
+  },
+  "homepage": "https://github.com/delawere/react-meeting-planer-app#readme"
 }
