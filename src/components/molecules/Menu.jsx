@@ -17,8 +17,8 @@ const Container = styled.div`
   background: #fff;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  cursor: default;
-  font-size: 13px;
+  cursor: pointer;
+  font-size: 14px;
   margin: 0;
   outline: none;
   padding: 6px 0;
