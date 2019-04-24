@@ -19,7 +19,11 @@
     "react-scripts": "1.1.5",
     "redux-thunk": "^2.3.0",
     "seamless-immutable": "^7.1.4",
-    "styled-components": "^4.0.2"
+    "styled-components": "^4.0.2",
+    "react-router": "^4.3.1",
+    "react-test-renderer": "^16.7.0",
+    "redux": "^4.0.1",
+    "svg-inline-loader": "^0.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,11 +36,7 @@
     "enzyme-adapter-react-16": "^1.8.0",
     "enzyme-to-json": "^3.3.5",
     "jest": "^24.0.0",
-    "prettier": "^1.15.3",
-    "react-router": "^4.3.1",
-    "react-test-renderer": "^16.7.0",
-    "redux": "^4.0.1",
-    "svg-inline-loader": "^0.8.0"
+    "prettier": "^1.15.3"
   },
   "description": "Todo app with calendar and authorization. Worked on React + Firebase.",
   "main": ".eslintrc.js",
