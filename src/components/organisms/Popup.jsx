@@ -75,6 +75,7 @@ const putActionsToProps = dispatch => {
 const clientWidth = document.documentElement.clientWidth;
 
 class Popup extends Component {
+  
   static getDerivedStateFromProps({ currentData, active }) {
     return {
       fullDate: currentData,
