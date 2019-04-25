@@ -5,15 +5,40 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import { LANDING } from "../../router/constants";
+import styled from "styled-components";
 
 import Input from "../atoms/Input";
 import LoginFormTitle from "../atoms/LoginFormTitle";
 
-const containerStyle = {
-  width: "40%",
-  marginTop: "50px",
-  padding: "30px"
-};
+const Button = styled.button`
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+  display: block;
+  margin: 0 auto;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  :hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+`;
+
+const Form = styled.form`
+  width: 40%;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 30px;
+`;
 
 const putActionsToProps = dispatch => {
   return {
@@ -60,7 +85,7 @@ class Login extends Component {
     return (
       <div>
         <LoginFormTitle name={"Log In"} />
-        <form className="container" style={containerStyle}>
+        <Form>
           <Input
             type="email"
             name="email"
@@ -69,7 +94,6 @@ class Login extends Component {
             className="form-control"
             placeholder="email"
           />
-
           <Input
             type="password"
             name="password"
@@ -78,16 +102,13 @@ class Login extends Component {
             className="form-control"
             placeholder="Password"
           />
-
-          <div className="form-group row">
-            <button
+            <Button
               onClick={this.login}
               className="btn btn-primary center-block  col-6"
             >
               Log in
-            </button>
-          </div>
-        </form>
+            </Button>
+        </Form>
       </div>
     );
   }
