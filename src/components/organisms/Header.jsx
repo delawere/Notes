@@ -9,16 +9,17 @@ const Container = styled.header`
   top: 0;
   left: 0;
   width: 100%;
+  height: 50px;
   background: #fff;
   display: flex;
   justify-content: flex-start;
+  flex-direction: row;
   border-bottom: 1px solid #dadce0;
 `;
 
-const Title = styled.p`
+const Title = styled.span`
   display: inline-block;
   color: #337ab7;
-  text-align: center;
   font-size: 32px;
   font-weight: 500;
   padding: 4px 20px;
@@ -27,7 +28,7 @@ const Title = styled.p`
 
 const Header = ({ userLogged, openForm }) => (
   <Container>
-    <Title>todos</Title>
+    <Title>note</Title>
     <ContactButtons></ContactButtons>
     {!userLogged ? <UserLoginForm openForm={openForm} /> : <UserControl />}
   </Container>

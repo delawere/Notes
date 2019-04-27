@@ -12,8 +12,8 @@ import LoginFormTitle from "../atoms/LoginFormTitle";
 
 const Button = styled.button`
   color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
+  background-color: #007bff;
+  border-color: #007bff;
   display: block;
   margin: 0 auto;
   font-weight: 400;
@@ -28,8 +28,8 @@ const Button = styled.button`
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
   :hover {
-    background-color: #218838;
-    border-color: #1e7e34;
+    background-color: #0069d9;
+    border-color: #0062cc;
   }
 `;
 

@@ -6,9 +6,10 @@ import * as moment from "moment";
 
 const Cell = styled.div`
   display: flex;
-  width: 14.285%;
+  margin: 0;
+  padding: 0;
+  width: calc(14.285% - 2px);
   height: 10vh;
-  margin: 0px;
   margin-top: 2px;
   align-items: flex-end;
   justify-content: center;

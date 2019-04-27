@@ -1,14 +1,39 @@
 import React, { Component } from "react";
 import fire from "../../config/Fire";
+import styled from "styled-components";
 
 import Input from "../atoms/Input";
 import LoginFormTitle from "../atoms/LoginFormTitle";
 
-const containerStyle = {
-  width: "40%",
-  marginTop: "50px",
-  padding: "30px"
-};
+const Button = styled.button`
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+  display: block;
+  margin: 0 auto;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  :hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+`;
+
+const Form = styled.form`
+  width: 40%;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 30px;
+`;
 
 class Signup extends Component {
   constructor(props) {
@@ -63,7 +88,7 @@ class Signup extends Component {
     return (
       <div>
         <LoginFormTitle name={"Sign Up"} />
-        <form className="container" style={containerStyle}>
+        <Form>
           <Input
             type="email"
             name="email"
@@ -84,15 +109,8 @@ class Signup extends Component {
             placeholder="Password"
           />
 
-          <div className="form-group row">
-            <button
-              onClick={this.signup}
-              className="btn btn-success center-block col-6"
-            >
-              Sign Up
-            </button>
-          </div>
-        </form>
+          <Button onClick={this.signup}>Sign Up</Button>
+        </Form>
       </div>
     );
   }

@@ -18,6 +18,7 @@ const Container = styled.main`
   width: 100vw;
   height: 100%;
   padding-top: 10vh;
+  overflow: hidden;
 `;
 
 const MainContainer = styled.div`
