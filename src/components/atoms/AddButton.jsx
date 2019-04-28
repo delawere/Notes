@@ -10,12 +10,12 @@ const Button = styled.button`
   background-color: #1abc9c;
   color: #fff;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 0.9rem;
   -webkit-text-decoration: none;
   -webkit-text-decoration: none;
   text-decoration: none;
   margin-left: 15px;
-  padding: 11px 40px;
+  padding: 0.5rem 1rem;
   border-radius: 5px;
   outline: 0!important;
   border: 0;

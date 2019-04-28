@@ -15,14 +15,12 @@ const Input = styled.input`
     display: inline-block;
     width: 100%;
     align-self: flex-end;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 24px;
+    padding: 0.5rem;
     border-radius: 5px;
     border: 1px solid #ccc;
     cursor: text;
     font-family: 'pt_sansregular',sans-serif;
-    font-size: 18px;
+    font-size: 0.9rem;
 
     &:focus,
     &:hover {

@@ -30,7 +30,6 @@ const Wrapper = styled.div`
   position: absolute;
   top: ${props => props.y}px;
   left: calc(${props => props.x}px + 185px);
-  opacity: 0.92;
   transition: 0.7s;
 `;
 

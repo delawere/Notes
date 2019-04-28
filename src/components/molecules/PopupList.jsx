@@ -9,7 +9,6 @@ const PopupList = ({
   addTaskToMarkedGroup
 }) => (
   <fieldset style={{ display: visible ? "flex" : "none" }}>
-    <legend>todo</legend>
     {tasksList.map(({ text, key }) => (
       <PopupListItem
         text={text}
