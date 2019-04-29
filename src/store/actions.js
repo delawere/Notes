@@ -7,7 +7,8 @@ import {
   ACTION_SWITCH_SHOWED_TASKS_LIST,
   ACTION_CHECK_TASK,
   ACTION_ADD_CURRENT_MONTH_TASKS,
-  ACTION_PUT_POPUP_COORDINATES
+  ACTION_PUT_POPUP_COORDINATES,
+  ACTION_SET_POPUP_VISIBLE
 } from "./action-types";
 
 export const addUser = user => {
@@ -70,5 +71,12 @@ export const putPopupCoordinates = coordinates => {
   return {
     type: ACTION_PUT_POPUP_COORDINATES,
     payload: coordinates
-  }
-}
+  };
+};
+
+export const setPopupVisible = isVisible => {
+  return {
+    type: ACTION_SET_POPUP_VISIBLE,
+    payload: isVisible
+  };
+};

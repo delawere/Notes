@@ -10,7 +10,8 @@ import {
   addTasks,
   addCurrentDayTasks,
   addCurrentDayDate,
-  putPopupCoordinates
+  putPopupCoordinates,
+  setPopupVisible
 } from "./store/actions";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { LANDING, LOGIN } from "./router/constants";
@@ -35,7 +36,8 @@ const putActionsToProps = dispatch => {
     addTasks: bindActionCreators(addTasks, dispatch),
     addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
     addCurrentDayDate: bindActionCreators(addCurrentDayDate, dispatch),
-    putPopupCoordinates: bindActionCreators(putPopupCoordinates, dispatch)
+    putPopupCoordinates: bindActionCreators(putPopupCoordinates, dispatch),
+    setPopupVisible: bindActionCreators(setPopupVisible, dispatch)
   };
 };
 

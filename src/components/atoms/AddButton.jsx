@@ -17,7 +17,7 @@ const Button = styled.button`
   margin-left: 15px;
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  outline: 0!important;
+  outline: 0;
   border: 0;
   -webkit-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;

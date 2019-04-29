@@ -22,7 +22,7 @@ const Title = styled.span`
   color: #337ab7;
   font-size: 32px;
   font-weight: 500;
-  padding: 4px 20px;
+  padding: 0 20px;
   text-decoration: none;
 `;
 

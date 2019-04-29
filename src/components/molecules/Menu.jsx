@@ -9,7 +9,7 @@ const Container = styled.div`
   left: 864px;
   top: 60px;
   border-width: 0;
-  box-shadow: 0 1px 2px 0 rgba(60, 6https://habr.com/ru/post/247373/.15);
+  box-shadow: 0 1px 2px 0 #000;
   border-radius: 4px;
   position: absolute;
   border-radius: 0;

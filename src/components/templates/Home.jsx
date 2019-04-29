@@ -7,7 +7,7 @@ import * as moment from "moment";
 import styled from "styled-components";
 import { Redirect } from "react-router";
 import { LOGIN } from "../../router/constants";
- 
+
 const Container = styled.main`
   position: relative;
   background: rgb(247, 247, 247);
@@ -42,12 +42,18 @@ export default class Home extends PureComponent {
 
   onClickDay = data => {
     const { date, coordinates } = data;
-    const { addCurrentDayTasks, addCurrentDayDate, putPopupCoordinates } = this.props;
+    const {
+      addCurrentDayTasks,
+      addCurrentDayDate,
+      putPopupCoordinates,
+      setPopupVisible
+    } = this.props;
     const activeTasks = this.parseTasksObjectToArray(data.activeTasks);
 
     addCurrentDayDate(date);
     addCurrentDayTasks(activeTasks);
     putPopupCoordinates(coordinates);
+    setPopupVisible(true);
   };
 
   componentDidMount() {

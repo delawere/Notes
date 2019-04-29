@@ -7,7 +7,8 @@ import {
   addCurrentDayTasks,
   addNewTask,
   switchShowedTasksList,
-  addTaskToMarkedTasksList
+  addTaskToMarkedTasksList,
+  setPopupVisible
 } from "../../store/actions";
 import { bindActionCreators } from "redux";
 
@@ -15,34 +16,36 @@ import PopupList from "../molecules/PopupList";
 import AddForm from "../molecules/AddForm";
 import PopupActions from "./PopupActions";
 import ShowListControls from "../molecules/ShowListControls";
-import MenuButton from "../atoms/MenuButton";
+import ClosePopupButton from "../atoms/ClosePopupButton";
 import Menu from "../molecules/Menu";
 
+const wrapperWidth = 400;
+
 const Wrapper = styled.div`
-  min-height: 300px;
-  width: 500px;
+  width: ${wrapperWidth}px;
   background-color: #f5f5f5;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
-  margin-top: 25px;
+  margin-top: 15px;
   margin-bottom: 35px;
   flex: 2;
   color: #242425;
   position: absolute;
   top: ${props => props.y}px;
   left: calc(${props => props.x}px + 185px);
-  transition: 0.7s;
+  transition: 0.5s;
+  display: ${props => props.isVisible ? '' : 'none'};
 `;
 
 const PopupContainer = styled.div`
   width: 100%;
   margin: auto;
-  padding: 10px 45px;
+  padding: 0.5rem 2rem;
   padding-bottom: 5px;
 `;
 
 const PopupHeader = styled.header`
   width: 100%;
-  padding: 20px 0;
+  padding: 4px 0;
   font-size: 1.8rem;
   font-weight: 450;
   display: flex;
@@ -55,7 +58,8 @@ const putStateToProps = state => {
     active: state.currentDayTasks,
     showedTasksList: state.showedTasksList,
     markedList: state.markedList,
-    coordinates: state.coordinates
+    coordinates: state.coordinates,
+    popupVisible: state.popupVisible
   };
 };
 
@@ -67,7 +71,8 @@ const putActionsToProps = dispatch => {
     addTaskToMarkedTasksList: addTaskToMarkedTasksList(
       addTaskToMarkedTasksList,
       dispatch
-    )
+    ),
+    setPopupVisible: bindActionCreators(setPopupVisible, dispatch)
   };
 };
 
@@ -149,12 +154,14 @@ class Popup extends Component {
       active,
       showedTasksList,
       markedList,
-      coordinates
+      coordinates,
+      popupVisible,
+      setPopupVisible
     } = this.props;
 
-    const x = (coordinates.x + 185 + 500) >= clientWidth ? (coordinates.x - 370 - 315) : coordinates.x
+    const x = (coordinates.x + 185 + wrapperWidth) >= clientWidth ? (coordinates.x - 270 - 315) : coordinates.x
     return (
-      <Wrapper x={x} y={coordinates.y}>
+      <Wrapper x={x} y={coordinates.y} isVisible={popupVisible}>
         <PopupContainer>
           <PopupHeader>
             {currentDate
@@ -165,7 +172,7 @@ class Popup extends Component {
                 this.applyChange(markedList, this.removeTask)
               }
             />
-            <MenuButton />
+            <ClosePopupButton closePopup={setPopupVisible}/>
           </PopupHeader>
           <PopupList
             tasksList={active}
