@@ -13,7 +13,7 @@ const SVG = styled.svg`
   height: 14px;
 `;
 
-const ClosePopupButton = closePopup => (
+const ClosePopupButton = ({ closePopup }) => (
   <Container>
     <SVG id="icon-cross" viewBox="0 0 32 32" onClick={() => closePopup(false)}>
       <title>Close</title>
