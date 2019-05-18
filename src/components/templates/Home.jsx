@@ -43,6 +43,7 @@ export default class Home extends PureComponent {
   onClickDay = data => {
     const { date, coordinates } = data;
     const {
+      popupVisible,
       addCurrentDayTasks,
       addCurrentDayDate,
       putPopupCoordinates,
@@ -53,7 +54,13 @@ export default class Home extends PureComponent {
     addCurrentDayDate(date);
     addCurrentDayTasks(activeTasks);
     putPopupCoordinates(coordinates);
-    setPopupVisible(true);
+
+    if (!popupVisible) {
+      setPopupVisible(true);
+    } else {
+      setPopupVisible(false);
+      setTimeout(() => setPopupVisible(true), 100);
+    }
   };
 
   componentDidMount() {

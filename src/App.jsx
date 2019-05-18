@@ -26,7 +26,8 @@ const putStateToProps = state => {
     },
     currentDayTasks: {
       active: state.currentDayTasks
-    }
+    },
+    popupVisible: state.popupVisible
   };
 };
 

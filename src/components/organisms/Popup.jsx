@@ -32,7 +32,6 @@ const Wrapper = styled.div`
   position: absolute;
   top: ${props => props.y}px;
   left: calc(${props => props.x}px + 185px);
-  transition: 0.5s;
   display: ${props => props.isVisible ? '' : 'none'};
 `;
 
