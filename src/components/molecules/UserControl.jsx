@@ -12,6 +12,7 @@ const UserInfoContainer = styled.div`
   padding-bottom: 4px;
   border-bottom: 1px solid #e3e3e3;
   cursor: pointer;
+  border: none;
 `;
 
 const UserName = styled.p`

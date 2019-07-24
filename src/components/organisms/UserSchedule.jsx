@@ -43,12 +43,12 @@ const WeekDayContainer = styled.div`
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.08);
 `;
 
-const WeakDayCell = styled.div `
+const WeakDayCell = styled.div`
   text-align: center;
   width: 14.285%;
 `;
 
-const HolidayCell = styled(WeakDayCell) `
+const HolidayCell = styled(WeakDayCell)`
   color: tomato;
 `;
 
@@ -111,10 +111,10 @@ class UserSchedule extends PureComponent {
           <CalendarWrap>
             <WeekDayContainer>
               {UserSchedule.days.map(weakday => {
-                if (weakday[0] !== 'S') {
+                if (weakday[0] !== "S") {
                   return <WeakDayCell key={weakday}>{weakday}</WeakDayCell>;
-                };
-                return <HolidayCell key={weakday}>{weakday}</HolidayCell>;  
+                }
+                return <HolidayCell key={weakday}>{weakday}</HolidayCell>;
               })}
             </WeekDayContainer>
             <CalendarContainer

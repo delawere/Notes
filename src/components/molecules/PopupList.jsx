@@ -8,7 +8,7 @@ const PopupList = ({
   onRemove,
   addTaskToMarkedGroup
 }) => (
-  <fieldset style={{ display: visible ? "flex" : "none" }}>
+  <fieldset style={{ display: visible ? "flex" : "none", 'overflow-y': 'scroll', height: '45vh' }}>
     {tasksList.map(({ text, key }) => (
       <PopupListItem
         text={text}

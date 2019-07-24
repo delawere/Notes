@@ -2,16 +2,14 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import DeleteButton from "../atoms/DeleteButton";
-import DoneButton from "../atoms/DoneButton";
+import Button from "../atoms/Button";
 import ListItemField from "../atoms/ListItemField";
 
 const Container = styled.div`
-  padding: 10px 40px;
+  padding: 0.8em 0;
   margin: 5px 0;
   font-size: 1.1rem;
   display: flex;
-  width: 90%;
   justify-content: space-between;
   transition-duration: 0.3s;
   transition-timing-function: ease-out;
@@ -26,11 +24,15 @@ const Container = styled.div`
 const ControlButtons = styled.div`
   display: flex;
   opacity: 0;
-  justify-content: center;
+  justify-content: space-between;
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
-  width: 70px;
 `;
+
+const buttonTitles = {
+  remove: "remove",
+  done: "done"
+};
 
 class PopupListItem extends Component {
   constructor(props) {
@@ -58,6 +60,8 @@ class PopupListItem extends Component {
 
       isLineThrought
     } = this.props;
+
+    const { done, remove } = buttonTitles;
     return (
       <Container isLineThrought={isLineThrought}>
         <ListItemField
@@ -68,8 +72,8 @@ class PopupListItem extends Component {
           isLineThrought={isLineThrought}
         />
         <ControlButtons className="ControlButtons">
-          <DoneButton onRemove={onRemove} taskKey={taskKey} />
-          <DeleteButton onRemove={onRemove} taskKey={taskKey} />
+          <Button onRemove={onRemove} taskKey={taskKey} title={done} />
+          <Button onRemove={onRemove} taskKey={taskKey} title={remove} />
         </ControlButtons>
       </Container>
     );

@@ -2,9 +2,9 @@ import React, { PureComponent } from "react";
 import styled from "styled-components";
 import moment from "moment";
 import PropTypes from "prop-types";
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
-import { addCurrentMonthTasks } from "../../store/actions";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { addCurrentMonthTasks, setCalendarCoordinate } from "../../store/actions";
 
 import ScheduleCell from "./ScheduleCell";
 
@@ -23,11 +23,16 @@ const putStateToProps = state => {
 
 const putActionsToProps = dispatch => {
   return {
-    addCurrentMonthTasks: bindActionCreators(addCurrentMonthTasks, dispatch)
+    addCurrentMonthTasks: bindActionCreators(addCurrentMonthTasks, dispatch),
+    setCalendarCoordinate: bindActionCreators(setCalendarCoordinate, dispatch)
   };
 };
 
 class CalendarContainer extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.containerRef = React.createRef();
+  }
   async componentDidUpdate(prevProps) {
     if (prevProps.date === this.props.date) {
       return;
@@ -39,6 +44,18 @@ class CalendarContainer extends PureComponent {
   }
 
   async componentDidMount() {
+    window.addEventListener("DOMContentLoaded", () => {
+      const x = this.containerRef.current.getBoundingClientRect().x;
+      this.props.setCalendarCoordinate(x);
+    });
+    window.addEventListener("scroll", () => {
+      const x = this.containerRef.current.getBoundingClientRect().x;
+      this.props.setCalendarCoordinate(x);
+    });
+    window.addEventListener("resize", () => {
+      const x = this.containerRef.current.getBoundingClientRect().x;
+      this.props.setCalendarCoordinate(x);
+    });
     const days = await this.getDays();
     this.props.addCurrentMonthTasks(days);
   }
@@ -100,7 +117,7 @@ class CalendarContainer extends PureComponent {
 
   render() {
     return (
-      <Container>
+      <Container ref={this.containerRef}>
         {this.props.currentMonthTasks.map(
           ({
             label,

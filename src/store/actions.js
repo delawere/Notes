@@ -7,8 +7,9 @@ import {
   ACTION_SWITCH_SHOWED_TASKS_LIST,
   ACTION_CHECK_TASK,
   ACTION_ADD_CURRENT_MONTH_TASKS,
-  ACTION_PUT_POPUP_COORDINATES,
-  ACTION_SET_POPUP_VISIBLE
+  ACTION_PUT_POPUP_PARAMETRES,
+  ACTION_SET_POPUP_VISIBLE,
+  ACTION_SET_CALENDAR_COORDINATE
 } from "./action-types";
 
 export const addUser = user => {
@@ -67,10 +68,10 @@ export const addCurrentMonthTasks = tasksList => {
   };
 };
 
-export const putPopupCoordinates = coordinates => {
+export const putPopupParametres = parametres => {
   return {
-    type: ACTION_PUT_POPUP_COORDINATES,
-    payload: coordinates
+    type: ACTION_PUT_POPUP_PARAMETRES,
+    payload: parametres
   };
 };
 
@@ -78,5 +79,12 @@ export const setPopupVisible = isVisible => {
   return {
     type: ACTION_SET_POPUP_VISIBLE,
     payload: isVisible
+  };
+};
+
+export const setCalendarCoordinate = calendarCoordinate => {
+  return {
+    type: ACTION_SET_CALENDAR_COORDINATE,
+    payload: calendarCoordinate
   };
 };

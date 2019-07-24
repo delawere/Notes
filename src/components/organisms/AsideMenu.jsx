@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import UserSchedule from "./UserSchedule";
+import Popup from "./Popup";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const AsideContainer = styled.aside`
+  position: relative;
   flex: 1;
   height: 80vh;
   margin-top: 25px;
@@ -38,9 +40,10 @@ class AsideMenu extends Component {
   }
 
   render() {
-    const { activeTasks } = this.props;
+    const { activeTasks, onAfterSubmit } = this.props;
     return (
       <AsideContainer>
+        <Popup onAfterSubmit={onAfterSubmit}/>
         <UserSchedule
           onClickDay={this.props.onClickDay}
           activeTasks={activeTasks}
@@ -52,7 +55,7 @@ class AsideMenu extends Component {
 
 AsideMenu.propTypes = {
   onClickDay: PropTypes.func,
-  activeTasks: PropTypes.object,
+  activeTasks: PropTypes.object
 };
 
 AsideMenu = connect(putStateToProps)(AsideMenu);

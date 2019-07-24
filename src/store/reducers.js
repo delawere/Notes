@@ -7,8 +7,9 @@ import {
   ACTION_SWITCH_SHOWED_TASKS_LIST,
   ACTION_CHECK_TASK,
   ACTION_ADD_CURRENT_MONTH_TASKS,
-  ACTION_PUT_POPUP_COORDINATES,
-  ACTION_SET_POPUP_VISIBLE
+  ACTION_PUT_POPUP_PARAMETRES,
+  ACTION_SET_POPUP_VISIBLE,
+  ACTION_SET_CALENDAR_COORDINATE
 } from "./action-types";
 
 const initialState = {
@@ -19,8 +20,9 @@ const initialState = {
   currentDayTasks: [],
   markedList: [],
   currentMonthTasks: [],
-  coordinates: { x: 0, y: 0 },
-  popupVisible: false
+  cellParametres: { coordinates: { x: 0, y: 0 }, width: 0 },
+  popupVisible: false,
+  calendarCoordinate: 0
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -65,12 +67,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         currentMonthTasks: action.payload
       };
-    case ACTION_PUT_POPUP_COORDINATES:
+    case ACTION_PUT_POPUP_PARAMETRES:
       return {
         ...state,
-        coordinates: action.payload
+        cellParametres: action.payload
       };
-
+    case ACTION_SET_CALENDAR_COORDINATE:
+      return {
+        ...state,
+        calendarCoordinate: action.payload
+      };
     case ACTION_SET_POPUP_VISIBLE:
       return {
         ...state,

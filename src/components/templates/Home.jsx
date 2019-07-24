@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import AsideMenu from "../organisms/AsideMenu";
 import FirebaseRequest from "../FirebaseRequest";
-import Popup from "../organisms/Popup";
 import Header from "../organisms/Header";
 import * as moment from "moment";
 import styled from "styled-components";
@@ -18,7 +17,6 @@ const Container = styled.main`
   width: 100vw;
   height: 100%;
   padding-top: 10vh;
-  overflow: hidden;
 `;
 
 const MainContainer = styled.div`
@@ -41,19 +39,19 @@ export default class Home extends PureComponent {
   };
 
   onClickDay = data => {
-    const { date, coordinates } = data;
+    const { date, coordinates, width } = data;
     const {
       popupVisible,
       addCurrentDayTasks,
       addCurrentDayDate,
-      putPopupCoordinates,
+      putPopupParametres,
       setPopupVisible
     } = this.props;
     const activeTasks = this.parseTasksObjectToArray(data.activeTasks);
 
     addCurrentDayDate(date);
     addCurrentDayTasks(activeTasks);
-    putPopupCoordinates(coordinates);
+    putPopupParametres({ coordinates, width });
 
     if (!popupVisible) {
       setPopupVisible(true);
@@ -106,8 +104,10 @@ export default class Home extends PureComponent {
         <Container className="container" style={{ background: "#f7f7f7" }}>
           <Header userLogged={this.props.user} />
           <MainContainer>
-            <AsideMenu onClickDay={this.onClickDay} />
-            <Popup onAfterSubmit={this.getUsersData} />
+            <AsideMenu
+              onClickDay={this.onClickDay}
+              onAfterSubmit={this.getUsersData}
+            />
           </MainContainer>
         </Container>
       );

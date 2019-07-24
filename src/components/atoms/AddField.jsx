@@ -6,7 +6,7 @@ const enterCharCode = 13;
 
 const Container = styled.div`
   position: relative;
-  min-height: 85px;
+  padding: 1em 0 1em;
   flex: 1;
   display: flex;
 `;

@@ -19,20 +19,21 @@ import ShowListControls from "../molecules/ShowListControls";
 import ClosePopupButton from "../atoms/ClosePopupButton";
 import Menu from "../molecules/Menu";
 
-const wrapperWidth = 400;
+const clientWidth = document.documentElement.clientWidth;
+const popupWidth = `${clientWidth * 0.4}px`;
 
 const Wrapper = styled.div`
-  width: ${wrapperWidth}px;
+  z-index: 2;
+  width: ${popupWidth};
+  min-height: 90%;
   background-color: #f5f5f5;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
-  margin-top: 15px;
-  margin-bottom: 35px;
   flex: 2;
   color: #242425;
   position: absolute;
-  top: ${props => props.y}px;
-  left: calc(${props => props.x}px + 185px);
-  display: ${props => props.isVisible ? '' : 'none'};
+  top: 2em;
+  left: calc(50% - ${popupWidth} / 2);
+  display: ${props => (props.isVisible ? "" : "none")};
 `;
 
 const PopupContainer = styled.div`
@@ -57,7 +58,6 @@ const putStateToProps = state => {
     active: state.currentDayTasks,
     showedTasksList: state.showedTasksList,
     markedList: state.markedList,
-    coordinates: state.coordinates,
     popupVisible: state.popupVisible
   };
 };
@@ -75,10 +75,7 @@ const putActionsToProps = dispatch => {
   };
 };
 
-const clientWidth = document.documentElement.clientWidth;
-
 class Popup extends Component {
-  
   static getDerivedStateFromProps({ currentData, active }) {
     return {
       fullDate: currentData,
@@ -153,14 +150,12 @@ class Popup extends Component {
       active,
       showedTasksList,
       markedList,
-      coordinates,
       popupVisible,
-      setPopupVisible
+      setPopupVisible,
     } = this.props;
 
-    const x = (coordinates.x + 185 + wrapperWidth) >= clientWidth ? (coordinates.x - 270 - 315) : coordinates.x
     return (
-      <Wrapper x={x} y={coordinates.y} isVisible={popupVisible}>
+      <Wrapper isVisible={popupVisible}>
         <PopupContainer>
           <PopupHeader>
             {currentDate
@@ -171,7 +166,7 @@ class Popup extends Component {
                 this.applyChange(markedList, this.removeTask)
               }
             />
-            <ClosePopupButton closePopup={setPopupVisible}/>
+            <ClosePopupButton closePopup={setPopupVisible} />
           </PopupHeader>
           <PopupList
             tasksList={active}

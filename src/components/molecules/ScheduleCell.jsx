@@ -48,12 +48,13 @@ const onClickHandler = (
   onClickDay,
   taskKey
 ) => {
-  const { x, y } = coordinates;
+  const { x, y, width, height } = coordinates;
   onClickDay({
     date: fullDate,
     activeTasks: activeTasks ? activeTasks : "",
     taskKey: taskKey,
-    coordinates: { x, y }
+    coordinates: { x: x - width, y: y - height },
+    width
   });
 };
 
@@ -73,14 +74,14 @@ const ScheduleCell = ({
         color: next || prev ? "#9e9e9e" : "#242425",
         "background": moment(currentDayDate).format("MM.DD.YYYY") === fullDate ? "#85C1E9" : ""
       }}
-      onClick={e =>
+      onClick={e => {
         onClickHandler(
           e.target.getBoundingClientRect(),
           fullDate,
           activeTasks,
           onClickDay,
           taskKey
-        )
+        )}
       }
     >
       <Flag style={activeTasks ? {} : { opacity: "0" }} />
