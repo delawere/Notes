@@ -1,8 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import * as moment from "moment";
+import React from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const Cell = styled.div`
   display: flex;
@@ -20,6 +19,11 @@ const Cell = styled.div`
   font-weight: 500;
   color: #242425;
   border: 1px solid rgba(0, 0, 0, 0.035);
+  transition: background-color 300ms;
+
+  &:hover {
+    background-color: #85c1e9;
+  }
 `;
 
 const Flag = styled.div`
@@ -29,15 +33,13 @@ const Flag = styled.div`
   height: 6px;
   background-color: rgb(31, 161, 24);
   top: 6px;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-timing-function: ease-out;
+  transition-duration: 300ms;
   transition-timing-function: ease-out;
 `;
 
 const putStateToProps = state => {
   return {
-    currentDayDate: state.currentDayDate,
+    currentDayDate: state.currentDayDate
   };
 };
 
@@ -51,7 +53,7 @@ const onClickHandler = (
   const { x, y, width, height } = coordinates;
   onClickDay({
     date: fullDate,
-    activeTasks: activeTasks ? activeTasks : "",
+    activeTasks: activeTasks ? activeTasks : '',
     taskKey: taskKey,
     coordinates: { x: x - width, y: y - height },
     width
@@ -71,8 +73,7 @@ const ScheduleCell = ({
   return (
     <Cell
       style={{
-        color: next || prev ? "#9e9e9e" : "#242425",
-        "background": moment(currentDayDate).format("MM.DD.YYYY") === fullDate ? "#85C1E9" : ""
+        color: next || prev ? '#9e9e9e' : '#242425'
       }}
       onClick={e => {
         onClickHandler(
@@ -81,18 +82,16 @@ const ScheduleCell = ({
           activeTasks,
           onClickDay,
           taskKey
-        )}
-      }
+        );
+      }}
     >
-      <Flag style={activeTasks ? {} : { opacity: "0" }} />
+      <Flag style={activeTasks ? {} : { opacity: '0' }} />
       {value}
     </Cell>
   );
 };
 
-const ScheduleCellWrapper = connect(
-  putStateToProps
-)(ScheduleCell);
+const ScheduleCellWrapper = connect(putStateToProps)(ScheduleCell);
 
 export default ScheduleCellWrapper;
 

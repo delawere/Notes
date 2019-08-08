@@ -19,20 +19,19 @@ import ShowListControls from "../molecules/ShowListControls";
 import ClosePopupButton from "../atoms/ClosePopupButton";
 import Menu from "../molecules/Menu";
 
+const popupWidth = '60vw';
 const clientWidth = document.documentElement.clientWidth;
-const popupWidth = `${clientWidth * 0.4}px`;
 
 const Wrapper = styled.div`
   z-index: 2;
   width: ${popupWidth};
-  min-height: 90%;
+  max-width: 600px;
   background-color: #f5f5f5;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
-  flex: 2;
   color: #242425;
   position: absolute;
   top: 2em;
-  left: calc(50% - ${popupWidth} / 2);
+  left: calc(50% - ${clientWidth * 0.6 > 600 ? '600px' : clientWidth * 0.6} / 2);
   display: ${props => (props.isVisible ? "" : "none")};
 `;
 

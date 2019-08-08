@@ -1,16 +1,15 @@
-import React, { PureComponent } from "react";
-import styled from "styled-components";
-import * as moment from "moment";
-import PropTypes from "prop-types";
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
+import * as moment from 'moment';
+import PropTypes from 'prop-types';
 
-import CalendarContainer from "../molecules/CalendarContainer";
-import Arrow from "../atoms/Arrow";
+import CalendarContainer from '../molecules/CalendarContainer';
+import Arrow from '../atoms/Arrow';
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-around;
   z-index: 200;
-  height: 250px;
   border-radius: 3px;
   justify-content: space-around;
   padding: 20px;
@@ -54,13 +53,13 @@ const HolidayCell = styled(WeakDayCell)`
 
 class UserSchedule extends PureComponent {
   static days = [
-    "Monday",
-    "Thuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
+    'Monday',
+    'Thuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
   ];
 
   constructor(props) {
@@ -68,7 +67,7 @@ class UserSchedule extends PureComponent {
 
     this.state = {
       visible: false,
-      month: moment().format("MM-DD-YYYY")
+      month: moment().format('MM-DD-YYYY')
     };
   }
 
@@ -88,8 +87,8 @@ class UserSchedule extends PureComponent {
     const currentMonth = this.state.month;
     this.setState({
       month: moment(currentMonth)
-        .subtract(1, "month")
-        .format("MM-DD-YYYY")
+        .subtract(1, 'month')
+        .format('MM-DD-YYYY')
     });
   };
 
@@ -97,21 +96,21 @@ class UserSchedule extends PureComponent {
     const currentMonth = this.state.month;
     this.setState({
       month: moment(currentMonth)
-        .add(1, "month")
-        .format("MM-DD-YYYY")
+        .add(1, 'month')
+        .format('MM-DD-YYYY')
     });
   };
 
   render() {
     return (
       <React.Fragment>
-        <Title>{moment(this.state.month).format("MMMM YYYY")}</Title>
+        <Title>{moment(this.state.month).format('MMMM YYYY')}</Title>
+        <Arrow arrowSide={'left'} onClick={this.prevMonth} />
         <Wrapper>
-          <Arrow arrowSide={"left"} onClick={this.prevMonth} />
           <CalendarWrap>
             <WeekDayContainer>
               {UserSchedule.days.map(weakday => {
-                if (weakday[0] !== "S") {
+                if (weakday[0] !== 'S') {
                   return <WeakDayCell key={weakday}>{weakday}</WeakDayCell>;
                 }
                 return <HolidayCell key={weakday}>{weakday}</HolidayCell>;
@@ -123,8 +122,8 @@ class UserSchedule extends PureComponent {
               activeTasks={this.props.activeTasks}
             />
           </CalendarWrap>
-          <Arrow arrowSide={"right"} onClick={this.nextMonth} />
         </Wrapper>
+        <Arrow arrowSide={'right'} onClick={this.nextMonth} />
       </React.Fragment>
     );
   }

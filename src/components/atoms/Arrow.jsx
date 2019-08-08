@@ -1,22 +1,27 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 /* import PropTypes from "prop-types"; */
 
 const leftSidePath =
-  "M20.928 5.376l-9.504 9.472 9.504 9.504q0.32 0.32 0.32 0.8t-0.32 0.8l-2.976 2.976q-0.352 0.32-0.8 0.32t-0.8-0.32l-13.248-13.28q-0.352-0.32-0.352-0.8t0.352-0.8l13.248-13.248q0.32-0.352 0.8-0.352t0.8 0.352l2.976 2.976q0.32 0.32 0.32 0.8t-0.32 0.8z";
+  'M20.928 5.376l-9.504 9.472 9.504 9.504q0.32 0.32 0.32 0.8t-0.32 0.8l-2.976 2.976q-0.352 0.32-0.8 0.32t-0.8-0.32l-13.248-13.28q-0.352-0.32-0.352-0.8t0.352-0.8l13.248-13.248q0.32-0.352 0.8-0.352t0.8 0.352l2.976 2.976q0.32 0.32 0.32 0.8t-0.32 0.8z';
 const rightSidePath =
-  "M19.776 15.648l-13.248 13.28q-0.352 0.32-0.8 0.32t-0.8-0.32l-2.976-2.976q-0.352-0.352-0.352-0.8t0.352-0.8l9.472-9.504-9.472-9.472q-0.352-0.352-0.352-0.8t0.352-0.8l2.976-2.976q0.32-0.352 0.8-0.352t0.8 0.352l13.248 13.248q0.32 0.352 0.32 0.8t-0.32 0.8z";
+  'M19.776 15.648l-13.248 13.28q-0.352 0.32-0.8 0.32t-0.8-0.32l-2.976-2.976q-0.352-0.352-0.352-0.8t0.352-0.8l9.472-9.504-9.472-9.472q-0.352-0.352-0.352-0.8t0.352-0.8l2.976-2.976q0.32-0.352 0.8-0.352t0.8 0.352l13.248 13.248q0.32 0.352 0.32 0.8t-0.32 0.8z';
 
 const Container = styled.div`
-  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  padding: 0;
   cursor: pointer;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  ${props => (props.arrowSide === 'left' ? 'left: 0.25em' : 'right: 0.25em')};
 `;
 
 const SvgArrows = styled.svg`
-  width: 10px;
-  heigth: 10px;
-  border-radius: 3px;
-  margin-top: 50px;
+  width: 100%;
+  height: 100%;
   background-color: inherit;
   transition-property: fill;
   transition-duration: 0.15s;
@@ -29,7 +34,7 @@ const SvgArrows = styled.svg`
 `;
 
 const Arrow = ({ arrowSide, onClick }) => (
-  <Container onClick={onClick}>
+  <Container onClick={onClick} arrowSide={arrowSide}>
     <SvgArrows
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +43,7 @@ const Arrow = ({ arrowSide, onClick }) => (
       viewBox="0 0 32 32"
     >
       <title>left-open</title>
-      <path d={arrowSide === "left" ? leftSidePath : rightSidePath} />
+      <path d={arrowSide === 'left' ? leftSidePath : rightSidePath} />
     </SvgArrows>
   </Container>
 );

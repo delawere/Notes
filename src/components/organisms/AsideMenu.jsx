@@ -8,10 +8,8 @@ import { connect } from "react-redux";
 const AsideContainer = styled.aside`
   position: relative;
   flex: 1;
-  height: 80vh;
-  margin-top: 25px;
-  margin-bottom: 35px;
-  margin-right: 50px;
+  margin-top: 2em;
+  margin: 0 auto;
   background: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   justify-self: self-end;
