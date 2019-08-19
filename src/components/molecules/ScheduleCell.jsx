@@ -20,10 +20,6 @@ const Cell = styled.div`
   color: #242425;
   border: 1px solid rgba(0, 0, 0, 0.035);
   transition: background-color 300ms;
-
-  &:hover {
-    background-color: #85c1e9;
-  }
 `;
 
 const Flag = styled.div`

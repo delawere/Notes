@@ -1,30 +1,30 @@
-import React from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const bgColors = {
-  done: "#0088cc",
-  remove: "tomato"
+  done: '#0088cc',
+  remove: 'tomato',
+  now: '#b0b2c3'
 };
 
 const ButtonWrapper = styled.button`
+  margin: 0 0.1em;
+  border: none;
   text-transform: capitalize;
-  font-size: 0.8rem;
-  padding: 0.25em 1.25em;
+  height: 1.4em;
+  line-height: 1;
   border-radius: 0.25em;
   background-color: ${props => bgColors[props.title]};
   color: white;
   font-weight: 500;
-  margin-right: 0.75em;
-  border: none;
-  outline: none;
 
   &:hover {
   }
 `;
 
-const Button = ({ onRemove, taskKey, title }) => (
-  <ButtonWrapper onClick={() => onRemove(taskKey)} title={title}>
+const Button = ({ onClick, taskKey, title }) => (
+  <ButtonWrapper onClick={() => onClick(taskKey)} title={title}>
     {title}
   </ButtonWrapper>
 );

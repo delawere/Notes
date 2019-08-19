@@ -6,9 +6,9 @@ import Button from "../atoms/Button";
 import ListItemField from "../atoms/ListItemField";
 
 const Container = styled.div`
-  padding: 0.8em 0;
-  margin: 5px 0;
-  font-size: 1.1rem;
+  padding: 0.4em 0;
+  margin: 0.25em 0;
+  font-size: 0.9rem;
   display: flex;
   justify-content: space-between;
   transition-duration: 0.3s;
@@ -72,8 +72,8 @@ class PopupListItem extends Component {
           isLineThrought={isLineThrought}
         />
         <ControlButtons className="ControlButtons">
-          <Button onRemove={onRemove} taskKey={taskKey} title={done} />
-          <Button onRemove={onRemove} taskKey={taskKey} title={remove} />
+          <Button onClick={onRemove} taskKey={taskKey} title={done} />
+          <Button onClick={onRemove} taskKey={taskKey} title={remove} />
         </ControlButtons>
       </Container>
     );

@@ -4,7 +4,17 @@ import * as moment from 'moment';
 import PropTypes from 'prop-types';
 
 import CalendarContainer from '../molecules/CalendarContainer';
-import Arrow from '../atoms/Arrow';
+import Arrow from "../atoms/Arrow";
+
+const Container = styled.div`
+  width: 45em;
+  margin-right: 2.5em;
+`;
+
+const Header = styled.header`
+  display: flex;
+  space-between: center;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,8 +35,9 @@ const CalendarWrap = styled.div`
 
 const Title = styled.h2`
   color: #242425;
-  font-size: 16px;
-  margin-left: 50px;
+  font-size: 1rem;
+  width: 10em;
+  text-align: center;
   font-weight: 600;
 `;
 
@@ -83,19 +94,19 @@ class UserSchedule extends PureComponent {
     });
   };
 
-  prevMonth = () => {
-    const currentMonth = this.state.month;
+  switchPrevMonth = () => {
+    const currentDate = this.state.month; //mm-dd-yyyy
     this.setState({
-      month: moment(currentMonth)
+      month: moment(currentDate)
         .subtract(1, 'month')
         .format('MM-DD-YYYY')
     });
   };
 
-  nextMonth = () => {
-    const currentMonth = this.state.month;
+  switchNextMonth = () => {
+    const currentDate = this.state.month; //mm-dd-yyyy
     this.setState({
-      month: moment(currentMonth)
+      month: moment(currentDate)
         .add(1, 'month')
         .format('MM-DD-YYYY')
     });
@@ -103,9 +114,13 @@ class UserSchedule extends PureComponent {
 
   render() {
     return (
-      <React.Fragment>
-        <Title>{moment(this.state.month).format('MMMM YYYY')}</Title>
-        <Arrow arrowSide={'left'} onClick={this.prevMonth} />
+      <Container>
+        <Header>
+          <Arrow arrowSide={'left'} onClick={this.switchPrevMonth} />
+          <Title>{moment(this.state.month).format('MMMM YYYY')}</Title>
+          <Arrow arrowSide={'right'} onClick={this.switchNextMonth} />
+        </Header>
+
         <Wrapper>
           <CalendarWrap>
             <WeekDayContainer>
@@ -123,8 +138,7 @@ class UserSchedule extends PureComponent {
             />
           </CalendarWrap>
         </Wrapper>
-        <Arrow arrowSide={'right'} onClick={this.nextMonth} />
-      </React.Fragment>
+      </Container>
     );
   }
 }

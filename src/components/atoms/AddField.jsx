@@ -6,7 +6,8 @@ const enterCharCode = 13;
 
 const Container = styled.div`
   position: relative;
-  padding: 1em 0 1em;
+  padding: 0;
+  margin: 0;
   flex: 1;
   display: flex;
 `;

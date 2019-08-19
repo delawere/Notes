@@ -8,12 +8,11 @@ import { Redirect } from "react-router";
 import { LOGIN } from "../../router/constants";
 
 const Container = styled.main`
+  background-color: #fff;
   position: relative;
-  background: rgb(247, 247, 247);
   display: flex;
   flex-direction: column;
-  padding-top: 4.5vw;
-  padding: 15px 30px;
+  padding: 0.75em 1.5em;
   width: 100vw;
   height: 100%;
   padding-top: 10vh;
@@ -101,7 +100,7 @@ export default class Home extends PureComponent {
   render() {
     if (this.props.user) {
       return (
-        <Container className="container" style={{ background: "#f7f7f7" }}>
+        <Container className="container">
           <Header userLogged={this.props.user} />
           <MainContainer>
             <AsideMenu

@@ -6,13 +6,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const AsideContainer = styled.aside`
-  position: relative;
-  flex: 1;
+  width: 100%;
   margin-top: 2em;
   margin: 0 auto;
-  background: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  justify-self: self-end;
+  display: flex;
 `;
 
 const putStateToProps = state => {
@@ -41,11 +38,11 @@ class AsideMenu extends Component {
     const { activeTasks, onAfterSubmit } = this.props;
     return (
       <AsideContainer>
-        <Popup onAfterSubmit={onAfterSubmit}/>
         <UserSchedule
           onClickDay={this.props.onClickDay}
           activeTasks={activeTasks}
         />
+        <Popup onAfterSubmit={onAfterSubmit}/>
       </AsideContainer>
     );
   }

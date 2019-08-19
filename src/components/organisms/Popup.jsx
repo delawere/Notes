@@ -1,38 +1,25 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import * as moment from "moment";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import * as moment from 'moment';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   addCurrentDayTasks,
   addNewTask,
   switchShowedTasksList,
-  addTaskToMarkedTasksList,
-  setPopupVisible
-} from "../../store/actions";
-import { bindActionCreators } from "redux";
+  addTaskToMarkedTasksList
+} from '../../store/actions';
+import { bindActionCreators } from 'redux';
 
-import PopupList from "../molecules/PopupList";
-import AddForm from "../molecules/AddForm";
-import PopupActions from "./PopupActions";
-import ShowListControls from "../molecules/ShowListControls";
-import ClosePopupButton from "../atoms/ClosePopupButton";
-import Menu from "../molecules/Menu";
-
-const popupWidth = '60vw';
-const clientWidth = document.documentElement.clientWidth;
+import PopupList from '../molecules/PopupList';
+import AddForm from '../molecules/AddForm';
+import PopupActions from './PopupActions';
+import ShowListControls from '../molecules/ShowListControls';
+import Menu from '../molecules/Menu';
 
 const Wrapper = styled.div`
-  z-index: 2;
-  width: ${popupWidth};
-  max-width: 600px;
-  background-color: #f5f5f5;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+  width: 50%;
   color: #242425;
-  position: absolute;
-  top: 2em;
-  left: calc(50% - ${clientWidth * 0.6 > 600 ? '600px' : clientWidth * 0.6} / 2);
-  display: ${props => (props.isVisible ? "" : "none")};
 `;
 
 const PopupContainer = styled.div`
@@ -69,8 +56,7 @@ const putActionsToProps = dispatch => {
     addTaskToMarkedTasksList: addTaskToMarkedTasksList(
       addTaskToMarkedTasksList,
       dispatch
-    ),
-    setPopupVisible: bindActionCreators(setPopupVisible, dispatch)
+    )
   };
 };
 
@@ -78,7 +64,7 @@ class Popup extends Component {
   static getDerivedStateFromProps({ currentData, active }) {
     return {
       fullDate: currentData,
-      date: moment(currentData).format("D MMMM"),
+      date: moment(currentData).format('D MMMM'),
       activeTask: active || []
     };
   }
@@ -97,7 +83,7 @@ class Popup extends Component {
   removeTask = async key => {
     try {
       const { addNewTask, onAfterSubmit } = this.props;
-      const currentDate = moment(this.props.currentDate).format("MM-DD-YYYY");
+      const currentDate = moment(this.props.currentDate).format('MM-DD-YYYY');
       const currentTasks = await PopupActions.removeTask(currentDate, key, [
         ...this.props.active
       ]);
@@ -149,8 +135,7 @@ class Popup extends Component {
       active,
       showedTasksList,
       markedList,
-      popupVisible,
-      setPopupVisible,
+      popupVisible
     } = this.props;
 
     return (
@@ -158,19 +143,18 @@ class Popup extends Component {
         <PopupContainer>
           <PopupHeader>
             {currentDate
-              ? moment(currentDate).format("D MMMM")
-              : moment().format("D MMMM")}
+              ? moment(currentDate).format('D MMMM')
+              : moment().format('D MMMM')}
             <Menu
               deleteMarkedTasks={() =>
                 this.applyChange(markedList, this.removeTask)
               }
             />
-            <ClosePopupButton closePopup={setPopupVisible} />
           </PopupHeader>
           <PopupList
             tasksList={active}
             visible={
-              showedTasksList === "active" || showedTasksList === "all"
+              showedTasksList === 'active' || showedTasksList === 'all'
                 ? true
                 : false
             }
@@ -178,7 +162,7 @@ class Popup extends Component {
             addTaskToMarkedGroup={this.addTaskToMarkedGroup}
           />
           <AddForm
-            date={moment(currentDate).format("MM-DD-YYYY")}
+            date={moment(currentDate).format('MM-DD-YYYY')}
             refreshDataSet={this.refreshDataSet}
           />
           <ShowListControls

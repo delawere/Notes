@@ -13,7 +13,7 @@ const placeholder = "Enter what you want to do";
 
 const AddFormContainer = styled.div`
   margin: 0 auto;
-  margin-top: 15px;
+  margin-top: 2.5em;
   display: flex;
   align-items: flex-end;
   width: 100%;
