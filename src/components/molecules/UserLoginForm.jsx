@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-/* import PropTypes from "prop-types"; */
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const UserInfoContainer = styled.div`
   color: #0070c9;
@@ -30,5 +30,9 @@ const UserLoginForm = ({ openForm }) => (
     <Link name="signup">Sign up</Link>
   </UserInfoContainer>
 );
+
+UserLoginForm.propTypes = {
+  openForm: PropTypes.func
+};
 
 export default UserLoginForm;

@@ -12,7 +12,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Input = styled.input`
+const Input = styled.textarea`
     display: inline-block;
     width: 100%;
     align-self: flex-end;
@@ -41,6 +41,8 @@ const AddField = ({
   <Container>
     <Input
       id="fullname"
+      cols="40"
+      rows="3"
       value={value}
       name={name}
       placeholder={placeholder}

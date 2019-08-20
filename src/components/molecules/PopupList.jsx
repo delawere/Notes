@@ -4,7 +4,7 @@ import PopupListItem from '../molecules/PopupListItem';
 
 const PopupList = ({ tasksList, visible, onRemove, addTaskToMarkedGroup }) => (
   <fieldset
-    style={{ display: visible ? 'flex' : 'none', 'overflow-y': 'scroll' }}
+    style={{ display: visible ? 'flex' : 'none', 'overflowY': 'scroll' }}
   >
     {tasksList.map(({ text, key }) => (
       <PopupListItem

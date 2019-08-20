@@ -1,38 +1,26 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-import Button from "../atoms/Button";
-import ListItemField from "../atoms/ListItemField";
+import ListItemField from '../atoms/ListItemField';
+import CheckButton from '../atoms/CheckButton';
+import DeleteButton from '../atoms/DeleteButton';
 
 const Container = styled.div`
-  padding: 0.4em 0;
-  margin: 0.25em 0;
-  font-size: 0.9rem;
+  padding: 0.5em 1em;
+  font-size: 1.1rem;
   display: flex;
   justify-content: space-between;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-out;
-  cursor: pointer;
+  align-items: flex-end;
   border-bottom: 1px solid rgba(222, 222, 222, 0.4);
-
-  &:hover .ControlButtons {
-    opacity: 1;
-  }
 `;
 
 const ControlButtons = styled.div`
   display: flex;
-  opacity: 0;
   justify-content: space-between;
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
 `;
-
-const buttonTitles = {
-  remove: "remove",
-  done: "done"
-};
 
 class PopupListItem extends Component {
   constructor(props) {
@@ -61,7 +49,6 @@ class PopupListItem extends Component {
       isLineThrought
     } = this.props;
 
-    const { done, remove } = buttonTitles;
     return (
       <Container isLineThrought={isLineThrought}>
         <ListItemField
@@ -72,8 +59,8 @@ class PopupListItem extends Component {
           isLineThrought={isLineThrought}
         />
         <ControlButtons className="ControlButtons">
-          <Button onClick={onRemove} taskKey={taskKey} title={done} />
-          <Button onClick={onRemove} taskKey={taskKey} title={remove} />
+          <CheckButton onClick={onRemove} taskKey={taskKey} />
+          <DeleteButton onClick={onRemove} taskKey={taskKey} />
         </ControlButtons>
       </Container>
     );

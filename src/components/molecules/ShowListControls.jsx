@@ -5,7 +5,6 @@ import ShowListButton from "../atoms/ShowListButton";
 const List = styled.ul`
   padding: 0;
   list-style: none;
-  text-align: center;
   padding-top: 22px;
 `;
 
@@ -16,6 +15,7 @@ const ShowListControls = ({ hideList, activeButton }) => {
     <List>
       {ButtonsText.map(text => (
         <ShowListButton
+          key={text}
           text={text}
           hideList={hideList}
           active={activeButton === text.toLowerCase() ? true : false}

@@ -12,11 +12,11 @@ import AddButton from "../atoms/AddButton";
 const placeholder = "Enter what you want to do";
 
 const AddFormContainer = styled.div`
-  margin: 0 auto;
   margin-top: 2.5em;
   display: flex;
   align-items: flex-end;
-  width: 100%;
+  height: 10em;
+  width: 30em;
 `;
 
 const putActionsToProps = dispatch => {

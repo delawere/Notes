@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
-/* import PropTypes from "prop-types"; */
+import PropTypes from "prop-types";
 import fire from "../../config/Fire";
 import { addUser } from "../../store/actions";
 import { bindActionCreators } from "redux";
@@ -72,6 +72,8 @@ UserControl = connect(
   putActionToProps
 )(UserControl);
 
-UserControl.propTypes = {};
+UserControl.propTypes = {
+  addUser: PropTypes.func
+};
 
 export default UserControl;
