@@ -143,8 +143,8 @@ class Popup extends Component {
         <PopupContainer>
           <PopupHeader>
             {currentDate
-              ? moment(currentDate).format('D MMMM')
-              : moment().format('D MMMM')}
+              ? moment(currentDate).format('dddd, D MMMM')
+              : moment().format('dddd, D MMMM')}
             <Menu
               deleteMarkedTasks={() =>
                 this.applyChange(markedList, this.removeTask)

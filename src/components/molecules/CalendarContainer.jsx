@@ -17,7 +17,8 @@ const Container = styled.div`
 
 const putStateToProps = state => {
   return {
-    currentMonthTasks: state.currentMonthTasks
+    currentMonthTasks: state.currentMonthTasks,
+    currentDayDate: state.currentDayDate
   };
 };
 
@@ -141,6 +142,8 @@ class CalendarContainer extends PureComponent {
                 }}
                 fullDate={fullDate}
                 onClickDay={this.props.onClickDay}
+                //Fix this shit
+                isActiveDay={this.props.currentDayDate === moment(fullDate).format("MM-DD-YYYY") || this.props.currentDayDate === moment(fullDate).format("MM.DD.YYYY") }
                 activeTasks={activeDesc}
                 taskKey={taskKey}
               />

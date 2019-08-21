@@ -7,7 +7,7 @@ import CalendarContainer from '../molecules/CalendarContainer';
 import Arrow from "../atoms/Arrow";
 
 const Container = styled.div`
-  width: 45em;
+  width: 50%;
   margin-right: 2.5em;
 `;
 
