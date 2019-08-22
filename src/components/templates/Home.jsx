@@ -19,7 +19,7 @@ const Container = styled.div`
 
 const MainContainer = styled.div`
   margin: 0 auto;
-  width: 940px;
+  width: 1200px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

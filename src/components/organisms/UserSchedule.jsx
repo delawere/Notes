@@ -8,7 +8,7 @@ import Arrow from "../atoms/Arrow";
 
 const Container = styled.div`
   width: 50%;
-  margin-right: 2.5em;
+  margin-right: 1.5em;
 `;
 
 const Header = styled.header`
