@@ -28,7 +28,7 @@ const Label = styled.span`
   border-radius: 50%;
   line-height: 2.5em;
   text-align: center;
-  background-image: ${props => props.isActiveDay ? 'linear-gradient(#2193b0, #6dd5ed)' : ''};
+  background-color: ${props => props.isActiveDay ? '#3492FF' : ''};
   color: ${props => props.isActiveDay ? '#fff' : ''};
 `
 
@@ -37,8 +37,8 @@ const Flag = styled.div`
   border-radius: 50%;
   width: 6px;
   height: 6px;
-  background-color: rgb(31, 161, 24);
-  top: 6px;
+  background-color: #3492FF;
+  top: 15px;
   transition-duration: 300ms;
   transition-timing-function: ease-out;
 `;
@@ -73,8 +73,7 @@ const ScheduleCell = ({
   onClickDay,
   isActiveDay,
   activeTasks,
-  taskKey,
-  currentDayDate
+  taskKey
 }) => {
   const { next, prev } = className;
   return (
@@ -92,7 +91,7 @@ const ScheduleCell = ({
         );
       }}
     >
-      <Flag style={activeTasks ? {} : { opacity: '0' }} />
+      <Flag style={activeTasks && !isActiveDay ? {} : { opacity: '0' }} />
       <Label isActiveDay={isActiveDay}>{value}</Label>
     </Cell>
   );

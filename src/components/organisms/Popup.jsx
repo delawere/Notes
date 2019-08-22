@@ -20,7 +20,7 @@ import Menu from '../molecules/Menu';
 const Wrapper = styled.div`
   width: 50%;
   color: #242425;
-`;
+  background-color: rgba(0, 0, 0, 0,25);`;
 
 const PopupContainer = styled.div`
   width: 100%;

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import ListItemField from '../atoms/ListItemField';
-import CheckButton from '../atoms/CheckButton';
 import DeleteButton from '../atoms/DeleteButton';
 
 const Container = styled.div`
@@ -59,7 +58,6 @@ class PopupListItem extends Component {
           isLineThrought={isLineThrought}
         />
         <ControlButtons className="ControlButtons">
-          <CheckButton onClick={onRemove} taskKey={taskKey} />
           <DeleteButton onClick={onRemove} taskKey={taskKey} />
         </ControlButtons>
       </Container>

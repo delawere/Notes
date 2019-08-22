@@ -54,6 +54,7 @@ const WeekDayContainer = styled.div`
 `;
 
 const WeakDayCell = styled.div`
+  overflow: hidden;
   text-align: center;
   width: 14.285%;
 `;

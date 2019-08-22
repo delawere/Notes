@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopupListItem from '../molecules/PopupListItem';
+import styled from "styled-components";
 
-const PopupList = ({ tasksList, visible, onRemove, addTaskToMarkedGroup }) => (
-  <fieldset
-    style={{ display: visible ? 'flex' : 'none', 'overflowY': 'scroll' }}
-  >
+const Fieldset = styled.fieldset`
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+`
+const NoTasksTitle = styled.span`
+  font-style: italic;
+  color: #b4b4b4;
+`;
+const PopupList = ({ tasksList, onRemove, addTaskToMarkedGroup }) => (
+  <Fieldset>
+    <NoTasksTitle>{tasksList.length > 0 ? '' : 'no tasks to do'}</NoTasksTitle>
     {tasksList.map(({ text, key }) => (
       <PopupListItem
         text={text}
@@ -15,7 +23,7 @@ const PopupList = ({ tasksList, visible, onRemove, addTaskToMarkedGroup }) => (
         addTaskToMarkedGroup={addTaskToMarkedGroup || ''}
       />
     ))}
-  </fieldset>
+  </Fieldset>
 );
 
 PopupList.propTypes = {

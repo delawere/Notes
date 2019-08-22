@@ -7,18 +7,19 @@ import styled from "styled-components";
 import { Redirect } from "react-router";
 import { LOGIN } from "../../router/constants";
 
-const Container = styled.main`
+const Container = styled.div`
   background-color: #fff;
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 0.75em 1.5em;
-  width: 100vw;
+  width: 100%;
   height: 100%;
   padding-top: 10vh;
 `;
 
 const MainContainer = styled.div`
+  margin: 0 auto;
+  width: 940px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
