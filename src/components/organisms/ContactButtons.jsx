@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Container = styled.div`
   background: inherit;
@@ -15,25 +15,18 @@ const IconContainer = styled.div`
 `;
 
 const Icon = styled.svg`
-  fill: rgba(72, 72, 72, 0.7);
-  width: 25px;
-  height: 25px;
-  margin: 4px;
+  fill: white;
+  width: 2.5em;
+  height: 2.5em;
 
   &:hover {
-    fill: rgb(37, 37, 37);
+    fill: white;
   }
 `;
 
 const ContactButtons = () => (
   <Container>
     <IconContainer>
-      <a href="https://t.me/dmitriyZhiganov">
-        <Icon id="icon-telegram" viewBox="0 0 28 28">
-          <title>telegram</title>
-          <path d="M18.578 20.422l2.297-10.828c0.203-0.953-0.344-1.328-0.969-1.094l-13.5 5.203c-0.922 0.359-0.906 0.875-0.156 1.109l3.453 1.078 8.016-5.047c0.375-0.25 0.719-0.109 0.438 0.141l-6.484 5.859-0.25 3.563c0.359 0 0.516-0.156 0.703-0.344l1.687-1.625 3.5 2.578c0.641 0.359 1.094 0.172 1.266-0.594zM28 14c0 7.734-6.266 14-14 14s-14-6.266-14-14 6.266-14 14-14 14 6.266 14 14z" />
-        </Icon>
-      </a>
       <a href="https://github.com/delawere">
         <Icon id="icon-github" viewBox="0 0 32 32">
           <title>github</title>

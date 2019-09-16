@@ -39,6 +39,10 @@ class PopupListItem extends Component {
     );
   };
 
+  onMouseDownHandler = (event) => {
+    console.log(event.target.parentNode);
+  }
+
   render() {
     const {
       text,
@@ -49,7 +53,7 @@ class PopupListItem extends Component {
     } = this.props;
 
     return (
-      <Container isLineThrought={isLineThrought}>
+      <Container isLineThrought={isLineThrought} onMouseDown={this.onMouseDownHandler}>
         <ListItemField
           text={text}
           taskKey={taskKey}

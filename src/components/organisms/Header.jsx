@@ -1,35 +1,28 @@
-import React from "react";
-import styled from "styled-components";
-import ContactButtons from "../organisms/ContactButtons";
-import UserControl from "../molecules/UserControl";
-import UserLoginForm from "../molecules/UserLoginForm";
+import React from 'react';
+import styled from 'styled-components';
+import ContactButtons from '../organisms/ContactButtons';
+import UserControl from '../molecules/UserControl';
+import UserLoginForm from '../molecules/UserLoginForm';
 
 const Container = styled.header`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 50px;
-  background: #fff;
+  font-size: 14px;
+  line-height: 1.5;
+  color: hsla(0, 0%, 100%, 0.7);
+  background-color: #24292e;
   display: flex;
+  padding: 0.5em 0.75em;
   justify-content: flex-start;
+  align-items: center;
   flex-direction: row;
-  border-bottom: 1px solid #dadce0;
-`;
-
-const Title = styled.span`
-  display: inline-block;
-  color: #337ab7;
-  font-size: 32px;
-  font-weight: 500;
-  padding: 0 20px;
-  text-decoration: none;
 `;
 
 const Header = ({ userLogged, openForm }) => (
   <Container>
-    <Title>note</Title>
-    <ContactButtons></ContactButtons>
+    <ContactButtons />
     {!userLogged ? <UserLoginForm openForm={openForm} /> : <UserControl />}
   </Container>
 );
