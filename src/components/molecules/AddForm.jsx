@@ -7,15 +7,12 @@ import { addCurrentDayTasks } from "../../store/actions";
 import { bindActionCreators } from "redux";
 
 import AddField from "../atoms/AddField";
-import AddButton from "../atoms/AddButton";
 
-const placeholder = "Enter what you want to do";
+const placeholder = "+ Add Task";
 
 const AddFormContainer = styled.div`
-  margin-top: 2.5em;
   display: flex;
   align-items: flex-end;
-  height: 10em;
   width: 30em;
 `;
 
@@ -55,6 +52,7 @@ class AddForm extends Component {
   };
 
   onFocusAddField = () => {
+
     this.setState({ inFocus: !this.state.inFocus });
   };
 
@@ -70,7 +68,6 @@ class AddForm extends Component {
           onFocusAddField={this.onFocusAddField}
           inFocus={this.state.inFocus}
         />
-        <AddButton addNewTask={this.addNewTask} title="Add" />
       </AddFormContainer>
     );
   }

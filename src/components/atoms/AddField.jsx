@@ -6,28 +6,25 @@ const enterCharCode = 13;
 
 const Container = styled.div`
   position: relative;
-  padding: 0;
+  padding: 0.5em;
   margin: 0;
   flex: 1;
   display: flex;
 `;
 
-const Input = styled.textarea`
+const Input = styled.input`
     display: inline-block;
     width: 100%;
     align-self: flex-end;
     padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border: none;
     cursor: text;
     font-family: 'pt_sansregular',sans-serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
 
     &:focus,
     &:hover {
-      border-color: #66afe9;
-      outline: 0;
-      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+      outline: none;
 `;
 
 const AddField = ({
@@ -40,9 +37,6 @@ const AddField = ({
 }) => (
   <Container>
     <Input
-      id="fullname"
-      cols="40"
-      rows="3"
       value={value}
       name={name}
       placeholder={placeholder}

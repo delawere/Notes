@@ -12,15 +12,14 @@ import {
 import { bindActionCreators } from 'redux';
 
 import PopupList from '../molecules/PopupList';
-import AddForm from '../molecules/AddForm';
 import PopupActions from './PopupActions';
-import ShowListControls from '../molecules/ShowListControls';
 import Menu from '../molecules/Menu';
 
 const Wrapper = styled.div`
   width: 50%;
   color: #242425;
-  background-color: rgba(0, 0, 0, 0,25);`;
+  background-color: rgba(0, 0, 0, 0, 25);
+`;
 
 const PopupContainer = styled.div`
   width: 100%;
@@ -61,14 +60,7 @@ const putActionsToProps = dispatch => {
 };
 
 class Popup extends Component {
-  static getDerivedStateFromProps({ currentData, active }) {
-    return {
-      fullDate: currentData,
-      date: moment(currentData).format('D MMMM'),
-      activeTask: active || []
-    };
-  }
-
+  
   refreshDataSet = (newTask, active) => {
     const { addCurrentDayTasks, onAfterSubmit } = this.props;
     const { activeTasks } = PopupActions.refreshDataSet(
@@ -160,14 +152,8 @@ class Popup extends Component {
             }
             onRemove={this.removeTask}
             addTaskToMarkedGroup={this.addTaskToMarkedGroup}
-          />
-          <AddForm
-            date={moment(currentDate).format('MM-DD-YYYY')}
+            currentDate={moment(currentDate).format('MM-DD-YYYY')}
             refreshDataSet={this.refreshDataSet}
-          />
-          <ShowListControls
-            hideList={this.hideList}
-            activeButton={showedTasksList}
           />
         </PopupContainer>
       </Wrapper>

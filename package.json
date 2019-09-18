@@ -1,7 +1,7 @@
 {
-  "name": "reactnotes",
-  "version": "0.1.0",
-  "private": true,
+  "name": "Notes",
+  "version": "2.0.0",
+  "private": false,
   "dependencies": {
     "@babel/cli": "^7.2.3",
     "eslint": "^5.15.0",
@@ -45,7 +45,7 @@
     "type": "git",
     "url": "git+https://github.com/delawere/react-meeting-planer-app.git"
   },
-  "author": "",
+  "author": "Dmitriy Zhiganov",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/delawere/react-meeting-planer-app/issues"

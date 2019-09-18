@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopupListItem from '../molecules/PopupListItem';
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const Fieldset = styled.fieldset`
-  padding-top: 0.5em;
-  padding-left: 0.5em;
-`
-const NoTasksTitle = styled.span`
-  font-style: italic;
-  color: #b4b4b4;
+import AddForm from '../molecules/AddForm';
+
+const Container = styled.div`
+  padding-left: 1em;
+  padding-top: 0.75em;
 `;
-const PopupList = ({ tasksList, onRemove, addTaskToMarkedGroup }) => (
-  <Fieldset>
-    <NoTasksTitle>{tasksList.length > 0 ? '' : 'no tasks to do'}</NoTasksTitle>
+
+const PopupList = ({
+  tasksList,
+  onRemove,
+  addTaskToMarkedGroup,
+  currentDate,
+  refreshDataSet
+}) => (
+  <Container>
     {tasksList.map(({ text, key }) => (
       <PopupListItem
         text={text}
@@ -23,14 +27,16 @@ const PopupList = ({ tasksList, onRemove, addTaskToMarkedGroup }) => (
         addTaskToMarkedGroup={addTaskToMarkedGroup || ''}
       />
     ))}
-  </Fieldset>
+    <AddForm date={currentDate} refreshDataSet={refreshDataSet} />
+  </Container>
 );
 
 PopupList.propTypes = {
-  title: PropTypes.string,
   tasksList: PropTypes.array,
   onRemove: PropTypes.func,
-  addTaskToMarkedGroup: PropTypes.func
+  addTaskToMarkedGroup: PropTypes.func,
+  currentDate: PropTypes.string,
+  refreshDataSet: PropTypes.func
 };
 
 export default PopupList;

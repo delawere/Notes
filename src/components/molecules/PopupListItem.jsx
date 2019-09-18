@@ -6,12 +6,11 @@ import ListItemField from '../atoms/ListItemField';
 import DeleteButton from '../atoms/DeleteButton';
 
 const Container = styled.div`
-  padding: 0.5em 1em;
-  font-size: 1.1rem;
+  padding: 0.25em 1em;
+  font-size: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  border-bottom: 1px solid rgba(222, 222, 222, 0.4);
 `;
 
 const ControlButtons = styled.div`
