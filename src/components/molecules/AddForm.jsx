@@ -14,6 +14,7 @@ const AddFormContainer = styled.div`
   display: flex;
   align-items: flex-end;
   width: 30em;
+  margin-left: 1.6em;
 `;
 
 const putActionsToProps = dispatch => {
