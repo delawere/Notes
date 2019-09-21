@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import FirebaseRequest from "../FirebaseRequest";
-import { connect } from "react-redux";
-import { addCurrentDayTasks } from "../../store/actions";
-import { bindActionCreators } from "redux";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import FirebaseRequest from '../FirebaseRequest';
+import { connect } from 'react-redux';
+import { addCurrentDayTasks } from '../../store/actions';
+import { bindActionCreators } from 'redux';
 
-import AddField from "../atoms/AddField";
+import AddField from '../atoms/AddField';
 
-const placeholder = "+ Add Task";
+const placeholder = '+ Add Task';
 
 const AddFormContainer = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const AddFormContainer = styled.div`
 
 const putActionsToProps = dispatch => {
   return {
-    addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
+    addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch)
   };
 };
 
@@ -28,7 +28,7 @@ class AddForm extends Component {
     super(props);
 
     this.state = {
-      task: "",
+      task: '',
       inFocus: false
     };
   }
@@ -38,22 +38,23 @@ class AddForm extends Component {
   };
 
   addNewTask = async () => {
+    const active = 'active';
     const { task } = this.state;
     const { date, refreshDataSet } = this.props;
-    const key = await FirebaseRequest.addNewTask(task, date);
-    await refreshDataSet({
+    const key = await FirebaseRequest.addNewTask(task, date, active);
+    await refreshDataSet(
+      {
         task,
         key
       },
       true
     );
     this.setState({
-      task: ""
+      task: ''
     });
   };
 
   onFocusAddField = () => {
-
     this.setState({ inFocus: !this.state.inFocus });
   };
 
@@ -74,7 +75,10 @@ class AddForm extends Component {
   }
 }
 
-AddForm = connect(null, putActionsToProps)(AddForm);
+AddForm = connect(
+  null,
+  putActionsToProps
+)(AddForm);
 
 AddForm.propTypes = {
   date: PropTypes.string,

@@ -40,17 +40,16 @@ class PopupListItem extends Component {
     const {
       text,
       taskKey,
-      onRemove,
-
-      isLineThrought
+      type,
+      onRemove
     } = this.props;
 
     const { checked } = this.state;
 
     return (
-      <Container isLineThrought={isLineThrought} onClick={this.onClick}>
+      <Container onClick={this.onClick}>
         <CheckIcon visible={checked} />
-        <ListItemField text={text} checked={checked} />
+        <ListItemField text={text} checked={type === 'active' ? true : false} />
         <ControlButtons>
           <DeleteButton onClick={onRemove} taskKey={taskKey} />
         </ControlButtons>

@@ -1,11 +1,11 @@
-import React, { PureComponent } from "react";
-import AsideMenu from "../organisms/AsideMenu";
-import FirebaseRequest from "../FirebaseRequest";
-import Header from "../organisms/Header";
-import * as moment from "moment";
-import styled from "styled-components";
-import { Redirect } from "react-router";
-import { LOGIN } from "../../router/constants";
+import React, { PureComponent } from 'react';
+import AsideMenu from '../organisms/AsideMenu';
+import FirebaseRequest from '../FirebaseRequest';
+import Header from '../organisms/Header';
+import * as moment from 'moment';
+import styled from 'styled-components';
+import { Redirect } from 'react-router';
+import { LOGIN } from '../../router/constants';
 
 const Container = styled.div`
   background-color: #fff;
@@ -31,7 +31,8 @@ export default class Home extends PureComponent {
     for (let key in data) {
       result.push({
         key: key,
-        text: data[key]
+        text: data[key].task,
+        type: data[key].type
       });
     }
 
@@ -39,34 +40,20 @@ export default class Home extends PureComponent {
   };
 
   onClickDay = data => {
-    const { date, coordinates, width } = data;
-    const {
-      popupVisible,
-      addCurrentDayTasks,
-      addCurrentDayDate,
-      putPopupParametres,
-      setPopupVisible
-    } = this.props;
+    const { date } = data;
+    const { addCurrentDayTasks, addCurrentDayDate } = this.props;
     const activeTasks = this.parseTasksObjectToArray(data.activeTasks);
 
     addCurrentDayDate(date);
     addCurrentDayTasks(activeTasks);
-    putPopupParametres({ coordinates, width });
-
-    if (!popupVisible) {
-      setPopupVisible(true);
-    } else {
-      setPopupVisible(false);
-      setTimeout(() => setPopupVisible(true), 100);
-    }
   };
 
   componentDidMount() {
-    this.getUsersData(moment().format("MM-DD-YYYY"));
+    this.getUsersData(moment().format('MM-DD-YYYY'));
   }
 
   getUsersData = async todayDate => {
-    const { addTasks, currentDayTasks, currentDayDate } = this.props;
+    const { addTasks, currentDayDate } = this.props;
     const { addCurrentDayTasks, addCurrentDayDate } = this.props;
 
     //Обновлять попап нужно либо по клику, либо при инициализации.
@@ -76,32 +63,26 @@ export default class Home extends PureComponent {
     }
     const usersData = await FirebaseRequest.getData();
 
-    const { active } = usersData;
     const currentDate = currentDayDate || todayDate;
-    const currentDateFormatted = moment(currentDate).format("MM-DD-YYYY");
+    const currentDateFormatted = moment(currentDate).format('MM-DD-YYYY');
 
-    if (active) {
-      const newActiveTask = this.parseTasksObjectToArray(
-        active[currentDateFormatted]
-      );
-
-      currentDayTasks.active = newActiveTask || [];
-    }
-
-    addTasks(usersData.active);
+    addTasks(usersData);
 
     // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
     if (todayDate) {
       addCurrentDayDate(todayDate);
 
-      addCurrentDayTasks(currentDayTasks.active);
+      const currentDayTasks = this.parseTasksObjectToArray(
+        usersData[currentDateFormatted]
+      );
+      addCurrentDayTasks(currentDayTasks);
     }
   };
 
   render() {
     if (this.props.user) {
       return (
-        <Container className="container">
+        <Container>
           <Header userLogged={this.props.user} />
           <MainContainer>
             <AsideMenu

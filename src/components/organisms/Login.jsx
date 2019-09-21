@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import fire from "../../config/Fire";
-import { addUser } from "../../store/actions";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { Redirect } from "react-router";
-import { LANDING } from "../../router/constants";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import fire from '../../config/Fire';
+import { addUser } from '../../store/actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
+import { LANDING } from '../../router/constants';
+import styled from 'styled-components';
 
-import Input from "../atoms/Input";
-import LoginFormTitle from "../atoms/LoginFormTitle";
+import Input from '../atoms/Input';
+import LoginFormTitle from '../atoms/LoginFormTitle';
 
 const Button = styled.button`
   color: #fff;
@@ -56,8 +56,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: ""
+      email: '',
+      password: ''
     };
   }
 
@@ -84,14 +84,13 @@ class Login extends Component {
     }
     return (
       <div>
-        <LoginFormTitle name={"Log In"} />
+        <LoginFormTitle name={'Log In'} />
         <Form>
           <Input
             type="email"
             name="email"
             value={this.state.email}
             onChange={this.handleChange}
-            className="form-control"
             placeholder="email"
           />
           <Input
@@ -99,15 +98,9 @@ class Login extends Component {
             name="password"
             value={this.state.password}
             onChange={this.handleChange}
-            className="form-control"
             placeholder="Password"
           />
-            <Button
-              onClick={this.login}
-              className="btn btn-primary center-block  col-6"
-            >
-              Log in
-            </Button>
+          <Button onClick={this.login}>Log in</Button>
         </Form>
       </div>
     );

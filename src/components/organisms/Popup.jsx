@@ -6,14 +6,11 @@ import { connect } from 'react-redux';
 import {
   addCurrentDayTasks,
   addNewTask,
-  switchShowedTasksList,
-  addTaskToMarkedTasksList
 } from '../../store/actions';
 import { bindActionCreators } from 'redux';
 
 import PopupList from '../molecules/PopupList';
 import PopupActions from './PopupActions';
-import Menu from '../molecules/Menu';
 
 const Wrapper = styled.div`
   width: 50%;
@@ -41,9 +38,7 @@ const putStateToProps = state => {
   return {
     currentDate: state.currentDayDate,
     active: state.currentDayTasks,
-    showedTasksList: state.showedTasksList,
-    markedList: state.markedList,
-    popupVisible: state.popupVisible
+    showedTasksList: state.showedTasksList
   };
 };
 
@@ -51,16 +46,10 @@ const putActionsToProps = dispatch => {
   return {
     addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
     addNewTask: bindActionCreators(addNewTask, dispatch),
-    switchShowedTasksList: bindActionCreators(switchShowedTasksList, dispatch),
-    addTaskToMarkedTasksList: addTaskToMarkedTasksList(
-      addTaskToMarkedTasksList,
-      dispatch
-    )
   };
 };
 
 class Popup extends Component {
-  
   refreshDataSet = (newTask, active) => {
     const { addCurrentDayTasks, onAfterSubmit } = this.props;
     const { activeTasks } = PopupActions.refreshDataSet(
@@ -87,71 +76,31 @@ class Popup extends Component {
     }
   };
 
-  addTaskToMarkedGroup = (task, checked) => {
-    const markedList = PopupActions.addToMarkedGroup(
-      [...this.props.markedList],
-      task,
-      checked
-    );
-
-    addTaskToMarkedTasksList(markedList);
-  };
-
   applyChange = (list, callback) => {
     if (list.length > 0) {
       list.forEach(it => callback(it.taskKey, it.text));
     }
   };
 
-  hideList = listName => {
-    this.setState({
-      visibleList: listName
-    });
-    this.props.switchShowedTasksList(listName);
-  };
-
-  markAsDone = key => {
-    const { currentDayTasks } = this.props.active;
-    const result = currentDayTasks.map(task => {
-      if (task.key === key) {
-        return (task.done = true);
-      }
-      return task;
-    });
-    return result;
+  markAsDone = (date, task) => {
+    const done = 'done';
+    PopupActions.moveTask(date, task, done);
   };
 
   render() {
-    const {
-      currentDate,
-      active,
-      showedTasksList,
-      markedList,
-      popupVisible
-    } = this.props;
+    const { currentDate, active } = this.props;
 
     return (
-      <Wrapper isVisible={popupVisible}>
+      <Wrapper>
         <PopupContainer>
           <PopupHeader>
             {currentDate
               ? moment(currentDate).format('dddd, D MMMM')
               : moment().format('dddd, D MMMM')}
-            <Menu
-              deleteMarkedTasks={() =>
-                this.applyChange(markedList, this.removeTask)
-              }
-            />
           </PopupHeader>
           <PopupList
             tasksList={active}
-            visible={
-              showedTasksList === 'active' || showedTasksList === 'all'
-                ? true
-                : false
-            }
             onRemove={this.removeTask}
-            addTaskToMarkedGroup={this.addTaskToMarkedGroup}
             currentDate={moment(currentDate).format('MM-DD-YYYY')}
             refreshDataSet={this.refreshDataSet}
           />

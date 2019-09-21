@@ -95,7 +95,6 @@ class Signup extends Component {
             value={this.state.email}
             onChange={this.handleChange}
             onFocus={this.showHelp}
-            className="form-control"
             placeholder="email"
           />
 
@@ -105,7 +104,6 @@ class Signup extends Component {
             value={this.state.password}
             onChange={this.handleChange}
             onFocus={this.showHelp}
-            className="form-control"
             placeholder="Password"
           />
 

@@ -25,7 +25,7 @@ const InputText = styled.input`
   }
 `;
 
-const Input = ({ type, name, value, onChange, className, placeholder }) => (
+const Input = ({ type, name, value, onChange, placeholder }) => (
   <InputText
     type={type}
     name={name}
@@ -40,7 +40,6 @@ Input.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  className: PropTypes.string,
   placeholder: PropTypes.string
 };
 

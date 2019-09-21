@@ -13,18 +13,17 @@ const Container = styled.div`
 const PopupList = ({
   tasksList,
   onRemove,
-  addTaskToMarkedGroup,
   currentDate,
   refreshDataSet
 }) => (
   <Container>
-    {tasksList.map(({ text, key }) => (
+    {tasksList.map(({ text, key, type }) => (
       <PopupListItem
         text={text}
         key={key}
         taskKey={key}
+        type={type}
         onRemove={onRemove || ''}
-        addTaskToMarkedGroup={addTaskToMarkedGroup || ''}
       />
     ))}
     <AddForm date={currentDate} refreshDataSet={refreshDataSet} />
