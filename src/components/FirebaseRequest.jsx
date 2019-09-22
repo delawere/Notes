@@ -18,37 +18,27 @@ FirebaseRequest.removeTask = async (key, date) => {
   await database.ref(`users/${userId}/tasks/${date}/${key}`).remove();
 };
 
-FirebaseRequest.addNewTask = async (task, date, type = 'active', callback) => {
-  if (!task) {
-    console.error("You can't add empty task");
-  }
+FirebaseRequest.upgradeTask = async ({ id, task, date, type = 'active' }) => {
+  let key;
 
   try {
     const dayRef = database.ref(`users/${userId}/tasks`).child(date);
-    const newTaskKey = dayRef.push().key;
+
+    if (id) {
+      key = id;
+    } else {
+      key = dayRef.push().key;
+    }
+
     const update = {};
-    update[newTaskKey] = {
+    update[key] = {
       task,
       type
     };
-    await dayRef.update(update).then(() => {
-      if (typeof callback === 'function') {
-        callback();
-      }
-    });
-    return newTaskKey;
+    await dayRef.update(update);
+    return key;
   } catch (error) {
-    console.error(`Add failed. Error: ${error}`);
-  }
-};
-
-FirebaseRequest.moveTaskToDone = async (task, date, type) => {
-  try {
-    this.addNewTask(task, date, type, () => {
-      this.FirebaseRequest.removeTask(task, date);
-    });
-  } catch (error) {
-    console.error(`Move failed. Error: ${error}`);
+    console.error(`Upgrade failed. Error: ${error}`);
   }
 };
 

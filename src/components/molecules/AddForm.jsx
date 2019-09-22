@@ -13,8 +13,8 @@ const placeholder = '+ Add Task';
 const AddFormContainer = styled.div`
   display: flex;
   align-items: flex-end;
-  width: 30em;
   margin-left: 1.6em;
+  padding-right: 1em;
 `;
 
 const putActionsToProps = dispatch => {
@@ -41,7 +41,13 @@ class AddForm extends Component {
     const active = 'active';
     const { task } = this.state;
     const { date, refreshDataSet } = this.props;
-    const key = await FirebaseRequest.addNewTask(task, date, active);
+    const taskParametres = {
+      id: null,
+      task,
+      date,
+      type: active
+    };
+    const key = await FirebaseRequest.upgradeTask(taskParametres);
     await refreshDataSet(
       {
         task,

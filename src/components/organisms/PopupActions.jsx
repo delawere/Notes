@@ -2,20 +2,20 @@ import FirebaseRequest from '../FirebaseRequest';
 
 const PopupActions = {};
 
-PopupActions.refreshDataSet = (newTask, activeTasks, active) => {
+PopupActions.refreshDataSet = (newTask, activeTasks) => {
   const { key, task } = newTask;
   activeTasks.push({ key, text: task });
 
   return { activeTasks };
 };
 
-PopupActions.removeTask = async (date, key, activeTasks) => {
+PopupActions.removeTask = async (date, key, tasks) => {
   await FirebaseRequest.removeTask(key, date);
   let currentTasks = [];
   let categoryName = '';
-  let removedElemIndex = activeTasks.findIndex(task => task.key === key);
+  let removedElemIndex = tasks.findIndex(task => task.key === key);
 
-  currentTasks = activeTasks;
+  currentTasks = tasks;
   categoryName = 'active';
 
   currentTasks.splice(removedElemIndex, 1);
@@ -23,8 +23,8 @@ PopupActions.removeTask = async (date, key, activeTasks) => {
   return { categoryName, currentTasks };
 };
 
-PopupActions.moveTask = async (date, key, type) => {
-  await FirebaseRequest.moveTaskToDone(key, date);
+PopupActions.upgradeTask = async parametres => {
+  await FirebaseRequest.upgradeTask(parametres);
 };
 
 export default PopupActions;

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const Label = styled.span`
   display: inline-block;
+  transition: color 200ms ease-in-out;
   color: ${props => (props.checked ? '#b4b4b4' : '#000')};
 `;
 

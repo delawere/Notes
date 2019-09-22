@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import * as moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  addCurrentDayTasks,
-  addNewTask,
-} from '../../store/actions';
+import { addCurrentDayTasks, addNewTask } from '../../store/actions';
 import { bindActionCreators } from 'redux';
 
 import PopupList from '../molecules/PopupList';
@@ -45,7 +42,7 @@ const putStateToProps = state => {
 const putActionsToProps = dispatch => {
   return {
     addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
-    addNewTask: bindActionCreators(addNewTask, dispatch),
+    addNewTask: bindActionCreators(addNewTask, dispatch)
   };
 };
 
@@ -82,9 +79,17 @@ class Popup extends Component {
     }
   };
 
-  markAsDone = (date, task) => {
-    const done = 'done';
-    PopupActions.moveTask(date, task, done);
+  changeTaskType = async ({ id, task, date, type }) => {
+    const { onAfterSubmit } = this.props;
+    const newType = type === 'active' ? 'done' : 'active';
+
+    await PopupActions.upgradeTask({
+      id,
+      task,
+      date,
+      type: newType
+    });
+    await onAfterSubmit(date);
   };
 
   render() {
@@ -101,6 +106,7 @@ class Popup extends Component {
           <PopupList
             tasksList={active}
             onRemove={this.removeTask}
+            changeTaskType={this.changeTaskType}
             currentDate={moment(currentDate).format('MM-DD-YYYY')}
             refreshDataSet={this.refreshDataSet}
           />

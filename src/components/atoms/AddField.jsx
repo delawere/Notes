@@ -21,10 +21,12 @@ const Input = styled.input`
     cursor: text;
     font-family: 'pt_sansregular',sans-serif;
     font-size: 1rem;
+    transition: 150ms ease-in-out;
 
-    &:focus,
-    &:hover {
+    &:focus {
       outline: none;
+      border-radius: 0.3em;
+      background-color: #e9ecef;
 `;
 
 const AddField = ({

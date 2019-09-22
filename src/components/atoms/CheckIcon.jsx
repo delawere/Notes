@@ -10,8 +10,8 @@ const SVG = styled.svg`
   width: 1em;
   height: 1em;
   fill: #b4b4b4;
-  transition: fill 200ms ease-in-out;
-  visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+  transition: 200ms ease-in-out;
+  opacity: ${props => (props.visible ? '1' : '0')};
 `;
 
 const CheckIcon = ({ visible }) => (

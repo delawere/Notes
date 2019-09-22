@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import CheckIcon from '../atoms/CheckIcon';
@@ -21,47 +21,37 @@ const ControlButtons = styled.div`
   transition-timing-function: ease-out;
 `;
 
-class PopupListItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      checked: false
-    };
-  }
-
-  onClick = () => {
-    this.setState({
-      checked: !this.state.checked
-    });
-  };
-
-  render() {
-    const {
-      text,
-      taskKey,
-      type,
-      onRemove
-    } = this.props;
-
-    const { checked } = this.state;
-
-    return (
-      <Container onClick={this.onClick}>
-        <CheckIcon visible={checked} />
-        <ListItemField text={text} checked={type === 'active' ? true : false} />
-        <ControlButtons>
-          <DeleteButton onClick={onRemove} taskKey={taskKey} />
-        </ControlButtons>
-      </Container>
-    );
-  }
-}
-
-export default PopupListItem;
+const PopupListItem = ({
+  text,
+  taskKey,
+  type,
+  date,
+  onRemove,
+  changeTaskType
+}) => {
+  const isDone = type === 'done' ? true : false;
+  return (
+    <Container
+      onClick={() => changeTaskType({ id: taskKey, task: text, date, type })}
+    >
+      <CheckIcon visible={isDone} />
+      <ListItemField text={text} checked={isDone} />
+      <ControlButtons>
+        <DeleteButton onClick={onRemove} taskKey={taskKey} />
+      </ControlButtons>
+    </Container>
+  );
+};
 
 PopupListItem.propTypes = {
   text: PropTypes.string,
   taskKey: PropTypes.string,
-  onRemove: PropTypes.func
+  type: PropTypes.string,
+  date: PropTypes.string,
+  onRemove: PropTypes.func,
+  changeTaskType: PropTypes.func
 };
+
+export default PopupListItem;
+
+

@@ -13,6 +13,7 @@ const Container = styled.div`
 const PopupList = ({
   tasksList,
   onRemove,
+  changeTaskType,
   currentDate,
   refreshDataSet
 }) => (
@@ -23,7 +24,9 @@ const PopupList = ({
         key={key}
         taskKey={key}
         type={type}
-        onRemove={onRemove || ''}
+        date={currentDate}
+        onRemove={onRemove}
+        changeTaskType={changeTaskType}
       />
     ))}
     <AddForm date={currentDate} refreshDataSet={refreshDataSet} />

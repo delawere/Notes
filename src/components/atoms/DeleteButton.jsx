@@ -18,8 +18,13 @@ const Svg = styled.svg`
   fill: #b4b4b4;
 `;
 
-const DeleteButton = ({ onClick, taskKey, title }) => (
-  <Button onClick={() => onClick(taskKey)}>
+const DeleteButton = ({ onClick, taskKey }) => (
+  <Button
+    onClick={event => {
+      event.stopPropagation();
+      onClick(taskKey);
+    }}
+  >
     <Svg viewBox="0 0 20 20">
       <title>close</title>
       <path d="M10 8.586l-7.071-7.071-1.414 1.414 7.071 7.071-7.071 7.071 1.414 1.414 7.071-7.071 7.071 7.071 1.414-1.414-7.071-7.071 7.071-7.071-1.414-1.414-7.071 7.071z" />

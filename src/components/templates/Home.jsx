@@ -56,8 +56,8 @@ export default class Home extends PureComponent {
     const { addTasks, currentDayDate } = this.props;
     const { addCurrentDayTasks, addCurrentDayDate } = this.props;
 
-    //Обновлять попап нужно либо по клику, либо при инициализации.
-    //Второе выполняется в componentDidMount. Соответственно, одна из дат должна присутствовать.
+    // The list of tasks will be updated after click on the day, open the page or changing list
+    // The opening page will be processed in ComponentDidMount so one of the dates should be
     if (!currentDayDate && !todayDate) {
       return;
     }
@@ -68,7 +68,7 @@ export default class Home extends PureComponent {
 
     addTasks(usersData);
 
-    // Условие ниже отрабатывает при первом запуске, для установки текущего дня по-умолчанию
+    // The following condition triggers when the page opens and set up the current date as the default date
     if (todayDate) {
       addCurrentDayDate(todayDate);
 
