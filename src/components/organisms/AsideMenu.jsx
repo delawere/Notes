@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import UserSchedule from "./UserSchedule";
-import Popup from "./Popup";
+import TasksForm from "./TasksForm";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -42,7 +42,7 @@ class AsideMenu extends Component {
           onClickDay={this.props.onClickDay}
           activeTasks={activeTasks}
         />
-        <Popup onAfterSubmit={onAfterSubmit}/>
+        <TasksForm onAfterSubmit={onAfterSubmit}/>
       </AsideContainer>
     );
   }

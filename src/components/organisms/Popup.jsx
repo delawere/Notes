@@ -1,130 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import * as moment from 'moment';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { addCurrentDayTasks, addNewTask } from '../../store/actions';
-import { bindActionCreators } from 'redux';
+import PopupItem from '../molecules/PopupItem';
 
-import PopupList from '../molecules/PopupList';
-import PopupActions from './PopupActions';
-
-const Wrapper = styled.div`
-  width: 50%;
-  color: #242425;
-  background-color: rgba(0, 0, 0, 0, 25);
+const Container = styled.div`
+  margin: 0;
+  padding: 0;
+  border-radius: 0.25em;
+  background: white;
+  position: relative;
+  max-width: 8.5em;
+  font-size: 1.1rem;
+  color: rgb(55, 53, 47);
+  fill: rgb(55, 53, 47);
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
 `;
 
-const PopupContainer = styled.div`
-  width: 100%;
-  margin: auto;
-  padding: 0.5rem 2rem;
-  padding-bottom: 5px;
+const List = styled.ul`
+margin: 0;
+padding: 0;
+padding-left: 1em;
+  list-style-type: none;
 `;
 
-const PopupHeader = styled.header`
-  width: 100%;
-  padding: 4px 0;
-  font-size: 1.8rem;
-  font-weight: 450;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const putStateToProps = state => {
-  return {
-    currentDate: state.currentDayDate,
-    active: state.currentDayTasks,
-    showedTasksList: state.showedTasksList
-  };
+const Popup = ({ items, actions }) => {
+  return (
+    <Container>
+      <List>
+        {items.map((it, i) => (
+          <PopupItem key={i} title={it} onClick={actions[it.toLowerCase()]} />
+        ))}
+      </List>
+    </Container>
+  );
 };
 
-const putActionsToProps = dispatch => {
-  return {
-    addCurrentDayTasks: bindActionCreators(addCurrentDayTasks, dispatch),
-    addNewTask: bindActionCreators(addNewTask, dispatch)
-  };
-};
-
-class Popup extends Component {
-  refreshDataSet = (newTask, active) => {
-    const { addCurrentDayTasks, onAfterSubmit } = this.props;
-    const { activeTasks } = PopupActions.refreshDataSet(
-      newTask,
-      [...this.props.active],
-      active
-    );
-    addCurrentDayTasks(activeTasks);
-    onAfterSubmit();
-  };
-
-  removeTask = async key => {
-    try {
-      const { addNewTask, onAfterSubmit } = this.props;
-      const currentDate = moment(this.props.currentDate).format('MM-DD-YYYY');
-      const currentTasks = await PopupActions.removeTask(currentDate, key, [
-        ...this.props.active
-      ]);
-
-      addNewTask(currentTasks.currentTasks);
-      onAfterSubmit();
-    } catch (e) {
-      console.error(`Task doesn't remove. Error: ${e}`);
-    }
-  };
-
-  applyChange = (list, callback) => {
-    if (list.length > 0) {
-      list.forEach(it => callback(it.taskKey, it.text));
-    }
-  };
-
-  changeTaskType = async ({ id, task, date, type }) => {
-    const { onAfterSubmit } = this.props;
-    const newType = type === 'active' ? 'done' : 'active';
-
-    await PopupActions.upgradeTask({
-      id,
-      task,
-      date,
-      type: newType
-    });
-    await onAfterSubmit(date);
-  };
-
-  render() {
-    const { currentDate, active } = this.props;
-
-    return (
-      <Wrapper>
-        <PopupContainer>
-          <PopupHeader>
-            {currentDate
-              ? moment(currentDate).format('dddd, D MMMM')
-              : moment().format('dddd, D MMMM')}
-          </PopupHeader>
-          <PopupList
-            tasksList={active}
-            onRemove={this.removeTask}
-            changeTaskType={this.changeTaskType}
-            currentDate={moment(currentDate).format('MM-DD-YYYY')}
-            refreshDataSet={this.refreshDataSet}
-          />
-        </PopupContainer>
-      </Wrapper>
-    );
-  }
-}
-
-Popup = connect(
-  putStateToProps,
-  putActionsToProps
-)(Popup);
-
-Popup.propTypes = {
-  closePopup: PropTypes.func,
-  onAfterSubmit: PropTypes.func,
-  tasks: PropTypes.object
-};
+Popup.propTypes = {};
 
 export default Popup;
