@@ -15,7 +15,7 @@ const SVG = styled.svg`
 `;
 
 const CheckIcon = ({ visible }) => (
-  <SVG viewBox="0 0 24 24" visible={visible}>
+  <SVG viewBox="0 0 24 28" visible={visible}>
     <title>check</title>
     <path d={CheckIconPath} />
   </SVG>

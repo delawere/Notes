@@ -5,13 +5,12 @@ import PopupItem from '../molecules/PopupItem';
 const Container = styled.div`
   display: ${props => (props.visible ? '' : 'none')};
   margin: 0;
-  padding: 0.5em 3em 0.5em 0.25em;
   box-sizing: border-box;
   width: 10em;
   border-radius: 0.25em;
   background: white;
   position: absolute;
-  left: calc(${props => props.x}px - 82.5px + 13.15px) ;
+  left: calc(${props => props.x}px - 82.5px + 13.15px);
   top: ${props => props.y}px;
   font-size: 1.1rem;
   color: rgb(55, 53, 47);
@@ -23,16 +22,27 @@ const Container = styled.div`
 const List = styled.ul`
   margin: 0;
   padding: 0;
-  padding-left: 1em;
   list-style-type: none;
 `;
 
-const Popup = ({ items, actions, visible, popupX, popupY }) => {
+const Popup = ({
+  items,
+  onPopupItemClick,
+  visible,
+  popupX,
+  popupY,
+  taskInfo
+}) => {
   return (
     <Container visible={visible} x={popupX} y={popupY}>
       <List>
         {items.map((it, i) => (
-          <PopupItem key={i} title={it} onClick={actions[it.toLowerCase()]} />
+          <PopupItem
+            title={it}
+            onClick={onPopupItemClick}
+            taskId={taskInfo.id}
+            key={i}
+          />
         ))}
       </List>
     </Container>
