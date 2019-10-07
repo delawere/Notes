@@ -5,5 +5,3 @@ Worked on React + Firebase.
 //TODO
 1. add categories for tasks
 2. add adaptive design
-
-### [Demo](https://calendarwithtodo.herokuapp.com/)
