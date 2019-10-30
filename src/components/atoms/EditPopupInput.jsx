@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-const InputText = styled.input`
+const Input = styled.input`
   outline: none;
   display: block;
   width: 100%;
-  padding: 0.4em 0.6em;
-  margin-bottom: 1em;
+  height: 2.3em;
+  padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -17,15 +17,10 @@ const InputText = styled.input`
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-
-  :focus {
-    border-color: #0062cc;
-    box-shadow: 0 0 0 0.2rem rgba(38,143,255,.5);
-  }
 `;
 
-const Input = ({ type, name, value, onChange, placeholder }) => (
-  <InputText
+const EditPopupInput = ({ type, name, value, onChange, placeholder }) => (
+  <Input
     type={type}
     name={name}
     value={value}
@@ -34,7 +29,7 @@ const Input = ({ type, name, value, onChange, placeholder }) => (
   />
 );
 
-Input.propTypes = {
+EditPopupInput.propTypes = {
   type: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
@@ -42,4 +37,4 @@ Input.propTypes = {
   placeholder: PropTypes.string
 };
 
-export default Input;
+export default EditPopupInput;

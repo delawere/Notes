@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import TodoList from '../molecules/TodoList';
 import TasksFormActions from './TasksFormActions';
 import Popup from './Popup';
+import EditPopup from '../molecules/EditPopup';
 
 const Wrapper = styled.div`
   margin-left: 5em;
@@ -53,6 +54,7 @@ class TasksForm extends Component {
   constructor(props) {
     super(props);
     this.popupWrapper = React.createRef();
+    this.editPopupWrapper = React.createRef();
 
     this.state = {
       popupVisible: false,
@@ -61,7 +63,14 @@ class TasksForm extends Component {
         y: 0
       },
       processedTask: {
-        id: '',
+        id: ''
+      },
+      editPopupVisible: false,
+      editPopupCoordinates: {
+        x: 0,
+        y: 0
+      },
+      editPopupText: {
         currentText: '',
         newText: ''
       }
@@ -87,7 +96,7 @@ class TasksForm extends Component {
         this.removeTask(key);
         break;
       case 'Edit':
-        this.edittask(key);
+        this.editTask(key);
         break;
       case 'Move':
         this.moveTask(key);
@@ -113,7 +122,18 @@ class TasksForm extends Component {
     }
   };
 
-  editTask = key => {};
+  editTask = key => {
+    this.setState(
+      {
+        editPopupVisible: !this.state.editPopupVisible
+      },
+      () => {
+        document.addEventListener('click', this.onOutsideClickWrapper);
+      }
+    );
+  };
+
+  onChangeEditPopup = () => {};
 
   applyChange = (list, callback) => {
     if (list.length > 0) {
@@ -139,16 +159,31 @@ class TasksForm extends Component {
     return target;
   };
 
-  onOutsideClickHandler = event => {
-    const parentDom = this.popupWrapper.current;
+  onOutsideClickWrapper = event => {
+    const { popupVisible, editPopupVisible } = this.state;
+
+    if (popupVisible) {
+      this.onOutsideClick(event, this.popupWrapper.current, 'popupVisible');
+    }
+
+    if (editPopupVisible) {
+      this.onOutsideClick(
+        event,
+        this.editPopupWrapper.current,
+        'editPopupVisible'
+      );
+    }
+  };
+
+  onOutsideClick = (event, parentDom, componentStateName) => {
     let isOutsideClick = !this.findAncestor(event.target, parentDom);
 
     if (isOutsideClick) {
       this.setState(
         {
-          popupVisible: false
+          [componentStateName]: false
         },
-        () => document.removeEventListener('click', this.onOutsideClickHandler)
+        () => document.removeEventListener('click', this.onOutsideClickWrapper)
       );
     }
   };
@@ -175,7 +210,7 @@ class TasksForm extends Component {
     );
   };
 
-  onPopupOpen = (popupX, popupY, taskId, taskText) => {
+  onPopupOpen = (popupX, popupY, taskId, currentText) => {
     this.setState(
       {
         popupCoordinates: {
@@ -183,12 +218,15 @@ class TasksForm extends Component {
           y: popupY + 25
         },
         processedTask: {
-          id: taskId,
-          currentText: taskText
+          id: taskId
+        },
+        editPopupText: {
+          currentText,
+          newText: ''
         }
       },
       () => {
-        document.addEventListener('click', this.onOutsideClickHandler);
+        document.addEventListener('click', this.onOutsideClickWrapper);
       }
     );
   };
@@ -201,12 +239,10 @@ class TasksForm extends Component {
           y: 0
         },
         processedTask: {
-          id: '',
-          currentText: '',
-          newText: ''
+          id: ''
         }
       },
-      () => document.removeEventListener('click', this.onOutsideClickHandler)
+      () => document.removeEventListener('click', this.onOutsideClickWrapper)
     );
   };
 
@@ -236,6 +272,14 @@ class TasksForm extends Component {
               popupX={this.state.popupCoordinates.x}
               popupY={this.state.popupCoordinates.y}
               taskInfo={this.state.processedTask}
+            />
+          </div>
+          <div ref={this.editPopupWrapper}>
+            <EditPopup
+              visible={this.state.editPopupVisible}
+              currentText={this.state.editPopupText.currentText}
+              newText={this.state.editPopupText.newText}
+              onChange={this.onChangeEditPopup}
             />
           </div>
         </Container>

@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+const hoverStyles = 'background: #d3d3d3; border: 1px solid #b4b4b4;';
+
 const Button = styled.button`
   width: 1.55em;
   height: 1.55em;
@@ -11,11 +13,10 @@ const Button = styled.button`
   outline: none;
   transition: 200ms ease-in-out;
   border: 1px solid transparent;
+  border-radius: 0.25em;
 
   &:hover {
-    background: #d3d3d3;
-    border-radius: 0.25em;
-    border: 1px solid #b4b4b4;
+    ${hoverStyles}
   }
 `;
 
@@ -36,6 +37,7 @@ const Paths = {
 
 const IconButton = ({ onClick, taskKey, taskText, buttonType }) => (
   <Button
+    menuOpened={true}
     onClick={event => {
       event.stopPropagation();
 
