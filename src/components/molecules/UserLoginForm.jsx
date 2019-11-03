@@ -2,13 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const UserInfoContainer = styled.div`
-  color: #0070c9;
-  padding: 15px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3;
-`;
-
 const Link = styled.a`
   cursor: pointer;
   user-select: none;
@@ -18,17 +11,26 @@ const Link = styled.a`
   border-radius: 3px;
   flex-shrink: 0;
   font-size: 15px;
-  margin-left: 2px;
-  margin-right: 2px;
+  margin-left: 1em;
   font-weight: 500;
-  color: rgb(4, 4, 2);
+  color: #999;
+  border-radius: 0.2em;
+  border: ${props => (props.name === 'signup' ? '1px solid #999' : 'none')}
+  margin-right: ${props => (props.name === 'signup' ? '1.5em' : '0')}
+  transition: 150ms ease-in-out;
+
+  &:hover {
+    color: white;
+    text-decoration: none;
+    border: ${props => (props.name === 'signup' ? '1px solid white' : 'none')}
+  }
 `;
 
 const UserLoginForm = ({ openForm }) => (
-  <UserInfoContainer onClick={openForm}>
+  <div onClick={openForm}>
     <Link name="login">Log in</Link>
     <Link name="signup">Sign up</Link>
-  </UserInfoContainer>
+  </div>
 );
 
 UserLoginForm.propTypes = {

@@ -5,7 +5,7 @@ const Title = styled.p`
   font-size: 62px;
   font-weight: 700;
   margin-top: 20vh;
-  margin-bottom: 24px;
+  margin-bottom: 0.9em;
   text-align: center;
   line-height: 1.1;
 `;

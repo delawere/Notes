@@ -4,6 +4,7 @@ import propTypes from 'prop-types';
 
 const Container = styled.div`
   margin: 0 auto;
+  margin-bottom: 2em;
   border-radius: 0.5em;
   box-shadow: 0 0 3px #ddd;
   overflow: hidden;
