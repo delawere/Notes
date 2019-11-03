@@ -6,6 +6,7 @@ import Input from '../atoms/Input';
 import LoginFormTitle from '../atoms/LoginFormTitle';
 import ErrorPopup from '../molecules/ErrorPopup';
 import SubmitButton from '../atoms/SubmitButton';
+import RedirectLabel from '../molecules/RedirectLabel';
 
 const Form = styled.form`
   box-sizing: border-box;
@@ -35,6 +36,7 @@ const Auth = ({ name, errorMessage, emailProps, passwordProps, onClick }) => (
       <Input {...passwordProps} />
       <PasswordRules>{passwordProps.rules}</PasswordRules>
       <SubmitButton title={name} onClick={onClick} />
+      <RedirectLabel labelTitle={'Already a member?'} linkTitle={'Log In'} />
     </Form>
   </div>
 );

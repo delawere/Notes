@@ -5,7 +5,8 @@ import { addUser } from '../../store/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { LANDING } from '../../router/constants';
+import { HOME, LOGIN, SIGNUP } from '../../router/constants';
+import { Route, Switch } from 'react-router-dom';
 
 import Header from '../organisms/Header';
 import Auth from '../organisms/Auth';
@@ -39,6 +40,13 @@ class Form extends Component {
       password: '',
       error: ''
     };
+  }
+
+  componentDidMount() {
+    if (window.location.pathname === LOGIN) {
+      return;
+    }
+    window.location.pathname = LOGIN;
   }
 
   login = e => {
@@ -96,33 +104,65 @@ class Form extends Component {
 
   render() {
     if (this.props.user) {
-      return <Redirect to={LANDING} />;
+      return <Redirect to={HOME} />;
     }
 
     return (
       <main>
         <Header openForm={this.openForm} />
         <LogForm>
-          <Auth
-            name={this.state.login ? 'Log In' : 'Sign Up'}
-            errorMessage={this.state.error}
-            emailProps={{
-              type: 'email',
-              name: 'email',
-              value: this.state.email,
-              onChange: this.handleChange,
-              placeholder: 'email'
-            }}
-            passwordProps={{
-              type: 'password',
-              name: 'password',
-              value: this.state.password,
-              onChange: this.handleChange,
-              placeholder: 'password',
-              rules: this.state.signup ? 'Minimum 6 characters' : ''
-            }}
-            onClick={this.state.login ? this.login : this.signup}
-          />
+          <Switch>
+            <Route
+              exact
+              path={LOGIN}
+              render={() => (
+                <Auth
+                  name={'Log In'}
+                  errorMessage={this.state.error}
+                  emailProps={{
+                    type: 'email',
+                    name: 'email',
+                    value: this.state.email,
+                    onChange: this.handleChange,
+                    placeholder: 'email'
+                  }}
+                  passwordProps={{
+                    type: 'password',
+                    name: 'password',
+                    value: this.state.password,
+                    onChange: this.handleChange,
+                    placeholder: 'password'
+                  }}
+                  onClick={this.login}
+                />
+              )}
+            />
+            <Route
+              path={SIGNUP}
+              render={() => (
+                <Auth
+                  name={'Sign Up'}
+                  errorMessage={this.state.error}
+                  emailProps={{
+                    type: 'email',
+                    name: 'email',
+                    value: this.state.email,
+                    onChange: this.handleChange,
+                    placeholder: 'email'
+                  }}
+                  passwordProps={{
+                    type: 'password',
+                    name: 'password',
+                    value: this.state.password,
+                    onChange: this.handleChange,
+                    placeholder: 'password',
+                    rules: 'Minimum 6 characters'
+                  }}
+                  onClick={this.signup}
+                />
+              )}
+            />
+          </Switch>
         </LogForm>
       </main>
     );

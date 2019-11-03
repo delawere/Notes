@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import fire from "./config/Fire";
-import "./App.css";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import Form from "./components/templates/Form";
-import Home from "./components/templates/Home";
+import React, { Component } from 'react';
+import fire from './config/Fire';
+import './App.css';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Form from './components/templates/Form';
+import Home from './components/templates/Home';
 import {
   addUser,
   addTasks,
   addCurrentDayTasks,
   addCurrentDayDate
-} from "./store/actions";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { LANDING, LOGIN } from "./router/constants";
+} from './store/actions';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HOME } from './router/constants';
 
 const putStateToProps = state => {
   return {
@@ -51,7 +51,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem('user');
     if (user) {
       this.props.addUser(user);
       this.setState({
@@ -66,10 +66,10 @@ class App extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
-        localStorage.setItem("user", user.uid);
+        localStorage.setItem('user', user.uid);
       } else {
         this.setState({ user: null });
-        localStorage.removeItem("user");
+        localStorage.removeItem('user');
       }
     });
   }
@@ -80,12 +80,12 @@ class App extends Component {
         <Switch>
           <Route
             exact
-            path={LANDING}
+            path={HOME}
             render={() => (
               <WrappedHomeComponent currentUser={this.state.user} />
             )}
           />
-          <Route path={LOGIN} component={Form} />
+          <Route path={'/'} component={Form} />
         </Switch>
       </BrowserRouter>
     );

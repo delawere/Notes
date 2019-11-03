@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-const Link = styled.a`
+const StyledLink = styled(Link)`
   cursor: pointer;
   user-select: none;
   transition: background 120ms ease-in 0s;
@@ -28,8 +29,12 @@ const Link = styled.a`
 
 const UserLoginForm = ({ openForm }) => (
   <div onClick={openForm}>
-    <Link name="login">Log in</Link>
-    <Link name="signup">Sign up</Link>
+    <StyledLink name={'login'} to="/login">
+      Log in
+    </StyledLink>
+    <StyledLink name={'signup'} to="/signup">
+      Sign up
+    </StyledLink>
   </div>
 );
 
